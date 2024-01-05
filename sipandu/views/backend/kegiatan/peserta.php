@@ -243,24 +243,22 @@
 						"visible" => "false"
 					);
 				
-					if($_SESSION["user"]["id"] == "1"){
-						if ($kegiatan["tipe_kegiatan"] == "Daring") {
+					if ($kegiatan["tipe_kegiatan"] == "Daring") {
+						if (!empty($kegiatan["detail_tgl_kegiatan"])) {
 							if (!empty($kegiatan["detail_tgl_kegiatan"])) {
-								if (!empty($kegiatan["detail_tgl_kegiatan"])) {
-									foreach ($kegiatan["detail_tgl_kegiatan"] as $df) {
-										$columns[] = array(
-											"id" => "daftar_hadir_".$df,
-											"field" => "golongan",
-											"name" => "Hadir ".$this->utility->formatDateShortMonthIndo($df),
-											"class" => "text-center",
-											"format" => "checklistHadir"
-										);
-									}
+								foreach ($kegiatan["detail_tgl_kegiatan"] as $df) {
+									$columns[] = array(
+										"id" => "daftar_hadir_".$df,
+										"field" => "daftar_hadir",
+										"name" => "Hadir ".$this->utility->formatDateShortMonthIndo($df),
+										"class" => "text-center",
+										"format" => "checklistHadir"
+									);
 								}
 							}
-							else {
-								print $this->utility->formatRangeDate($kegiatan["tgl_mulai_kegiatan"], $kegiatan["tgl_selesai_kegiatan"]);
-							}
+						}
+						else {
+							print $this->utility->formatRangeDate($kegiatan["tgl_mulai_kegiatan"], $kegiatan["tgl_selesai_kegiatan"]);
 						}
 					}
 

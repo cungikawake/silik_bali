@@ -1274,7 +1274,9 @@ $config["unsur_satuan"] = array(
 	"Kemenag" => array("kemenag", "kementerian agama", "krmenterian agama")
 );
 
-$config["tahun_anggaran"] = array(
-	"2022" => "2022",
-	"2023" => "2023"
-);
+// Automatic Year
+$yearNow = date("Y");
+
+foreach (range(2022, $yearNow) as $confYear) {
+	$config["tahun_anggaran"][] = $confYear;
+}
