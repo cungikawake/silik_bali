@@ -1,2 +1,7 @@
 /sipandu/config/database.php
 /mysql-data/*
+/assets/user_dokumen/*
+/assets/laporan_perjadin/*
+/assets/surat_tugas/*
+/assets/ttd/*
+/assets/sertifikat/*
