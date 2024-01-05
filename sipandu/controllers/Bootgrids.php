@@ -964,25 +964,15 @@ class Bootgrids extends CI_Controller {
 		    }
 		}
 		elseif (isset($column->format) && $column->format == "checklistHadir") {
-		    $value = array(
-				"2023-11-29" => 1,
-				"2023-11-30" => 0,
-				"2023-12-01" => 1,
-				"2023-12-04" => 1
-			);
+			$daftarHadir = json_decode($value, true);
+
+			$searchDate = str_replace("daftar_hadir_","", $column->id);
 			
-			if (!empty($value)) {
-				foreach ($value as $key => $val) {
-					if ("daftar_hadir_".$key == $column->id) {
-						if ($val) {
-							$value = '<i class="fas fa-check-square icon-green" style="font-size:20px; margin-right:16px;" title="Hadir"></i>';
-						}
-						else {
-							$value = '<i class="fas fa-check-square icon-grey" style="font-size:20px; margin-right:16px;" title="Tidak Hadir"></i>';
-						}
-						
-					}
-				}
+			if (isset($daftarHadir[$searchDate]) && $daftarHadir[$searchDate] == 1) {
+				$value = '<i class="fas fa-check-square icon-green" style="font-size:20px; margin-right:16px;" title="Hadir"></i>';
+			}
+			else {
+				$value = '<i class="fas fa-check-square icon-grey" style="font-size:20px; margin-right:16px;" title="Tidak Hadir"></i>';
 			}
 		}
 		

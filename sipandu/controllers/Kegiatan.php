@@ -782,6 +782,7 @@ class Kegiatan extends CI_Controller {
 			
 			if (!empty($kegiatan)) {
 				$data = $_POST;
+				$type = $_POST["type"];
 				
 				if ($type == "Narasumber") {
 					$registered = $this->narasumber_model->getNarasumber($kegiatanId, $data["nik"]);
