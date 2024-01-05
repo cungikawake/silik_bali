@@ -1,6 +1,6 @@
 <?php $url_2 = $this->uri->segment(3); ?>
 
-<ul class="nav nav-pills nav-pills-perjadin">
+<ul class="nav nav-pills nav-pills-perjadin nav-pills-keg" style="padding:15px 15px 5px;">
 	<?php if ($this->utility->hasUserAccess("peserta_kegiatan","list") && isset($kegiatan["komponen"]["peserta"]) && $kegiatan["komponen"]["peserta"] == "1") { ?>
 	<li class="nav-item">
 		<a class="nav-link <?php if ($url_2 == "peserta") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/peserta/".$kegiatan["id"]."/"); ?>">Peserta</a>
@@ -389,61 +389,111 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Panitia</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_panitia" id="checkbox-p-1" <?php print $bankPanitia; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_panitia" id="checkbox-p-2" <?php print $paketPanitia; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_panitia" id="checkbox-p-x1" <?php print $ttdPanitia; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_panitia" id="checkbox-st-1" <?php print $upSurtugPanitia; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_panitia" id="checkbox-st-2" <?php print $surtugPanitia; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Panitia Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Panitia</label>
-								<select id="select-serticate" class="form-control" name="sertificate_panitia" data-selected-sertificate="<?php print $kegiatan["sertificate_panitia"]; ?>"></select>
-							</div>
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-panitia" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-panitia" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-panitia" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-panitia" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Panitia</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-panitia">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Panitia</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_panitia" id="checkbox-p-1" <?php print $bankPanitia; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_panitia" id="checkbox-p-2" <?php print $paketPanitia; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_panitia" id="checkbox-p-x1" <?php print $ttdPanitia; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_panitia" id="checkbox-st-1" <?php print $upSurtugPanitia; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_panitia" id="checkbox-st-2" <?php print $surtugPanitia; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Panitia Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Panitia</label>
+												<select id="select-serticate" class="form-control" name="sertificate_panitia" data-selected-sertificate="<?php print $kegiatan["sertificate_panitia"]; ?>"></select>
+											</div>
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Panitia</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_panitia" value="<?php print $kegiatan["wa_grup_panitia"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Panitia</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_panitia" value="<?php print $kegiatan["tele_grup_panitia"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_panitia" value="<?php print $kegiatan["wa_grup_panitia"]; ?>" />
+								</div>
+								<div class="tab-pane" id="dh-panitia">
+									<div class="row">
+										DAFTAR HADIR
+									</div>
+								</div>
+								<div class="tab-pane" id="spd-panitia">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-panitia">
+									<div class="row">
+										SERTIFIKAT
+									</div>
 								</div>
 							</div>
-							
-							<label>Link Telegram Grup Panitia</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
-									</div>
-									<input type="text" class="form-control" name="tele_grup_panitia" value="<?php print $kegiatan["tele_grup_panitia"]; ?>" />
-								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
-							</div>
-							
 						</div>
 					</div>
 					<div class="row">
@@ -493,61 +543,112 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Narasumber</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_narasumber" id="checkbox-p-1" <?php print $bankNarasumber; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_narasumber" id="checkbox-p-2" <?php print $paketNarasumber; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_narasumber" id="checkbox-p-x1" <?php print $ttdNarasumber; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_narasumber" id="checkbox-st-1" <?php print $upSurtugNarasumber; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_narasumber" id="checkbox-st-2" <?php print $surtugNarasumber; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Narasumber Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Narasumber</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_narasumber"]; ?>" name="sertificate_narasumber"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-narasumber" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-narasumber" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-narasumber" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-narasumber" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Narasumber</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-narasumber">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Narasumber</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_narasumber" id="checkbox-p-1" <?php print $bankNarasumber; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_narasumber" id="checkbox-p-2" <?php print $paketNarasumber; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_narasumber" id="checkbox-p-x1" <?php print $ttdNarasumber; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_narasumber" id="checkbox-st-1" <?php print $upSurtugNarasumber; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_narasumber" id="checkbox-st-2" <?php print $surtugNarasumber; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Narasumber Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Narasumber</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_narasumber"]; ?>" name="sertificate_narasumber"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Narasumber</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_narasumber" value="<?php print $kegiatan["wa_grup_narasumber"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Narasumber</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_narasumber" value="<?php print $kegiatan["tele_grup_narasumber"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_narasumber" value="<?php print $kegiatan["wa_grup_narasumber"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Narasumber</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-narasumber">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_narasumber" value="<?php print $kegiatan["tele_grup_narasumber"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-narasumber">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-narasumber">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -598,61 +699,113 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Moderator</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_moderator" id="checkbox-p-1" <?php print $bankModerator; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_moderator" id="checkbox-p-2" <?php print $paketModerator; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_moderator" id="checkbox-p-x1" <?php print $ttdModerator; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_moderator" id="checkbox-st-1" <?php print $upSurtugModerator; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_moderator" id="checkbox-st-2" <?php print $surtugModerator; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Moderator Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Pelatih Ahli</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_moderator"]; ?>" name="sertificate_moderator"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-moderator" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-moderator" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-moderator" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-moderator" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Pelatih Ahli</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-moderator">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Moderator</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_moderator" id="checkbox-p-1" <?php print $bankModerator; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_moderator" id="checkbox-p-2" <?php print $paketModerator; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_moderator" id="checkbox-p-x1" <?php print $ttdModerator; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_moderator" id="checkbox-st-1" <?php print $upSurtugModerator; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_moderator" id="checkbox-st-2" <?php print $surtugModerator; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Moderator Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Pelatih Ahli</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_moderator"]; ?>" name="sertificate_moderator"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Pelatih Ahli</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_moderator" value="<?php print $kegiatan["wa_grup_moderator"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Pelatih Ahli</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_moderator" value="<?php print $kegiatan["tele_grup_moderator"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_moderator" value="<?php print $kegiatan["wa_grup_moderator"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Pelatih Ahli</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-moderator">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_moderator" value="<?php print $kegiatan["tele_grup_moderator"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-moderator">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-moderator">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -703,61 +856,113 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Pengajar Praktek</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_pp" id="checkbox-p-1" <?php print $bankPP; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_pp" id="checkbox-p-2" <?php print $paketPP; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_pp" id="checkbox-p-x1" <?php print $ttdPP; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_pp" id="checkbox-st-1" <?php print $upSurtugPP; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_pp" id="checkbox-st-2" <?php print $surtugPP; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Pengajar Praktek Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Pengajar Praktek</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_pp"]; ?>" name="sertificate_pp"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-pp" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-pp" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-pp" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-pp" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Pengajar Praktek</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-pp">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Pengajar Praktek</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_pp" id="checkbox-p-1" <?php print $bankPP; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_pp" id="checkbox-p-2" <?php print $paketPP; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_pp" id="checkbox-p-x1" <?php print $ttdPP; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_pp" id="checkbox-st-1" <?php print $upSurtugPP; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_pp" id="checkbox-st-2" <?php print $surtugPP; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Pengajar Praktek Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Pengajar Praktek</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_pp"]; ?>" name="sertificate_pp"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Pengajar Praktek</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_pp" value="<?php print $kegiatan["wa_grup_pp"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Pengajar Praktek</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_pp" value="<?php print $kegiatan["tele_grup_pp"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_pp" value="<?php print $kegiatan["wa_grup_pp"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Pengajar Praktek</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-pp">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_pp" value="<?php print $kegiatan["tele_grup_pp"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-pp">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-pp">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -808,61 +1013,112 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Fasilitator</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_fasil" id="checkbox-p-1" <?php print $bankFasil; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_fasil" id="checkbox-p-2" <?php print $paketFasil; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_fasil" id="checkbox-p-x1" <?php print $ttdFasil; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_fasil" id="checkbox-st-1" <?php print $upSurtugFasil; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_fasil" id="checkbox-st-2" <?php print $surtugFasil; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Fasilitator Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Fasilitator</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_fasil"]; ?>" name="sertificate_fasil"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-fasil" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-fasil" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-fasil" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-fasil" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Fasilitator</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-fasil">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Fasilitator</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_fasil" id="checkbox-p-1" <?php print $bankFasil; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_fasil" id="checkbox-p-2" <?php print $paketFasil; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_fasil" id="checkbox-p-x1" <?php print $ttdFasil; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_fasil" id="checkbox-st-1" <?php print $upSurtugFasil; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_fasil" id="checkbox-st-2" <?php print $surtugFasil; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Fasilitator Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Fasilitator</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_fasil"]; ?>" name="sertificate_fasil"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Fasilitator</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_fasil" value="<?php print $kegiatan["wa_grup_fasil"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Fasilitator</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_fasil" value="<?php print $kegiatan["tele_grup_fasil"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_fasil" value="<?php print $kegiatan["wa_grup_fasil"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Fasilitator</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-fasil">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_fasil" value="<?php print $kegiatan["tele_grup_fasil"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-fasil">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-fasil">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -912,62 +1168,115 @@
 							$surtugInstruktur = 'checked="checked"';
 						}
 					?>
+					
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Instruktur</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_instruktur" id="checkbox-p-1" <?php print $bankInstruktur; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_instruktur" id="checkbox-p-2" <?php print $paketInstruktur; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_instruktur" id="checkbox-p-x1" <?php print $ttdInstruktur; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_instruktur" id="checkbox-st-1" <?php print $upSurtugInstruktur; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_instruktur" id="checkbox-st-2" <?php print $surtugInstruktur; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Instruktur Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Instruktur</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_instruktur"]; ?>" name="sertificate_instruktur"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-instruktur" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-instruktur" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-instruktur" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-instruktur" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Instruktur</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-instruktur">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Instruktur</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_instruktur" id="checkbox-p-1" <?php print $bankInstruktur; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_instruktur" id="checkbox-p-2" <?php print $paketInstruktur; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_instruktur" id="checkbox-p-x1" <?php print $ttdInstruktur; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_instruktur" id="checkbox-st-1" <?php print $upSurtugInstruktur; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_instruktur" id="checkbox-st-2" <?php print $surtugInstruktur; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Instruktur Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Instruktur</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_instruktur"]; ?>" name="sertificate_instruktur"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Instruktur</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_instruktur" value="<?php print $kegiatan["wa_grup_instruktur"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Instruktur</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_instruktur" value="<?php print $kegiatan["tele_grup_instruktur"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_instruktur" value="<?php print $kegiatan["wa_grup_instruktur"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Instruktur</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-instruktur">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_instruktur" value="<?php print $kegiatan["tele_grup_instruktur"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-instruktur">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-instruktur">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1018,61 +1327,113 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Pengawas</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_pengawas" id="checkbox-p-1" <?php print $bankPengawas; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_pengawas" id="checkbox-p-2" <?php print $paketPengawas; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_pengawas" id="checkbox-p-x1" <?php print $ttdPengawas; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_pengawas" id="checkbox-st-1" <?php print $upSurtugPengawas; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_pengawas" id="checkbox-st-2" <?php print $surtugPengawas; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Pengawas Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Pengawas</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_pengawas"]; ?>" name="sertificate_pengawas"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-pengawas" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-pengawas" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-pengawas" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-pengawas" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Pengawas</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-pengawas">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Pengawas</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_pengawas" id="checkbox-p-1" <?php print $bankPengawas; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_pengawas" id="checkbox-p-2" <?php print $paketPengawas; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_pengawas" id="checkbox-p-x1" <?php print $ttdPengawas; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_pengawas" id="checkbox-st-1" <?php print $upSurtugPengawas; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_pengawas" id="checkbox-st-2" <?php print $surtugPengawas; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Pengawas Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Pengawas</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_pengawas"]; ?>" name="sertificate_pengawas"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Pengawas</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_pengawas" value="<?php print $kegiatan["wa_grup_pengawas"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Pengawas</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_pengawas" value="<?php print $kegiatan["tele_grup_pengawas"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_pengawas" value="<?php print $kegiatan["wa_grup_pengawas"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Pengawas</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-pengawas">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_pengawas" value="<?php print $kegiatan["tele_grup_pengawas"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-pengawas">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-pengawas">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1123,61 +1484,113 @@
 						}
 					?>
 					<div class="row">
-						<div class="col-md-6">
-							<label>Form Pendaftaran Kepala Sekolah</label>
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_bank_kepala_sekolah" id="checkbox-p-1" <?php print $bankKepalaSekolah; ?> value="1" />
-									<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_show_confirm_paket_kepala_sekolah" id="checkbox-p-2" <?php print $paketKepalaSekolah; ?> value="1" />
-									<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_ttd_kepala_sekolah" id="checkbox-p-x1" <?php print $ttdKepalaSekolah; ?> value="1" />
-									<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_upload_surtug_kepala_sekolah" id="checkbox-st-1" <?php print $upSurtugKepalaSekolah; ?> value="1" />
-									<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="checkbox" name="form_wajib_surtug_kepala_sekolah" id="checkbox-st-2" <?php print $surtugKepalaSekolah; ?> value="1" />
-									<label for="checkbox-st-2" class="cr">Kepala Sekolah Wajib Upload Surat Tugas</label>
-								</div>
-							</div>
-							
-							
-							<div class="form-group" style="width: 70%;">
-								<label>Template Sertifikat Kepala Sekolah</label>
-								<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_kepala_sekolah"]; ?>" name="sertificate_kepala_sekolah"></select>
-							</div>
-							
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item active">
+									<a class="nav-link" href="#form-kepsek" data-toggle="tab">Form Pendaftaran</a>
+								</li>
+								
+								<?php
+									if ($kegiatan["tipe_kegiatan"] == "Daring") {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#dh-kepsek" data-toggle="tab">Daftar Hadir</a>
+										</li>
+								<?php
+									}
+									else {
+								?>
+										<li class="nav-item">
+											<a class="nav-link" href="#spd-kepsek" data-toggle="tab">Surat Perjalanan Dinas</a>
+										</li>
+								<?php
+									}
+								?>
+								<li class="nav-item">
+									<a class="nav-link" href="#sertifikat-kepsek" data-toggle="tab">Sertifikat</a>
+								</li>
+							</ul>
 						</div>
-						<div class="col-md-5">
-							<label>Link WA Grup Kepala Sekolah</label>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+						
+
+						<div class="col-md-12">
+							<div class="tab-content">
+								<div class="tab-pane active" id="form-kepsek">
+									<div class="row">
+										<div class="col-md-6">
+											<label>Form Pendaftaran Kepala Sekolah</label>
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_bank_kepala_sekolah" id="checkbox-p-1" <?php print $bankKepalaSekolah; ?> value="1" />
+													<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_show_confirm_paket_kepala_sekolah" id="checkbox-p-2" <?php print $paketKepalaSekolah; ?> value="1" />
+													<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_ttd_kepala_sekolah" id="checkbox-p-x1" <?php print $ttdKepalaSekolah; ?> value="1" />
+													<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_upload_surtug_kepala_sekolah" id="checkbox-st-1" <?php print $upSurtugKepalaSekolah; ?> value="1" />
+													<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+												</div>
+												<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+													<input type="checkbox" name="form_wajib_surtug_kepala_sekolah" id="checkbox-st-2" <?php print $surtugKepalaSekolah; ?> value="1" />
+													<label for="checkbox-st-2" class="cr">Kepala Sekolah Wajib Upload Surat Tugas</label>
+												</div>
+											</div>
+											
+											
+											<div class="form-group" style="width: 70%;">
+												<label>Template Sertifikat Kepala Sekolah</label>
+												<select id="select-serticate" class="form-control" data-selected-sertificate="<?php print $kegiatan["sertificate_kepala_sekolah"]; ?>" name="sertificate_kepala_sekolah"></select>
+											</div>
+											
+										</div>
+										<div class="col-md-5">
+											<label>Link WA Grup Kepala Sekolah</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+													</div>
+													<input type="text" class="form-control" name="wa_grup_kepala_sekolah" value="<?php print $kegiatan["wa_grup_kepala_sekolah"]; ?>" />
+												</div>
+											</div>
+											
+											<label>Link Telegram Grup Kepala Sekolah</label>
+											<div class="form-group">
+												<div class="input-group input-group-sm">
+													<div class="input-group-prepend">
+														<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+													</div>
+													<input type="text" class="form-control" name="tele_grup_kepala_sekolah" value="<?php print $kegiatan["tele_grup_kepala_sekolah"]; ?>" />
+												</div>
+												<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+											</div>
+										</div>
 									</div>
-									<input type="text" class="form-control" name="wa_grup_kepala_sekolah" value="<?php print $kegiatan["wa_grup_kepala_sekolah"]; ?>" />
 								</div>
-							</div>
-							
-							<label>Link Telegram Grup Kepala Sekolah</label>
-							<div class="form-group">
-								<div class="input-group input-group-sm">
-									<div class="input-group-prepend">
-										<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+								<div class="tab-pane" id="dh-kepsek">
+									<div class="row">
+										DAFTAR HADIR
 									</div>
-									<input type="text" class="form-control" name="tele_grup_kepala_sekolah" value="<?php print $kegiatan["tele_grup_kepala_sekolah"]; ?>" />
 								</div>
-								<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+								<div class="tab-pane" id="spd-kepsek">
+									<div class="row">
+										SPD
+									</div>
+								</div>
+								<div class="tab-pane" id="sertifikat-kepsek">
+									<div class="row">
+										SERTIFIKAT
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1191,4 +1604,7 @@
 		</div>
 	<?php } ?>
 </div>
+<style type="text/css">
+	.nav-pills-keg .nav-item {margin-bottom: 10px;}
+</style>
 <div style="display: block;height: 15px;">&nbsp;</div>
