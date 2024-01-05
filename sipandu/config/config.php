@@ -29,6 +29,14 @@ $config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 
 $config['site_name'] = 'SILIK BALI';
 $config['site_description'] = 'Sistem Layanan Informasi Dan Konsultasi BGP Provinsi Bali';
 
+/**
+ * Migration database
+ */
+$config['migration_enabled'] = TRUE;
+$config['migration_type'] = 'sequential';
+$config['migration_auto_latest'] = TRUE; 
+$config['migration_path'] = APPPATH . 'migrations/';
+
 /*
 |--------------------------------------------------------------------------
 | Index File

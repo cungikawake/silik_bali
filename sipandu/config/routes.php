@@ -58,3 +58,12 @@ $route['translate_uri_dashes'] = FALSE;
 $route['admin'] = '/admin/dashboard/index';
 $route['admin/login'] = '/admin/user/login';
 $route['admin/logout'] = '/admin/user/logout';
+
+//master
+$route['master_komponen_kegiatan'] = 'master_komponen_kegiatan/index';
+$route['master_komponen_kegiatan/create'] = 'master_komponen_kegiatan/create';
+$route['master_komponen_kegiatan/edit/(:num)'] = 'master_komponen_kegiatan/edit/$1';
+$route['master_komponen_kegiatan/store'] = 'master_komponen_kegiatan/store';
+$route['master_komponen_kegiatan/update/(:num)'] = 'master_komponen_kegiatan/update/$1';
+$route['master_komponen_kegiatan/delete/(:num)'] = 'master_komponen_kegiatan/delete/$1';
+
