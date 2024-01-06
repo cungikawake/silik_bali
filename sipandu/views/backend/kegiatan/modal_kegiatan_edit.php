@@ -82,47 +82,41 @@
 						</div>
 					</div>
 					
-					<?php
-						if($_SESSION["user"]["id"] == "1"){
-					?>
-							<div class="row row-detail-tgl-kegiatan <?php print $hideDetailTgl; ?>">
-								<div class="col-md-6 group-detail-tgl-kegiatan">
-									<label>Tgl Kegiatan</label>
-									<?php
-										$tglDetail = array("");
-								
-										if (isset($detail_tgl_kegiatan) && !empty($detail_tgl_kegiatan)) {
-											$tglDetail = $detail_tgl_kegiatan;
-							
-											foreach ($tglDetail as $keyTglku => $tglDet) {
-												$tglKu = "";
+					<div class="row row-detail-tgl-kegiatan <?php print $hideDetailTgl; ?>">
+						<div class="col-md-6 group-detail-tgl-kegiatan">
+							<label>Tgl Kegiatan</label>
+							<?php
+								$tglDetail = array("");
+						
+								if (isset($detail_tgl_kegiatan) && !empty($detail_tgl_kegiatan)) {
+									$tglDetail = $detail_tgl_kegiatan;
+					
+									foreach ($tglDetail as $keyTglku => $tglDet) {
+										$tglKu = "";
 
-												if (!empty($tglDet)) {
-													$tglKu = date("d/m/Y", strtotime($tglDet));
-												}
-									?>
-												<div class="input-group form-detail-tgl-kegiatan">
-													<input type="text" name="detail_tgl_kegiatan[]" required class="form-control datepicker input-detail-tgl-kegiatan" value="<?php print $tglKu; ?>" />
-													<span class="input-group-text"><a href="javascript:;" title="Hapus Tgl Kegiatan" class="del-detail-tgl-kegiatan"><i class="fas fa-trash-alt"></i></a></span>
-												</div>
-									<?php
-											}
+										if (!empty($tglDet)) {
+											$tglKu = date("d/m/Y", strtotime($tglDet));
 										}
-									?>
-									
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<small>
-										<a href="javascript:;" class="detail-tgl-kegiatan <?php print $hideDefaultTgl; ?>">Detailkan Tanggal Kegiatan</a>
-										<a href="javascript:;" class="add-detail-tgl-kegiatan <?php print $hideDetailTgl; ?>">Tambah Tanggal Kegiatan</a>
-									</small>
-								</div>
-							</div>
-					<?php
-						}
-					?>
+							?>
+										<div class="input-group form-detail-tgl-kegiatan">
+											<input type="text" name="detail_tgl_kegiatan[]" required class="form-control datepicker input-detail-tgl-kegiatan" value="<?php print $tglKu; ?>" />
+											<span class="input-group-text"><a href="javascript:;" title="Hapus Tgl Kegiatan" class="del-detail-tgl-kegiatan"><i class="fas fa-trash-alt"></i></a></span>
+										</div>
+							<?php
+									}
+								}
+							?>
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<small>
+								<a href="javascript:;" class="detail-tgl-kegiatan <?php print $hideDefaultTgl; ?>">Detailkan Tanggal Kegiatan</a>
+								<a href="javascript:;" class="add-detail-tgl-kegiatan <?php print $hideDetailTgl; ?>">Tambah Tanggal Kegiatan</a>
+							</small>
+						</div>
+					</div>
 				</div>
 				
 				<?php

@@ -87,7 +87,7 @@
 			if ($kegiatan["tipe_kegiatan"] == "Daring") {
 		?>
 			<tr>
-				<td>Zoom Id</td>
+				<td>Meeting Id</td>
 				<td>: <?php print $kegiatan["zoom_id_kegiatan"]; ?></td>
 			</tr>
 		<?php
@@ -134,11 +134,6 @@
 				$date_sign = array();
 				foreach($date_range as $date) {
 					$dateFormated = $date->format('Y-m-d');
-					
-					if ($kegiatan["id"] == "733" && ($dateFormated == "2023-10-27" || $dateFormated == "2023-10-28" || $dateFormated == "2023-10-29")) {
-						continue;
-					}
-					
 					$date_sign[] = $dateFormated;
 				}
 

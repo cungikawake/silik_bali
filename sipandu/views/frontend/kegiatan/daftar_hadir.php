@@ -369,7 +369,7 @@
 								</div>
                             </div>
                             <div class="modal-footer" style="text-align: left;">
-                                <button type="submit" class="btn btn-info btn-modal-form-submit" disabled>DAFTAR</button>
+                                <button type="submit" class="btn btn-info btn-modal-form-submit" disabled>SIMPAN</button>
                             </div>
                         </form>
                     </div>
