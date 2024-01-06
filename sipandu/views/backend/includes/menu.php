@@ -248,6 +248,12 @@
 						<a href="<?php print base_url('/admin/biodata/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Biodata</span></a>
 					</li>
 				<?php } ?>
+
+				<?php if ($this->utility->hasUserAccess("komponen_kegiatan","list")) { ?>
+					<li class="nav-item <?php if ($url_1 == "komponen_kegiatan") print "active"; ?>">
+						<a href="<?php print base_url('/admin/komponen_kegiatan/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Komponen Kegiatan</span></a>
+					</li>
+				<?php } ?>
 			</ul>
 		</div>
 	</div>

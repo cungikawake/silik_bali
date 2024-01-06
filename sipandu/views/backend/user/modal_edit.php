@@ -28,7 +28,7 @@
 <?php
 	$access = (array) json_decode($akses);
 	$aksesVal = array();
-
+ 
 	if (!empty($access)) {
 		foreach ($access as $accessKey => $accessItems) {
 			$aksesVal[$accessKey] = array();

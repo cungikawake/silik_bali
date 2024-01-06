@@ -974,6 +974,12 @@ class Bootgrids extends CI_Controller {
 			else {
 				$value = '<i class="fas fa-check-square icon-grey" style="font-size:20px; margin-right:16px;" title="Tidak Hadir"></i>';
 			}
+		}elseif (isset($column->format) && $column->format == "status_active") {
+			if($value == 1){
+				$value = 'Aktif';
+			}else{
+				$value = 'Tidak Aktif';
+			}
 		}
 		
 		return $value;

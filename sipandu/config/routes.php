@@ -60,7 +60,7 @@ $route['admin/login'] = '/admin/user/login';
 $route['admin/logout'] = '/admin/user/logout';
 
 //master
-$route['master_komponen_kegiatan'] = 'master_komponen_kegiatan/index';
+$route['admin/komponen_kegiatan/'] = 'admin/master/komponen_kegiatan/index';
 $route['master_komponen_kegiatan/create'] = 'master_komponen_kegiatan/create';
 $route['master_komponen_kegiatan/edit/(:num)'] = 'master_komponen_kegiatan/edit/$1';
 $route['master_komponen_kegiatan/store'] = 'master_komponen_kegiatan/store';

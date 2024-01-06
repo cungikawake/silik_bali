@@ -132,7 +132,7 @@
 							"id" => "dibuat_tgl",
 							"field" => "dibuat_tgl",
 							"name" => "Dibuat Tgl",
-							"format" => "date",
+							"format" => "date", 
 							"date" => array(
 								"format" => "d/m/Y H:i a"
 							),

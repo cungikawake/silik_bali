@@ -1238,6 +1238,20 @@ $config["user_akses"] = array(
 			"name" => "Import Data Bank"
 		)
 	),
+	"komponen_kegiatan" => array(
+		"list" => array(
+			"value" => 0,
+			"name" => "List Komponen Kegiatan"
+		),
+		"add" => array(
+			"value" => 0,
+			"name" => "Add Komponen Kegiatan"
+		),
+		"edit" => array(
+			"value" => 0,
+			"name" => "Edit Komponen Kegiatan"
+		), 
+	),
 	"laporan" => array(
 		"list_penugasan" => array(
 			"value" => 0,
