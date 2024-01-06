@@ -877,6 +877,8 @@ class Kegiatan extends CI_Controller {
 
 					$this->utility->resize_image($dir."/".$name, 200);
 				}
+
+				$data["kegiatan"] = $kegiatan;
 				
 				$out["html"] = $this->load->view('frontend/kegiatan/kegiatan_daftar_hadir_berhasil', $data, true);
 			}

@@ -176,6 +176,8 @@
 				'margin_header' => 11,
 				'margin_footer' => 10
 			]);
+
+			$mpdf->curlAllowUnsafeSslRequests = true;
 			
 			//$mpdf->keep_table_proportions = true;
 			$mpdf->shrink_tables_to_fit = 1;
