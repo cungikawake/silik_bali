@@ -53,11 +53,13 @@ $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
 // Admin Page
 $route['admin'] = '/admin/dashboard/index';
 $route['admin/login'] = '/admin/user/login';
 $route['admin/logout'] = '/admin/user/logout';
+
+// Daftar Hadir
+$route['daftar_hadir_(:any)/(:num)/(:num)'] = 'kegiatan/daftar_hadir/$1/$2/$3';
 
 //master
 $route['admin/komponen_kegiatan/'] = 'admin/master/komponen_kegiatan/index';
