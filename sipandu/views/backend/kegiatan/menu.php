@@ -1,115 +1,96 @@
 <?php $url_2 = $this->uri->segment(3); ?>
 
+<?php
+	$komponen = array();
+
+	$komponen[] = array(
+		"id" => "1",
+		"name" => "Peserta",
+		"code" => "peserta",
+		"table_name" => "kegiatan_peserta"
+	);
+	$komponen[] = array(
+		"id" => "2",
+		"name" => "Panitia",
+		"code" => "panitia",
+		"table_name" => "kegiatan_panitia"
+	);
+	$komponen[] = array(
+		"id" => "3",
+		"name" => "Narasumber",
+		"code" => "narasumber",
+		"table_name" => "kegiatan_narasumber"
+	);
+	$komponen[] = array(
+		"id" => "4",
+		"name" => "Moderator",
+		"code" => "moderator",
+		"table_name" => "kegiatan_moderator"
+	);
+	$komponen[] = array(
+		"id" => "5",
+		"name" => "Instruktur",
+		"code" => "instruktur",
+		"table_name" => "kegiatan_instruktur"
+	);
+	$komponen[] = array(
+		"id" => "6",
+		"name" => "Fasilitator",
+		"code" => "fasilitator",
+		"table_name" => "kegiatan_fasilitator"
+	);
+	$komponen[] = array(
+		"id" => "7",
+		"name" => "Pengajar Praktik",
+		"code" => "pengajar_praktek",
+		"table_name" => "kegiatan_pengajar_praktek"
+	);
+	$komponen[] = array(
+		"id" => "7",
+		"name" => "Pengawas",
+		"code" => "pengawas",
+		"table_name" => "kegiatan_pengawas"
+	);
+	$komponen[] = array(
+		"id" => "87",
+		"name" => "Kepala Sekolah",
+		"code" => "kepala_sekolah",
+		"table_name" => "kegiatan_kepala_sekolah"
+	);
+?>
+
 <ul class="nav nav-pills nav-pills-perjadin nav-pills-keg" style="padding:15px 15px 5px;">
-	<?php if ($this->utility->hasUserAccess("peserta_kegiatan","list") && isset($kegiatan["komponen"]["peserta"]) && $kegiatan["komponen"]["peserta"] == "1") { ?>
-	<li class="nav-item">
-		<a class="nav-link <?php if ($url_2 == "peserta") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/peserta/".$kegiatan["id"]."/"); ?>">Peserta</a>
-	</li>
-	<?php } ?>
-
-	<?php if ($this->utility->hasUserAccess("narasumber_kegiatan","list") && isset($kegiatan["komponen"]["narasumber"]) && $kegiatan["komponen"]["narasumber"] == "1") { ?>
-	<li class="nav-item">
-		<a class="nav-link <?php if ($url_2 == "narasumber") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/narasumber/".$kegiatan["id"]."/"); ?>">Narasumber</a>
-	</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("moderator_kegiatan","list") && isset($kegiatan["komponen"]["moderator"]) && $kegiatan["komponen"]["moderator"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "moderator") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/moderator/".$kegiatan["id"]."/"); ?>">Moderator</a>
-		</li>
-	<?php } ?>	
-	
-	<?php if ($this->utility->hasUserAccess("panitia_kegiatan","list") && isset($kegiatan["komponen"]["panitia"]) && $kegiatan["komponen"]["panitia"] == "1") { ?>
-	<li class="nav-item">
-		<a class="nav-link <?php if ($url_2 == "panitia") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/panitia/".$kegiatan["id"]."/"); ?>">Panitia</a>
-	</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("instruktur_kegiatan","list") && isset($kegiatan["komponen"]["instruktur"]) && $kegiatan["komponen"]["instruktur"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "instruktur") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/instruktur/".$kegiatan["id"]."/"); ?>">Instruktur</a>
-		</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("pengajar_praktek_kegiatan","list") && isset($kegiatan["komponen"]["pengajar_praktek"]) && $kegiatan["komponen"]["pengajar_praktek"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "pengajar_praktek") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/pengajar_praktek/".$kegiatan["id"]."/"); ?>">Pengajar Praktek</a>
-		</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("fasilitator_kegiatan","list") && isset($kegiatan["komponen"]["fasilitator"]) && $kegiatan["komponen"]["fasilitator"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "fasilitator") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/fasilitator/".$kegiatan["id"]."/"); ?>">Fasilitator</a>
-		</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("pengawas_kegiatan","list") && isset($kegiatan["komponen"]["pengawas"]) && $kegiatan["komponen"]["pengawas"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "pengawas") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/pengawas/".$kegiatan["id"]."/"); ?>">Pengawas</a>
-		</li>
-	<?php } ?>
-	
-	<?php if ($this->utility->hasUserAccess("kepala_sekolah_kegiatan","list") && isset($kegiatan["komponen"]["kepala_sekolah"]) && $kegiatan["komponen"]["kepala_sekolah"] == "1") { ?>
-		<li class="nav-item">
-			<a class="nav-link <?php if ($url_2 == "kepala_sekolah") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/kepala_sekolah/".$kegiatan["id"]."/"); ?>">Kepala Sekolah</a>
-		</li>
-	<?php } ?>
-	
-	
-
-	<?php if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
-	<li class="nav-item">
-		<a class="nav-link <?php if ($url_2 == "data_dukung") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/data_dukung/".$kegiatan["id"]."/"); ?>">Data Dukung</a>
-	</li>
-	<?php } ?>
-	
 	<?php
 		$showMoreOpt = false;
 		$opt = "keg-more-opt-peserta";
-	
-		if ($url_2 == "peserta") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-peserta";
+
+		if (!empty($komponen)) {
+			foreach ($komponen as $kom) {
+				if (isset($kegiatan["komponen"][$kom["code"]]) && $kegiatan["komponen"][$kom["code"]] == "1") {
+			?>
+				<li class="nav-item">
+					<a class="nav-link <?php if ($url_2 == $kom["code"]) { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/".$kom["code"]."/".$kegiatan["id"]."/"); ?>"><?php print $kom["name"]; ?></a>
+				</li>
+			<?php
+				}
+
+				if ($url_2 == $kom["code"]) {
+					$showMoreOpt = true;
+					$opt = "keg-more-opt-".$kom["code"];
+				}
+			}
 		}
-		else if ($url_2 == "narasumber") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-narasumber";
-		}
-		else if ($url_2 == "panitia") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-panitia";
-		}
-		else if ($url_2 == "moderator") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-moderator";
-		}
-		else if ($url_2 == "pengajar_praktek") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-pp";
-		}
-		else if ($url_2 == "fasilitator") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-fasil";
-		}
-		else if ($url_2 == "instruktur") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-instruktur";
-		}
-		else if ($url_2 == "pengawas") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-pengawas";
-		}
-		else if ($url_2 == "kepala_sekolah") {
-			$showMoreOpt = true;
-			$opt = "keg-more-opt-kepala_sekolah";
-		}
-	
-		if ($showMoreOpt) {
 	?>
+
+	<?php /*if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
+	<li class="nav-item">
+		<a class="nav-link <?php if ($url_2 == "data_dukung") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/data_dukung/".$kegiatan["id"]."/"); ?>">Data Dukung</a>
+	</li>
+	<?php }*/ ?>
+	
+	<?php if ($showMoreOpt) { ?>
 		<li class="nav-more-opt"><a data-toggle="collapse" href="#<?php print $opt; ?>" role="button" aria-expanded="true" aria-controls="<?php print $opt; ?>"><i class="fas fa-angle-down"></i></a></li>
-	<?php
-		}
-	?>
+	<?php } ?>
 </ul>
 <style type="text/css">
 	.btn-edit-spd-link { padding: 6px 10px; margin: 0 0 4px; }
@@ -118,7 +99,273 @@
 </style>
 
 <div class="keg-more-opt">
-	<?php if ($url_2 == "peserta") { ?>
+	<?php
+		if (!empty($komponen)) {
+			foreach ($komponen as $kom) {
+				if ($url_2 == $kom["code"]) {
+					
+					$komKode = $kom["code"];
+
+					if ($komKode == "fasilitator") {
+						$komKode = "fasil";
+					}
+
+					if ($komKode == "pengajar_praktek") {
+						$komKode = "pp";
+					}
+				?>
+					<div id="keg-more-opt-<?php print $kom["code"]; ?>" class="collapse">
+						<div class="keg-opt-form">
+							<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
+								<input type="hidden" name="id" value="<?php print $kegiatan["id"]; ?>" />
+								<input type="hidden" name="form_show_bank_<?php print $komKode; ?>" value="0" />
+								<input type="hidden" name="form_show_confirm_paket_<?php print $komKode; ?>" value="0" />
+								<input type="hidden" name="form_ttd_<?php print $komKode; ?>" value="0" />
+								<input type="hidden" name="form_upload_surtug_<?php print $komKode; ?>" value="0" />
+								<input type="hidden" name="form_wajib_surtug_<?php print $komKode; ?>" value="0" />
+								<?php
+									$bank = '';
+									$paket = '';
+									$ttd = '';
+									$upSurtug = '';
+									$surtug = '';
+
+									if ($kegiatan["form_show_bank_".$komKode]) {
+										$bank = 'checked="checked"';
+									}
+
+									if ($kegiatan["form_show_confirm_paket_".$komKode]) {
+										$paket = 'checked="checked"';
+									}
+
+									if ($kegiatan["form_ttd_".$komKode]) {
+										$ttd = 'checked="checked"';
+									}
+												
+									if ($kegiatan["form_upload_surtug_".$komKode]) {
+										$upSurtug = 'checked="checked"';
+									}
+												
+									if ($kegiatan["form_wajib_surtug_".$komKode]) {
+										$surtug = 'checked="checked"';
+									}
+								?>
+								<div class="row">
+									
+									<div class="col-md-12">
+										<ul class="nav nav-tabs" role="tablist">
+											<li class="nav-item active">
+												<a class="nav-link" href="#form-<?php print $kom["code"];?>" data-toggle="tab">Form Pendaftaran</a>
+											</li>
+											
+											<?php
+												if ($kegiatan["tipe_kegiatan"] == "Daring") {
+											?>
+													<li class="nav-item">
+														<a class="nav-link" href="#dh-<?php print $kom["code"];?>" data-toggle="tab">Daftar Hadir</a>
+													</li>
+											<?php
+												}
+												else {
+											?>
+													<li class="nav-item">
+														<a class="nav-link" href="#spd-<?php print $kom["code"];?>" data-toggle="tab">Surat Perjalanan Dinas</a>
+													</li>
+											<?php
+												}
+											?>
+											<li class="nav-item">
+												<a class="nav-link" href="#sertifikat-<?php print $kom["code"];?>" data-toggle="tab">Sertifikat</a>
+											</li>
+										</ul>
+									</div>
+									
+									<div class="col-md-12">
+										<div class="tab-content">
+											<div class="tab-pane active" id="form-<?php print $komKode;?>">
+												<div class="row">
+													<div class="col-md-6">
+														<label>Form Pendaftaran <?php print $kom["name"];?></label>
+														<div class="form-group">
+															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+																<input type="checkbox" name="form_show_bank_<?php print $komKode;?>" id="checkbox-p-1" <?php print $bank; ?> value="1" />
+																<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
+															</div>
+															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+																<input type="checkbox" name="form_show_confirm_paket_<?php print $komKode;?>" id="checkbox-p-2" <?php print $paket; ?> value="1" />
+																<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
+															</div>
+															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+																<input type="checkbox" name="form_ttd_<?php print $komKode;?>" id="checkbox-p-x1" <?php print $ttd; ?> value="1" />
+																<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
+															</div>
+														</div>
+														<div class="form-group">
+															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+																<input type="checkbox" name="form_upload_surtug_<?php print $komKode;?>" id="checkbox-st-1" <?php print $upSurtug; ?> value="1" />
+																<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
+															</div>
+															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+																<input type="checkbox" name="form_wajib_surtug_<?php print $komKode;?>" id="checkbox-st-2" <?php print $surtug; ?> value="1" />
+																<label for="checkbox-st-2" class="cr">Peserta Wajib Upload Surat Tugas</label>
+															</div>
+														</div>
+														<label>Pengkelasan</label>
+														<div class="form-group">
+															<?php
+																$pengkelasan = "";
+																if (isset($kegiatan["kategori"][$komKode]) && !empty($kegiatan["kategori"][$komKode])) {
+																	$pengkelasan = $kegiatan["kategori"][$komKode];
+																}
+															?>
+															<textarea class="form-control" rows="4" name="kategori[<?php print $komKode;?>]"><?php print $pengkelasan; ?></textarea>
+															<small>Kosongkan jika tidak ada pengkelasan; Enter untuk tiap nama kelas.</small>
+														</div>
+														
+													</div>
+													<div class="col-md-5">
+														<label>Link WA Grup <?php print $kom["name"];?></label>
+														<div class="form-group">
+															<div class="input-group input-group-sm">
+																<div class="input-group-prepend">
+																	<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
+																</div>
+																<input type="text" class="form-control" name="wa_grup_<?php print $komKode;?>" value="<?php print $kegiatan["wa_grup_".$komKode]; ?>" />
+															</div>
+														</div>
+
+														<label>Link Telegram Grup <?php print $kom["name"];?></label>
+														<div class="form-group">
+															<div class="input-group input-group-sm">
+																<div class="input-group-prepend">
+																	<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
+																</div>
+																<input type="text" class="form-control" name="tele_grup_<?php print $komKode;?>" value="<?php print $kegiatan["tele_grup_".$komKode]; ?>" />
+															</div>
+															<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="dh-<?php print $kom["code"];?>">
+												<div class="row">
+													<div class="col-md-6">
+														<?php
+															if ($kegiatan["tipe_kegiatan"] == "Daring") {
+																$start_date = new DateTime($kegiatan["tgl_mulai_kegiatan"]);
+																$end_date = new DateTime($kegiatan["tgl_selesai_kegiatan"]);
+																$end_date->setTime(0,0,1);
+
+																// Step 2: Defining the Date Interval
+																$interval = new DateInterval('P1D');
+
+																// Step 3: Creating the Date Range
+																$date_range = new DatePeriod($start_date, $interval, $end_date);
+																
+																$date_sign = array();
+																foreach($date_range as $date) {
+																	$dateFormated = $date->format('Y-m-d');
+																	$date_sign[] = $dateFormated;
+																}
+
+																if (!empty($kegiatan["detail_tgl_kegiatan"])) {
+																	$date_sign = $kegiatan["detail_tgl_kegiatan"];
+																}
+
+																foreach ($date_sign as $tglDetail) {
+																	?>
+																		<div class="form-group">
+																			<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
+																			<input type="text" class="form-control" readonly value="<?php print base_url("daftar_hadir_".$kom["code"]."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+																		</div>
+																<?php
+																}
+															}
+														?>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="spd-<?php print $kom["code"];?>">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
+															<label>Nama Pejabat Tujuan Perjalanan Dinas</label>
+															<input type="text" class="form-control" name="spd_nama" value="<?php print $kegiatan["spd_nama"]; ?>" />
+														</div>
+														<div class="form-group">
+															<label>NIP Pejabat Tujuan Perjalanan Dinas</label>
+															<input type="text" class="form-control" name="spd_nip" value="<?php print $kegiatan["spd_nip"]; ?>" />
+														</div>
+														<div class="form-group">
+															<label>Jabatan Pejabat Tujuan Perjalanan Dinas</label>
+															<input type="text" class="form-control" name="spd_jabatan" value="<?php print $kegiatan["spd_jabatan"]; ?>" />
+														</div>
+														<div class="form-group">
+															<label>Nama Unit Kerja Pejabat Tujuan Perjalanan Dinas</label>
+															<input type="text" class="form-control" name="spd_satker" value="<?php print $kegiatan["spd_satker"]; ?>" />
+														</div>
+													</div>
+													<div class="col-md-6">
+														<label>Link SPD Peserta</label>
+														<div class="form-group">
+															<?php
+																if (!isset($kegiatan["link_spd_peserta"]) || (isset($kegiatan["link_spd_peserta"]) && empty($kegiatan["link_spd_peserta"]))) {
+																	$spdLink = base_url("/download/sppd_peserta/".$kegiatan["id"]);
+																}
+																else {
+																	$spdLink = $kegiatan["link_spd_peserta"];
+																}
+															?>
+															<input type="text" class="form-control input-edit-spd-link" value="<?php print $spdLink; ?>" readonly /> <!--<button type="button" class="btn btn-info btn-edit-spd-link" title="Edit SPD Link"><i class="fas fa-edit"></i></button>--><br />
+															<small>Link untuk download SPD apabila peserta perlu membawa SPD</small>
+														</div>
+														
+														<div class="alert alert-info">
+															<div><label>Informasi Data Kasubbag Umum BGP Provinsi Bali</label></div>
+															<div class="form-group mb-1">
+																<div>I Made Abdi Wismana, S.T., M.T</div>
+															</div>
+															<div class="form-group">
+																<div>NIP 197705032001121003</div>
+															</div>
+															<div class="form-group mb-1">
+																<div>Kasubbag Umum</div>
+															</div>
+															<div class="form-group mb-0">
+																<div>Balai Guru Penggerak Provinsi Bali</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane" id="sertifikat-<?php print $kom["code"];?>">
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group" style="width: 70%;">
+															<label>Template Sertifikat Peserta</label>
+															<select id="select-serticate" class="form-control" name="sertificate_<?php print $komKode;?>" data-selected-sertificate="<?php print $kegiatan["sertificate_".$komKode]; ?>"></select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6" style="margin-top: 15px;">
+										<button type="submit" class="btn btn-info">Simpan</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				<?php
+				}
+			}
+		}
+	?>
+
+	<?php /*if ($url_2 == "peserta") { ?>
 		<div id="keg-more-opt-peserta" class="collapse">
 			<div class="keg-opt-form">
 				<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
@@ -256,18 +503,35 @@
 									<div class="row">
 										<div class="col-md-6">
 											<?php
-												if (isset($kegiatan["detail_tgl_kegiatan"]) && !empty($kegiatan["detail_tgl_kegiatan"])) {
-													foreach ($kegiatan["detail_tgl_kegiatan"] as $tglDetail) {
-											?>
-													<div class="form-group">
-														<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
-														<input type="text" class="form-control" readonly value="<?php print base_url("kegiatan/daftar_hadir_peserta/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
-													</div>
-											<?php
-													}
-												}
-												else {
+												if ($kegiatan["tipe_kegiatan"] == "Daring") {
+													$start_date = new DateTime($kegiatan["tgl_mulai_kegiatan"]);
+													$end_date = new DateTime($kegiatan["tgl_selesai_kegiatan"]);
+													$end_date->setTime(0,0,1);
+
+													// Step 2: Defining the Date Interval
+													$interval = new DateInterval('P1D');
+
+													// Step 3: Creating the Date Range
+													$date_range = new DatePeriod($start_date, $interval, $end_date);
 													
+													$date_sign = array();
+													foreach($date_range as $date) {
+														$dateFormated = $date->format('Y-m-d');
+														$date_sign[] = $dateFormated;
+													}
+
+													if (!empty($kegiatan["detail_tgl_kegiatan"])) {
+														$date_sign = $kegiatan["detail_tgl_kegiatan"];
+													}
+
+													foreach ($date_sign as $tglDetail) {
+														?>
+															<div class="form-group">
+																<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
+																<input type="text" class="form-control" readonly value="<?php print base_url("daftar_hadir/peserta/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+															</div>
+													<?php
+													}
 												}
 											?>
 										</div>
@@ -480,7 +744,40 @@
 								</div>
 								<div class="tab-pane" id="dh-panitia">
 									<div class="row">
-										DAFTAR HADIR
+										<div class="col-md-6">
+											<?php
+												if ($kegiatan["tipe_kegiatan"] == "Daring") {
+													$start_date = new DateTime($kegiatan["tgl_mulai_kegiatan"]);
+													$end_date = new DateTime($kegiatan["tgl_selesai_kegiatan"]);
+													$end_date->setTime(0,0,1);
+
+													// Step 2: Defining the Date Interval
+													$interval = new DateInterval('P1D');
+
+													// Step 3: Creating the Date Range
+													$date_range = new DatePeriod($start_date, $interval, $end_date);
+													
+													$date_sign = array();
+													foreach($date_range as $date) {
+														$dateFormated = $date->format('Y-m-d');
+														$date_sign[] = $dateFormated;
+													}
+
+													if (!empty($kegiatan["detail_tgl_kegiatan"])) {
+														$date_sign = $kegiatan["detail_tgl_kegiatan"];
+													}
+
+													foreach ($date_sign as $tglDetail) {
+														?>
+															<div class="form-group">
+																<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
+																<input type="text" class="form-control" readonly value="<?php print base_url("kegiatan/daftar_hadir/panitia/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+															</div>
+													<?php
+													}
+												}
+											?>
+										</div>
 									</div>
 								</div>
 								<div class="tab-pane" id="spd-panitia">
@@ -818,7 +1115,7 @@
 			</div>
 		</div>
 	<?php } else if ($url_2 == "pengajar_praktek") { ?>
-		<div id="keg-more-opt-pp" class="collapse">
+		<div id="keg-more-opt-pengajar_praktek" class="collapse">
 			<div class="keg-opt-form">
 				<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
 					<input type="hidden" name="id" value="<?php print $kegiatan["id"]; ?>" />
@@ -975,7 +1272,7 @@
 			</div>
 		</div>
 	<?php } else if ($url_2 == "fasilitator") { ?>
-		<div id="keg-more-opt-fasil" class="collapse">
+		<div id="keg-more-opt-fasilitator" class="collapse">
 			<div class="keg-opt-form">
 				<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
 					<input type="hidden" name="id" value="<?php print $kegiatan["id"]; ?>" />
@@ -1602,7 +1899,7 @@
 				</form>
 			</div>
 		</div>
-	<?php } ?>
+	<?php } */?>
 </div>
 <style type="text/css">
 	.nav-pills-keg .nav-item {margin-bottom: 10px;}
