@@ -243,25 +243,39 @@
 						"visible" => "false"
 					);
 				
-					if($_SESSION["user"]["id"] == "1"){
-						if ($kegiatan["tipe_kegiatan"] == "Daring") {
-							if (!empty($kegiatan["detail_tgl_kegiatan"])) {
-								if (!empty($kegiatan["detail_tgl_kegiatan"])) {
-									foreach ($kegiatan["detail_tgl_kegiatan"] as $df) {
-										$columns[] = array(
-											"id" => "daftar_hadir_".$df,
-											"field" => "golongan",
-											"name" => "Hadir ".$this->utility->formatDateShortMonthIndo($df),
-											"class" => "text-center",
-											"format" => "checklistHadir"
-										);
-									}
-								}
-							}
-							else {
-								print $this->utility->formatRangeDate($kegiatan["tgl_mulai_kegiatan"], $kegiatan["tgl_selesai_kegiatan"]);
+					if ($kegiatan["tipe_kegiatan"] == "Daring") {
+						$start_date = new DateTime($kegiatan["tgl_mulai_kegiatan"]);
+						$end_date = new DateTime($kegiatan["tgl_selesai_kegiatan"]);
+						$end_date->setTime(0,0,1);
+
+						// Step 2: Defining the Date Interval
+						$interval = new DateInterval('P1D');
+
+						// Step 3: Creating the Date Range
+						$date_range = new DatePeriod($start_date, $interval, $end_date);
+						
+						$date_sign = array();
+						foreach($date_range as $date) {
+							$dateFormated = $date->format('Y-m-d');
+							$date_sign[] = $dateFormated;
+						}
+
+						if (!empty($kegiatan["detail_tgl_kegiatan"])) {
+							$date_sign = $kegiatan["detail_tgl_kegiatan"];
+						}
+
+						if (!empty($date_sign)) {
+							foreach ($date_sign as $df) {
+								$columns[] = array(
+									"id" => "daftar_hadir_".$df,
+									"field" => "daftar_hadir",
+									"name" => "Hadir ".$this->utility->formatDateShortMonthIndo($df),
+									"class" => "text-center",
+									"format" => "checklistHadir"
+								);
 							}
 						}
+						
 					}
 
 					$columns[] = array(
@@ -365,6 +379,7 @@
 		<!-- [ Main Content ] end -->
 	</div>
 </div>
+
 <div id="modal-perjadin-nomnatif"></div>
 
 <?php $this->load->view("backend/includes/footer"); ?>

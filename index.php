@@ -68,11 +68,11 @@ switch (ENVIRONMENT)
 	case 'development':
 		//error_reporting(-1);
 		//ini_set('display_errors', 1);
-		if($_SERVER["REMOTE_ADDR"]=='180.249.185.191'){
-			error_reporting(-1);
-			ini_set('display_errors', 1);
-		}
-		ini_set('display_errors', 0);
+		// if($_SERVER["REMOTE_ADDR"]=='180.249.185.191'){
+		// 	error_reporting(-1);
+		// 	ini_set('display_errors', 1);
+		// }
+		ini_set('display_errors', 1);
 	break;
 
 	case 'testing':

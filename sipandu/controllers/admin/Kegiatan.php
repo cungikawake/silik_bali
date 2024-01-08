@@ -1102,7 +1102,7 @@ class Kegiatan extends CI_Controller {
 		$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
 		
 		if ($type == "peserta") {
-			$data["biodata"] = $this->peserta_model->getPesertaKegiatan($kegiatanId, true);	
+			$data["biodata"] = $this->peserta_model->getPesertaKegiatan($kegiatanId);	
 		}
 		else if ($type == "narasumber") {
 			$data["biodata"] = $this->narasumber_model->getNarasumberKegiatan($kegiatanId);	

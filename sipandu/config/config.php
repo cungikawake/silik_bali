@@ -29,6 +29,14 @@ $config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 
 $config['site_name'] = 'SILIK BALI';
 $config['site_description'] = 'Sistem Layanan Informasi Dan Konsultasi BGP Provinsi Bali';
 
+/**
+ * Migration database
+ */
+$config['migration_enabled'] = TRUE;
+$config['migration_type'] = 'sequential';
+$config['migration_auto_latest'] = TRUE; 
+$config['migration_path'] = APPPATH . 'migrations/';
+
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -381,13 +389,14 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
+
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
-$config['sess_match_ip'] = FALSE;
+$config['sess_save_path'] = sys_get_temp_dir();
+$config['sess_match_ip'] = TRUE;
 $config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
+$config['sess_regenerate_destroy'] = FALSE; 
 
 /*
 |--------------------------------------------------------------------------
@@ -1229,6 +1238,20 @@ $config["user_akses"] = array(
 			"name" => "Import Data Bank"
 		)
 	),
+	"komponen_kegiatan" => array(
+		"list" => array(
+			"value" => 0,
+			"name" => "List Komponen Kegiatan"
+		),
+		"add" => array(
+			"value" => 0,
+			"name" => "Add Komponen Kegiatan"
+		),
+		"edit" => array(
+			"value" => 0,
+			"name" => "Edit Komponen Kegiatan"
+		), 
+	),
 	"laporan" => array(
 		"list_penugasan" => array(
 			"value" => 0,
@@ -1274,7 +1297,9 @@ $config["unsur_satuan"] = array(
 	"Kemenag" => array("kemenag", "kementerian agama", "krmenterian agama")
 );
 
-$config["tahun_anggaran"] = array(
-	"2022" => "2022",
-	"2023" => "2023"
-);
+// Automatic Year
+$yearNow = date("Y");
+
+foreach (range(2022, $yearNow) as $confYear) {
+	$config["tahun_anggaran"][] = $confYear;
+}

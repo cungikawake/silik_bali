@@ -691,7 +691,7 @@ class Kegiatan extends CI_Controller {
 		exit();
 	}
 	
-	public function form_daftar_hadir ($type = "Peserta", $idKegiatan, $tglKegiatan) {
+	public function form_daftar_hadir ($type = "peserta", $idKegiatan, $tglKegiatan) {
 		$data = array();
 		$data["type"] = $type;
 		$data["tgl_daftar_hadir"] = date("Y-m-d", $tglKegiatan);
@@ -719,8 +719,8 @@ class Kegiatan extends CI_Controller {
 		}
 	}
 	
-	public function daftar_hadir_peserta ($idKegiatan, $tglKegiatan) {
-		$this->form_daftar_hadir("Peserta", $idKegiatan, $tglKegiatan);
+	public function daftar_hadir ($komponen, $idKegiatan, $tglKegiatan) {
+		$this->form_daftar_hadir($komponen, $idKegiatan, $tglKegiatan);
 	}
 	
 	public function getItemKegiatan () {
@@ -733,29 +733,29 @@ class Kegiatan extends CI_Controller {
 			
 			$biodata = array();
 			
-			if ($type == "Narasumber") {
-				$data["narasumber"] = $registered;
+			if ($type == "narasumber") {
+				$biodata = $this->narasumber_model->getNarasumber($kegiatan, $nik);
 			}
-			else if ($type == "Panitia") {
-				$data["panitia"] = $registered;
+			else if ($type == "panitia") {
+				$biodata = $this->panitia_model->getPanitia($kegiatan, $nik);
 			}
-			else if ($type == "Moderator") {
-				$data["moderator"] = $registered;
+			else if ($type == "moderator") {
+				$biodata = $this->moderator_model->get($kegiatan, $nik);
 			}
-			else if ($type == "Pengajar Praktek") {
-				$data["pp"] = $registered;
+			else if ($type == "pengajar_praktik") {
+				$biodata = $this->pengajar_praktek_model->get($kegiatan, $nik);
 			}
-			else if ($type == "Fasilitator") {
-				$data["fasil"] = $registered;
+			else if ($type == "fasilitator") {
+				$biodata = $this->fasilitator_model->get($kegiatan, $nik);
 			}
-			else if ($type == "Instruktur") {
-				$data["instruktur"] = $registered;
+			else if ($type == "instruktur") {
+				$biodata = $this->instruktur_model->get($kegiatan, $nik);
 			}
-			else if ($type == "Pengawas") {
-				$data["pengawas"] = $registered;
+			else if ($type == "pengawas") {
+				$biodata = $this->pengawas_model->get($kegiatan, $nik);
 			}
-			else if ($type == "Kepala Sekolah") {
-				$data["kepala_sekolah"] = $registered;
+			else if ($type == "kepala_sekolah") {
+				$biodata = $this->kepala_sekolah_model->get($kegiatan, $nik);
 			}
 			else {
 				$biodata = $this->peserta_model->getPeserta($kegiatan, $nik);
@@ -782,29 +782,30 @@ class Kegiatan extends CI_Controller {
 			
 			if (!empty($kegiatan)) {
 				$data = $_POST;
+				$type = $_POST["type"];
 				
-				if ($type == "Narasumber") {
+				if ($type == "narasumber") {
 					$registered = $this->narasumber_model->getNarasumber($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Panitia") {
+				else if ($type == "panitia") {
 					$registered = $this->panitia_model->getPanitia($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Moderator") {
+				else if ($type == "moderator") {
 					$registered = $this->moderator_model->get($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Pengajar Praktek") {
+				else if ($type == "pengajar_praktik") {
 					$registered = $this->pengajar_praktek_model->get($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Fasilitator") {
+				else if ($type == "fasilitator") {
 					$registered = $this->fasilitator_model->get($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Instruktur") {
+				else if ($type == "instruktur") {
 					$registered = $this->instruktur_model->get($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Pengawas") {
+				else if ($type == "pengawas") {
 					$registered = $this->pengawas_model->get($kegiatanId, $data["nik"]);
 				}
-				else if ($type == "Kepala Sekolah") {
+				else if ($type == "kepala_sekolah") {
 					$registered = $this->kepala_sekolah_model->get($kegiatanId, $data["nik"]);
 				}
 				else {
@@ -827,28 +828,28 @@ class Kegiatan extends CI_Controller {
 					
 					$update["daftar_hadir"] = json_encode($update["daftar_hadir"]);
 					
-					if ($type == "Narasumber") {
+					if ($type == "narasumber") {
 						$id = $this->narasumber_model->save($update, $id);
 					}
-					else if ($type == "Panitia") {
+					else if ($type == "panitia") {
 						$id = $this->panitia_model->save($update, $id);
 					}
-					else if ($type == "Moderator") {
+					else if ($type == "moderator") {
 						$id = $this->moderator_model->save($update, $id);
 					}
-					else if ($type == "Pengajar Praktek") {
+					else if ($type == "pengajar_praktik") {
 						$id = $this->pengajar_praktek_model->save($update, $id);
 					}
-					else if ($type == "Fasilitator") {
+					else if ($type == "fasilitator") {
 						$id = $this->fasilitator_model->save($update, $id);
 					}
-					else if ($type == "Instruktur") {
+					else if ($type == "instruktur") {
 						$id = $this->instruktur_model->save($update, $id);
 					}
-					else if ($type == "Pengawas") {
+					else if ($type == "pengawas") {
 						$id = $this->pengawas_model->save($update, $id);
 					}
-					else if ($type == "Kepala Sekolah") {
+					else if ($type == "kepala_sekolah") {
 						$id = $this->kepala_sekolah_model->save($update, $id);
 					}
 					else {
@@ -876,6 +877,8 @@ class Kegiatan extends CI_Controller {
 
 					$this->utility->resize_image($dir."/".$name, 200);
 				}
+
+				$data["kegiatan"] = $kegiatan;
 				
 				$out["html"] = $this->load->view('frontend/kegiatan/kegiatan_daftar_hadir_berhasil', $data, true);
 			}

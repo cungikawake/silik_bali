@@ -28,6 +28,10 @@
 		$showTtd = true;
 	}
 
+	if ($kegiatan["tipe_kegiatan"] == "Daring") {
+		$showTtd = true;
+	}
+
 	$typeTitle = $type;
 
 	if ($type == "pengajar_praktek") {
@@ -83,7 +87,7 @@
 			if ($kegiatan["tipe_kegiatan"] == "Daring") {
 		?>
 			<tr>
-				<td>Zoom Id</td>
+				<td>Meeting Id</td>
 				<td>: <?php print $kegiatan["zoom_id_kegiatan"]; ?></td>
 			</tr>
 		<?php
@@ -130,12 +134,11 @@
 				$date_sign = array();
 				foreach($date_range as $date) {
 					$dateFormated = $date->format('Y-m-d');
-					
-					if ($kegiatan["id"] == "733" && ($dateFormated == "2023-10-27" || $dateFormated == "2023-10-28" || $dateFormated == "2023-10-29")) {
-						continue;
-					}
-					
 					$date_sign[] = $dateFormated;
+				}
+
+				if (!empty($kegiatan["detail_tgl_kegiatan"])) {
+					$date_sign = $kegiatan["detail_tgl_kegiatan"];
 				}
 		?>
 				<tr>
@@ -264,9 +267,15 @@
 										else {
 											$ttd = "assets/ttd/".$kegiatan["kode"]."/ttd-".$bio["kode"].".png";
 										}
+										
+										// Kegiatan Daring
+										if (!empty($bio["daftar_hadir"])) {
+											$isiDaftarHadir = json_decode($bio["daftar_hadir"], true);
 
-										if (!file_exists(APPPATH."../".$ttd)) {
-											$ttd = "assets/ttd/".$kegiatan["kode"]."/ttd-".$bio["kode"].".png";
+											if (isset($isiDaftarHadir[$date]) && $isiDaftarHadir[$date] == 1) {
+												$tglDaftarHadirPath = date("d_m_Y", strtotime($date));
+												$ttd = "assets/ttd/".$kegiatan["kode"]."/".$tglDaftarHadirPath."/ttd-".$bio["ktp"].".png";
+											}
 										}
 
 										if ($showTtd) {
@@ -275,7 +284,7 @@
 											<img src="<?php print base_url($ttd); ?>" height="40px" />
 									<?php
 											}
-											else {
+											else if (!empty($bio["tanda_tangan"])) {
 									?>
 											<img src="<?php print $bio["tanda_tangan"]; ?>" height="40px" />
 									<?php

@@ -36,7 +36,7 @@
 			$this->client->setAccessType('offline');
 			$this->client->setApprovalPrompt('force');
 			
-			$this->setClient();
+			//$this->setClient();
 		}
 		
 		public function authUrl() {
