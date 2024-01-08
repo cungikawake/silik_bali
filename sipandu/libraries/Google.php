@@ -23,7 +23,8 @@
 			
 			if (isset($_SESSION["user"]) && !empty($_SESSION["user"])) {
 				// Scopes for admin
-				$this->client->setScopes(array("https://www.googleapis.com/auth/drive", "email"));https://www.googleapis.com/auth/calendar
+				$this->client->setScopes(array("https://www.googleapis.com/auth/drive", "email"));
+				//https://www.googleapis.com/auth/calendar
 				$this->client->setRedirectUri("https://bgpbali.id/admin/user/oAuth2");
 			}
 			else {
