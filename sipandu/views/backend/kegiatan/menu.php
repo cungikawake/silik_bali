@@ -1,82 +1,23 @@
-<?php $url_2 = $this->uri->segment(3); ?>
-
-<?php
-	$komponen = array();
-
-	$komponen[] = array(
-		"id" => "1",
-		"name" => "Peserta",
-		"code" => "peserta",
-		"table_name" => "kegiatan_peserta"
-	);
-	$komponen[] = array(
-		"id" => "2",
-		"name" => "Panitia",
-		"code" => "panitia",
-		"table_name" => "kegiatan_panitia"
-	);
-	$komponen[] = array(
-		"id" => "3",
-		"name" => "Narasumber",
-		"code" => "narasumber",
-		"table_name" => "kegiatan_narasumber"
-	);
-	$komponen[] = array(
-		"id" => "4",
-		"name" => "Moderator",
-		"code" => "moderator",
-		"table_name" => "kegiatan_moderator"
-	);
-	$komponen[] = array(
-		"id" => "5",
-		"name" => "Instruktur",
-		"code" => "instruktur",
-		"table_name" => "kegiatan_instruktur"
-	);
-	$komponen[] = array(
-		"id" => "6",
-		"name" => "Fasilitator",
-		"code" => "fasilitator",
-		"table_name" => "kegiatan_fasilitator"
-	);
-	$komponen[] = array(
-		"id" => "7",
-		"name" => "Pengajar Praktik",
-		"code" => "pengajar_praktek",
-		"table_name" => "kegiatan_pengajar_praktek"
-	);
-	$komponen[] = array(
-		"id" => "7",
-		"name" => "Pengawas",
-		"code" => "pengawas",
-		"table_name" => "kegiatan_pengawas"
-	);
-	$komponen[] = array(
-		"id" => "87",
-		"name" => "Kepala Sekolah",
-		"code" => "kepala_sekolah",
-		"table_name" => "kegiatan_kepala_sekolah"
-	);
-?>
+<?php $url_2 = $this->uri->segment(4); ?>
 
 <ul class="nav nav-pills nav-pills-perjadin nav-pills-keg" style="padding:15px 15px 5px;">
 	<?php
 		$showMoreOpt = false;
 		$opt = "keg-more-opt-peserta";
 
-		if (!empty($komponen)) {
-			foreach ($komponen as $kom) {
-				if (isset($kegiatan["komponen"][$kom["code"]]) && $kegiatan["komponen"][$kom["code"]] == "1") {
+		if (!empty($opsi_komponen)) {
+			foreach ($opsi_komponen as $kom) {
+				if (isset($kegiatan["komponen"][$kom->code]) && $kegiatan["komponen"][$kom->code] == "1") {
 			?>
 				<li class="nav-item">
-					<a class="nav-link <?php if ($url_2 == $kom["code"]) { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/".$kom["code"]."/".$kegiatan["id"]."/"); ?>"><?php print $kom["name"]; ?></a>
+					<a class="nav-link <?php if ($url_2 == $kom->code) { print "active"; } ?>" href="<?php print base_url("admin/item/".$kegiatan["id"]."/".$kom->code."/"); ?>"><?php print $kom->name; ?></a>
 				</li>
 			<?php
 				}
 
-				if ($url_2 == $kom["code"]) {
+				if ($url_2 == $kom->code) {
 					$showMoreOpt = true;
-					$opt = "keg-more-opt-".$kom["code"];
+					$opt = "keg-more-opt-".$kom->code;
 				}
 			}
 		}
@@ -100,11 +41,11 @@
 
 <div class="keg-more-opt">
 	<?php
-		if (!empty($komponen)) {
-			foreach ($komponen as $kom) {
-				if ($url_2 == $kom["code"]) {
+		if (!empty($opsi_komponen)) {
+			foreach ($opsi_komponen as $kom) {
+				if ($url_2 == $kom->code) {
 					
-					$komKode = $kom["code"];
+					$komKode = $kom->code;
 
 					if ($komKode == "fasilitator") {
 						$komKode = "fasil";
@@ -114,7 +55,7 @@
 						$komKode = "pp";
 					}
 				?>
-					<div id="keg-more-opt-<?php print $kom["code"]; ?>" class="collapse">
+					<div id="keg-more-opt-<?php print $kom->code; ?>" class="collapse">
 						<div class="keg-opt-form">
 							<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
 								<input type="hidden" name="id" value="<?php print $kegiatan["id"]; ?>" />
@@ -155,27 +96,27 @@
 									<div class="col-md-12">
 										<ul class="nav nav-tabs" role="tablist">
 											<li class="nav-item active">
-												<a class="nav-link" href="#form-<?php print $kom["code"];?>" data-toggle="tab">Form Pendaftaran</a>
+												<a class="nav-link" href="#form-<?php print $kom->code;?>" data-toggle="tab">Form Pendaftaran</a>
 											</li>
 											
 											<?php
 												if ($kegiatan["tipe_kegiatan"] == "Daring") {
 											?>
 													<li class="nav-item">
-														<a class="nav-link" href="#dh-<?php print $kom["code"];?>" data-toggle="tab">Daftar Hadir</a>
+														<a class="nav-link" href="#dh-<?php print $kom->code;?>" data-toggle="tab">Daftar Hadir</a>
 													</li>
 											<?php
 												}
 												else {
 											?>
 													<li class="nav-item">
-														<a class="nav-link" href="#spd-<?php print $kom["code"];?>" data-toggle="tab">Surat Perjalanan Dinas</a>
+														<a class="nav-link" href="#spd-<?php print $kom->code;?>" data-toggle="tab">Surat Perjalanan Dinas</a>
 													</li>
 											<?php
 												}
 											?>
 											<li class="nav-item">
-												<a class="nav-link" href="#sertifikat-<?php print $kom["code"];?>" data-toggle="tab">Sertifikat</a>
+												<a class="nav-link" href="#sertifikat-<?php print $kom->code;?>" data-toggle="tab">Sertifikat</a>
 											</li>
 										</ul>
 									</div>
@@ -185,7 +126,7 @@
 											<div class="tab-pane active" id="form-<?php print $komKode;?>">
 												<div class="row">
 													<div class="col-md-6">
-														<label>Form Pendaftaran <?php print $kom["name"];?></label>
+														<label>Form Pendaftaran <?php print $kom->name;?></label>
 														<div class="form-group">
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="form_show_bank_<?php print $komKode;?>" id="checkbox-p-1" <?php print $bank; ?> value="1" />
@@ -224,7 +165,7 @@
 														
 													</div>
 													<div class="col-md-5">
-														<label>Link WA Grup <?php print $kom["name"];?></label>
+														<label>Link WA Grup <?php print $kom->name;?></label>
 														<div class="form-group">
 															<div class="input-group input-group-sm">
 																<div class="input-group-prepend">
@@ -234,7 +175,7 @@
 															</div>
 														</div>
 
-														<label>Link Telegram Grup <?php print $kom["name"];?></label>
+														<label>Link Telegram Grup <?php print $kom->name;?></label>
 														<div class="form-group">
 															<div class="input-group input-group-sm">
 																<div class="input-group-prepend">
@@ -247,7 +188,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="tab-pane" id="dh-<?php print $kom["code"];?>">
+											<div class="tab-pane" id="dh-<?php print $kom->code;?>">
 												<div class="row">
 													<div class="col-md-6">
 														<?php
@@ -276,7 +217,7 @@
 																	?>
 																		<div class="form-group">
 																			<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
-																			<input type="text" class="form-control" readonly value="<?php print base_url("daftar_hadir_".$kom["code"]."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+																			<input type="text" class="form-control" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
 																		</div>
 																<?php
 																}
@@ -285,7 +226,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="tab-pane" id="spd-<?php print $kom["code"];?>">
+											<div class="tab-pane" id="spd-<?php print $kom->code;?>">
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
@@ -338,7 +279,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="tab-pane" id="sertifikat-<?php print $kom["code"];?>">
+											<div class="tab-pane" id="sertifikat-<?php print $kom->code;?>">
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group" style="width: 70%;">

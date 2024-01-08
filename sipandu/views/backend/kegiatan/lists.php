@@ -58,8 +58,8 @@
 							"visible" => "true"
 						);
 					
-						$linkKeg = "";
-						if ($this->utility->hasUserAccess("peserta_kegiatan","list")) {
+						$linkKeg = "/admin/item/{{id}}/peserta";
+						/*if ($this->utility->hasUserAccess("peserta_kegiatan","list")) {
 							$linkKeg = "/admin/kegiatan/peserta/{{id}}/";
 						}
 						else if ($this->utility->hasUserAccess("narasumber_kegiatan","list")) {
@@ -70,7 +70,7 @@
 						}
 						else if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) {
 							$linkKeg = "/admin/kegiatan/data_dukung/{{id}}/";	
-						}
+						}*/
 					
 						if (!empty($linkKeg)) {
 							$columns[] = array(

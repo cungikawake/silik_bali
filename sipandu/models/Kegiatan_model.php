@@ -4,6 +4,10 @@ class Kegiatan_model extends CI_Model{
     function __construct() {
 		
     }
+
+	public function get_all() {
+        return $this->db->get('kegiatan')->result();
+    }
 	
 	public function countKegiatan () {
 		$this->db->where("YEAR(tgl_selesai_kegiatan)", $_SESSION["tahun_anggaran"]);

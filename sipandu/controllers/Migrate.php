@@ -18,4 +18,75 @@ class Migrate extends CI_Controller {
         }
     }
 
+    public function kegiatan_options () {
+        $this->load->model("kegiatan_model");
+        $kegiatan = $this->kegiatan_model->get_all();
+
+        $komponen = array(
+            "peserta", "panitia", "narasumber", "moderator", "instruktur", "fasil", "pp", "pengawas", "kepala_sekolah"
+        );
+
+        foreach ($kegiatan as $out) {
+            $out = (array) $out;
+
+            
+            if (isset($out["link_peserta"]) && !empty($out["link_peserta"])) {
+                $out["link_peserta"] = (array) json_decode($out["link_peserta"]);
+            }
+            
+            if (isset($out["link_narasumber"]) && !empty($out["link_narasumber"])) {
+                $out["link_narasumber"] = (array) json_decode($out["link_narasumber"]);
+            }
+            
+            if (isset($out["link_panitia"]) && !empty($out["link_panitia"])) {
+                $out["link_panitia"] = (array) json_decode($out["link_panitia"]);
+            }
+            
+            if (isset($out["link_moderator"]) && !empty($out["link_moderator"])) {
+                $out["link_moderator"] = (array) json_decode($out["link_moderator"]);
+            }
+            
+            if (isset($out["link_pp"]) && !empty($out["link_pp"])) {
+                $out["link_pp"] = (array) json_decode($out["link_pp"]);
+            }
+            
+            if (isset($out["link_fasil"]) && !empty($out["link_fasil"])) {
+                $out["link_fasil"] = (array) json_decode($out["link_fasil"]);
+            }
+            
+            if (isset($out["link_instruktur"]) && !empty($out["link_instruktur"])) {
+                $out["link_instruktur"] = (array) json_decode($out["link_instruktur"]);
+            }
+            
+            if (isset($out["link_pengawas"]) && !empty($out["link_pengawas"])) {
+                $out["link_pengawas"] = (array) json_decode($out["link_pengawas"]);
+            }
+            
+            if (isset($out["link_kepala_sekolah"]) && !empty($out["link_kepala_sekolah"])) {
+                $out["link_kepala_sekolah"] = (array) json_decode($out["link_kepala_sekolah"]);
+            }
+            
+            if (isset($out["detail_tgl_kegiatan"]) && !empty($out["detail_tgl_kegiatan"])) {
+                $out["detail_tgl_kegiatan"] = (array) json_decode($out["detail_tgl_kegiatan"]);
+            }
+            
+            if (isset($out["komponen"]) && !empty($out["komponen"])) {
+                $out["komponen"] = (array) json_decode($out["komponen"]);
+            }
+            
+            if (isset($out["kategori"]) && !empty($out["kategori"])) {
+                $out["kategori"] = (array) json_decode($out["kategori"]);
+            }
+
+            if (isset($out["no_urut_terakhir"]) && !empty($out["no_urut_terakhir"])) {
+                $out["no_urut_terakhir"] = (array) json_decode($out["no_urut_terakhir"]);
+            }
+
+            $options = array();
+
+            foreach ($komponen as $kom) {
+                $options["link_".$kom] = $out["link_".$kom];
+            }
+        }
+    }
 }

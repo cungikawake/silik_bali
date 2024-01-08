@@ -164,73 +164,37 @@
 						</div>
 					</div>
 				</div>
-				<?php
-					$kom = array(
-						"peserta" => 1,
-						"narasumber" => 1,
-						"moderator" => 1,
-						"panitia" => 1
-					);
-				
-					if (isset($komponen) && !empty($komponen)) {
-						$kom = json_decode($komponen, true);
-					}
-				?>
 				<div class="form-group">
+					<?php
+						$kom = array(
+							"peserta" => 1,
+							"narasumber" => 1,
+							"moderator" => 1,
+							"panitia" => 1
+						);
+					
+						if (isset($komponen) && !empty($komponen)) {
+							$kom = json_decode($komponen, true);
+						}
+					?>
 					<label>Komponen Yang Terlibat Pada Kegiatan</label>
 					<div style="border: 1px solid #ccc; border-radius:4px; padding: 5px 10px 8px; background: #f4f7fa;">
 						<div class="row">
-							<div class="col-md-4">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[peserta]" value="0" />
-									<input type="checkbox" name="komponen[peserta]" id="komp-p-1" value="1" <?php print isset($kom["peserta"]) && $kom["peserta"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-1" class="cr">Peserta</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[narasumber]" value="0" />
-									<input type="checkbox" name="komponen[narasumber]" id="komp-p-2" value="1" <?php print isset($kom["narasumber"]) && $kom["narasumber"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-2" class="cr">Narasumber</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[moderator]" value="0" />
-									<input type="checkbox" name="komponen[moderator]" id="komp-p-3" value="1" <?php print isset($kom["moderator"]) && $kom["moderator"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-3" class="cr">Moderator</label>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[panitia]" value="0" />
-									<input type="checkbox" name="komponen[panitia]" id="komp-p-4" value="1" <?php print isset($kom["panitia"]) && $kom["panitia"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-4" class="cr">Panitia</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[instruktur]" value="0" />
-									<input type="checkbox" name="komponen[instruktur]" id="komp-p-6" value="1" <?php print isset($kom["instruktur"]) && $kom["instruktur"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-6" class="cr">Instruktur</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[fasilitator]" value="0" />
-									<input type="checkbox" name="komponen[fasilitator]" id="komp-p-5" value="1" <?php print isset($kom["fasilitator"]) && $kom["fasilitator"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-5" class="cr">Fasilitator</label>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[pengajar_praktek]" value="0" />
-									<input type="checkbox" name="komponen[pengajar_praktek]" id="komp-p-7" value="1" <?php print isset($kom["pengajar_praktek"]) && $kom["pengajar_praktek"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-7" class="cr">Pengajar Praktik</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[pengawas]" value="0" />
-									<input type="checkbox" name="komponen[pengawas]" id="komp-p-9" value="1" <?php print isset($kom["pengawas"]) && $kom["pengawas"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-9" class="cr">Pengawas</label>
-								</div>
-								<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-									<input type="hidden" name="komponen[kepala_sekolah]" value="0" />
-									<input type="checkbox" name="komponen[kepala_sekolah]" id="komp-p-8" value="1" <?php print isset($kom["kepala_sekolah"]) && $kom["kepala_sekolah"] == "1" ? 'checked="checked"' : ""; ?> />
-									<label for="komp-p-8" class="cr">Kepala Sekolah</label>
-								</div>
-							</div>
+							<?php
+								if (isset($opsi_komponen) && !empty($opsi_komponen)) {
+									foreach ($opsi_komponen as $opsi) {
+							?>
+									<div class="col-md-4">
+										<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+											<input type="hidden" name="komponen[<?php print $opsi->code; ?>]" value="0" />
+											<input type="checkbox" name="komponen[<?php print $opsi->code; ?>]" id="komp-check-<?php print $opsi->code; ?>" value="1" <?php print isset($kom[$opsi->code]) && $kom[$opsi->code] == "1" ? 'checked="checked"' : ""; ?> />
+											<label for="komp-check-<?php print $opsi->code; ?>" class="cr"><?php print $opsi->name; ?></label>
+										</div>
+									</div>
+							<?php
+									}
+								}
+							?>
 						</div>
 					</div>
 				</div>

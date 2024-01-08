@@ -58,8 +58,10 @@ $route['admin'] = '/admin/dashboard/index';
 $route['admin/login'] = '/admin/user/login';
 $route['admin/logout'] = '/admin/user/logout';
 
-// Daftar Hadir
+// Kegiatan & Daftar Hadir
 $route['daftar_hadir_(:any)/(:num)/(:num)'] = 'kegiatan/daftar_hadir/$1/$2/$3';
+$route['admin/item/(:num)/(:any)'] = 'admin/kegiatan/item/$1/$2/';
+
 
 //master
 $route['admin/komponen_kegiatan/'] = 'admin/master/komponen_kegiatan/index';

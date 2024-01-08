@@ -1430,6 +1430,9 @@ class Bootgrids extends CI_Controller {
 				if (isset($data["detail_tgl_kegiatan"]) && !empty($data["detail_tgl_kegiatan"])) {
 					$data["detail_tgl_kegiatan"] = json_decode($data["detail_tgl_kegiatan"], true);
 				}
+
+				$this->load->model("master_komponen_kegiatan_model");
+				$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
 			}
 			
 			if ($view == "backend/user/modal_sync_biodata") {
