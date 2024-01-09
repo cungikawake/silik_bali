@@ -1434,6 +1434,7 @@ class Bootgrids extends CI_Controller {
 
 				$this->load->model("master_komponen_kegiatan_model");
 				$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
+				 
 			}
 			
 			if ($view == "backend/user/modal_sync_biodata") {
@@ -1615,7 +1616,7 @@ class Bootgrids extends CI_Controller {
 				
 				$data["spj"] = $this->spj_model->getById($spjId);
 			}
-			
+  
 			
 			$this->load->view($view,$data);
 		}

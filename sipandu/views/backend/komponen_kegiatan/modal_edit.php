@@ -44,6 +44,10 @@
 						?>
 					</select>
 				</div>
+				<div class="form-group">
+					<label>Prioritas</label>
+					<input type="text" name="order" class="form-control" value="<?php print isset($order) ? $order : ""; ?>" /> 
+				</div> 
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-info btn-modal-form-submit">Simpan</button>

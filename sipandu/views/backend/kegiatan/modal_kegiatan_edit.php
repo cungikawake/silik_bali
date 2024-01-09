@@ -179,7 +179,7 @@
 					?>
 					<label>Komponen Yang Terlibat Pada Kegiatan</label>
 					<div style="border: 1px solid #ccc; border-radius:4px; padding: 5px 10px 8px; background: #f4f7fa;">
-						<div class="row">
+						<div class="row"> 
 							<?php
 								if (isset($opsi_komponen) && !empty($opsi_komponen)) {
 									foreach ($opsi_komponen as $opsi) {

@@ -11,7 +11,7 @@ class Komponen_kegiatan extends CI_Controller {
 		$this->load->view('/backend/komponen_kegiatan/lists'); 
     }
  
-    public function save () {
+    public function save () { 
 		$out = array();
 		$out["error"] = false;
 		$out["msg"] = "Berhasil menyimpan komponen kagiatan!";

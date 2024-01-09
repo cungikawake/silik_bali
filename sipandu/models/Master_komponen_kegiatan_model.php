@@ -7,7 +7,9 @@ class Master_komponen_kegiatan_model extends CI_Model {
     }
 
     public function get_all_records() {
-        return $this->db->get('master_komponen_kegiatan')->result();
+        $this->db->from('master_komponen_kegiatan');
+        $this->db->order_by('order', 'asc');
+        return $this->db->get()->result();
     }
 
     public function get_record_by_id($id) {
@@ -33,19 +35,23 @@ class Master_komponen_kegiatan_model extends CI_Model {
     }
 
     public function save($data, $id){
-        if ($this->db->table_exists($data['table_name'])) {
-            return FALSE;  // Table already exists, no need to create it again
-        }else{
-            if(empty($id)){
+        if(empty($id)){
+            $count = $this->db->get_where('master_komponen_kegiatan', array('table_name' => $data['table_name']))->count();
+            
+            if($count == 0){
                 $this->db->insert('master_komponen_kegiatan', $data);
                 $res = $this->create_sample_table($data['table_name']);
                 return $res;
             }else{
-                $this->db->where('id', $id);
-                $this->db->update('master_komponen_kegiatan', $data);
+                return FALSE;
+            }
+            
+        }else{ 
+            
+            $this->db->where('id', $id);
+            $this->db->update('master_komponen_kegiatan', $data);
 
-                return TRUE;
-            }  
+            return TRUE;
         }  
     }
 

@@ -4,8 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class  Migration_create_master_komponen_kegiatan extends CI_Migration {
 
    public function up() {
-
-      // Master Komponen
+ 
       $this->dbforge->add_field(array(
          'id' => array(
             'type' => 'INT',

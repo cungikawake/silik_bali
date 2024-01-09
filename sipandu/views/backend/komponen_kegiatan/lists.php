@@ -71,6 +71,13 @@
 							"visible" => "true",
 							"format" => "status_active", 
 						);
+
+						$columns[] = array(
+							"id" => "order",
+							"field" => "order",
+							"name" => "Prioritas", 
+							"visible" => "true", 
+						);
 						  
 
 						$this->bootgrid->setColumns($columns); 
