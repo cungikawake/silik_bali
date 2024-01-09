@@ -16,6 +16,8 @@
 		?>
 		
 		<form action="/admin/kegiatan/save_item" method="post" class="form-submit" autocomplete="off">
+			<input type="hidden" name="table_komponen" class="form-control" value="<?php print $table; ?>" />
+			<input type="hidden" name="code_komponen" class="form-control" value="<?php print $code_komponen; ?>" />
 			<input type="hidden" name="unsur" class="form-control" value="<?php print $unsur; ?>" />
 			<input type="hidden" name="kegiatan_id" class="form-control" value="<?php print isset($parentId) ? $parentId : ""; ?>" />
 			<input type="hidden" name="id" class="form-control" value="<?php print isset($id) ? $id : ""; ?>" />

@@ -185,7 +185,7 @@
 									foreach ($opsi_komponen as $opsi) {
 							?>
 									<div class="col-md-4">
-										<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+										<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;"> 
 											<input type="hidden" name="komponen[<?php print $opsi->code; ?>]" value="0" />
 											<input type="checkbox" name="komponen[<?php print $opsi->code; ?>]" id="komp-check-<?php print $opsi->code; ?>" value="1" <?php print isset($kom[$opsi->code]) && $kom[$opsi->code] == "1" ? 'checked="checked"' : ""; ?> />
 											<label for="komp-check-<?php print $opsi->code; ?>" class="cr"><?php print $opsi->name; ?></label>

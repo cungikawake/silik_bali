@@ -1425,8 +1425,9 @@ class Bootgrids extends CI_Controller {
 					$data["satker"] = $dataSatker;
 				}
 			}
-			
+			 
 			if ($view == "backend/kegiatan/modal_kegiatan_edit") {
+				
 				if (isset($data["detail_tgl_kegiatan"]) && !empty($data["detail_tgl_kegiatan"])) {
 					$data["detail_tgl_kegiatan"] = json_decode($data["detail_tgl_kegiatan"], true);
 				}
@@ -1508,34 +1509,37 @@ class Bootgrids extends CI_Controller {
 				
 				
 				$table = $_POST["table"];
-				
-				if ($table == "kegiatan_narasumber") {
-					$data["unsur"] = "narasumber";
-				}
-				else if ($table == "kegiatan_panitia") {
-					$data["unsur"] = "panitia";
-				}
-				else if ($table == "kegiatan_fasilitator") {
-					$data["unsur"] = "fasilitator";
-				}
-				else if ($table == "kegiatan_instruktur") {
-					$data["unsur"] = "instruktur";
-				}
-				else if ($table == "kegiatan_pengajar_praktek") {
-					$data["unsur"] = "pengajar praktek";
-				}
-				else if ($table == "kegiatan_peserta") {
-					$data["unsur"] = "peserta";
-				}
-				else if ($table == "kegiatan_moderator") {
-					$data["unsur"] = "moderator";
-				}
-				else if ($table == "kegiatan_pengawas") {
-					$data["unsur"] = "pengawas";
-				}
-				else if ($table == "kegiatan_kepala_sekolah") {
-					$data["unsur"] = "kepala sekolah";
-				}
+				$data["table"] = $table;
+				$data["code_komponen"] = $_POST["unsur"];
+				$data["unsur"] = $_POST["unsur"];
+
+				// if ($table == "kegiatan_narasumber") {
+				// 	$data["unsur"] = "narasumber";
+				// }
+				// else if ($table == "kegiatan_panitia") {
+				// 	$data["unsur"] = "panitia";
+				// }
+				// else if ($table == "kegiatan_fasilitator") {
+				// 	$data["unsur"] = "fasilitator";
+				// }
+				// else if ($table == "kegiatan_instruktur") {
+				// 	$data["unsur"] = "instruktur";
+				// }
+				// else if ($table == "kegiatan_pengajar_praktek") {
+				// 	$data["unsur"] = "pengajar praktek";
+				// }
+				// else if ($table == "kegiatan_peserta") {
+				// 	$data["unsur"] = "peserta";
+				// }
+				// else if ($table == "kegiatan_moderator") {
+				// 	$data["unsur"] = "moderator";
+				// }
+				// else if ($table == "kegiatan_pengawas") {
+				// 	$data["unsur"] = "pengawas";
+				// }
+				// else if ($table == "kegiatan_kepala_sekolah") {
+				// 	$data["unsur"] = "kepala sekolah";
+				// }
 			}
 			
 			if ($view == "backend/spj/modal_edit_item") {

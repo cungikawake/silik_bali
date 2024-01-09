@@ -20,6 +20,7 @@ class Kegiatan extends CI_Controller {
 		$this->load->model("dakung_model");
 		$this->load->model("pengaturan_model");
 		$this->load->model("user_model");
+		$this->load->model("komponen_kegiatan_model");
 	}
 	
 	public function index() {
@@ -74,7 +75,7 @@ class Kegiatan extends CI_Controller {
 			
 			if (isset($data["komponen"]) && !empty($data["komponen"])) {
 				$data["komponen"] = json_encode($data["komponen"]);
-			}
+			} 
 
 			$id = $this->kegiatan_model->save($data, $id);
 
@@ -172,6 +173,7 @@ class Kegiatan extends CI_Controller {
 		exit();
 	}
 	
+	/**save option per komponen kegiatan */
 	public function save_more_opt () {
 		$this->auth->login();
 		
@@ -291,33 +293,39 @@ class Kegiatan extends CI_Controller {
 				$data["tgl_lahir"] = date("Y-m-d",strtotime(str_replace(array("/"),array("-"),$data["tgl_lahir"])));
 			}
 			
-			if ($unsur == "peserta") {
-				$success = $this->peserta_model->save($data, $id);
-			}
-			else if ($unsur == "narasumber") {
-				$success = $this->narasumber_model->save($data, $id);
-			}
-			else if ($unsur == "moderator") {
-				$success = $this->moderator_model->save($data, $id);
-			}
-			else if ($unsur == "pengajar praktek") {
-				$success = $this->pengajar_praktek_model->save($data, $id);
-			}
-			else if ($unsur == "fasilitator") {
-				$success = $this->fasilitator_model->save($data, $id);
-			}
-			else if ($unsur == "instruktur") {
-				$success = $this->instruktur_model->save($data, $id);
-			}
-			else if ($unsur == "panitia") {
-				$success = $this->panitia_model->save($data, $id);
-			}
-			else if ($unsur == "pengawas") {
-				$success = $this->pengawas_model->save($data, $id);
-			}
-			else if ($unsur == "kepala sekolah") {
-				$success = $this->kepala_sekolah_model->save($data, $id);
-			}
+			$tabel = $data['table_komponen'];
+			$code_komponen = $data['code_komponen'];
+			unset($data['table_komponen']);
+			unset($data['code_komponen']);
+			$success = $this->komponen_kegiatan_model->save($tabel, $code_komponen, $data, $id);
+
+			// if ($unsur == "peserta") {
+			// 	$success = $this->peserta_model->save($data, $id);
+			// }
+			// else if ($unsur == "narasumber") {
+			// 	$success = $this->narasumber_model->save($data, $id);
+			// }
+			// else if ($unsur == "moderator") {
+			// 	$success = $this->moderator_model->save($data, $id);
+			// }
+			// else if ($unsur == "pengajar praktek") {
+			// 	$success = $this->pengajar_praktek_model->save($data, $id);
+			// }
+			// else if ($unsur == "fasilitator") {
+			// 	$success = $this->fasilitator_model->save($data, $id);
+			// }
+			// else if ($unsur == "instruktur") {
+			// 	$success = $this->instruktur_model->save($data, $id);
+			// }
+			// else if ($unsur == "panitia") {
+			// 	$success = $this->panitia_model->save($data, $id);
+			// }
+			// else if ($unsur == "pengawas") {
+			// 	$success = $this->pengawas_model->save($data, $id);
+			// }
+			// else if ($unsur == "kepala sekolah") {
+			// 	$success = $this->kepala_sekolah_model->save($data, $id);
+			// }
 			
 			// Update data Biodata
 			$this->biodata_model->updateByNIK($data);
@@ -476,7 +484,7 @@ class Kegiatan extends CI_Controller {
 		$this->load->model("master_komponen_kegiatan_model");
 		$data["komponen"] = $this->master_komponen_kegiatan_model->get_record_by_code($komponen);
 		$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
-
+		 
 		$this->load->view('backend/kegiatan/item', $data);
 	}
 

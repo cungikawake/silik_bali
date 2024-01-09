@@ -176,7 +176,7 @@
 								"modal" => array(
 									"view" => "backend/kegiatan/modal_kegiatan_edit"
 								)
-							);
+							); 
 							$this->bootgrid->setAddButton($addButton);
 						}
 						
