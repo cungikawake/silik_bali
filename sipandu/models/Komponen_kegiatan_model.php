@@ -114,6 +114,27 @@ class Komponen_kegiatan_model extends CI_Model{
 		$this->db->delete($table);
 		$this->db->reset_query();
 	}
+
+	public function getDetailByNik ($table,  $kegiatan, $nik) {
+		$out = array();
+		
+		$this->db->select("*");
+		$this->db->from($table);
+		$this->db->where("kegiatan_id", $kegiatan);
+		$this->db->where("ktp", $nik);
+		
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$out = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+		
+		return $out;
+	}
 	
 	 
 }
