@@ -446,7 +446,41 @@ class Kegiatan extends CI_Controller {
 		exit();
 	}*/
 	
-	public function peserta ($id) {
+	public function item ($id, $komponen = "peserta") {
+		$this->auth->login();
+		
+		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
+		
+		if (!empty($kegiatan)) {
+			// Get First Aktif Komponen
+			if (isset($kegiatan["komponen"]) && !empty($kegiatan["komponen"])) {
+				$komponenAktif = "";
+				
+				foreach ($kegiatan["komponen"] as $kom => $komAktif) {
+					if ($komAktif == "1") {
+						$komponenAktif = $kom;
+						break;
+					}
+				}
+				
+				if ($komponenAktif != "peserta") {
+					redirect(base_url("/admin/item/".$id."/".$komponenAktif));
+				}
+			}
+		}
+		
+		$data = array();
+		$data["kegiatan"] = $kegiatan;
+		$data["aktif_komponen"] = $komponen;
+
+		$this->load->model("master_komponen_kegiatan_model");
+		$data["komponen"] = $this->master_komponen_kegiatan_model->get_record_by_code($komponen);
+		$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
+
+		$this->load->view('backend/kegiatan/item', $data);
+	}
+
+	/*public function peserta ($id) {
 		$this->auth->login();
 		
 		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
@@ -561,7 +595,7 @@ class Kegiatan extends CI_Controller {
 		$data["kegiatan"] = $kegiatan;
 		
 		$this->load->view('backend/kegiatan/kepala_sekolah', $data);
-	}
+	}*/
 	
 	public function data_dukung ($id) {
 		$this->auth->login();

@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class  Migration_create_master_komponen_kegiatan extends CI_Migration {
 
    public function up() {
+
+      // Master Komponen
       $this->dbforge->add_field(array(
          'id' => array(
             'type' => 'INT',
@@ -32,6 +34,15 @@ class  Migration_create_master_komponen_kegiatan extends CI_Migration {
 
       $this->dbforge->add_key('id', TRUE);
       $this->dbforge->create_table('master_komponen_kegiatan');
+
+      // Tambah Filed Kegiatan
+      $fields = array(
+         "options" => array(
+            "type" => "text",
+            "after" => "zoom_code_kegiatan"
+         )
+      );
+      $this->dbforge->add_column("kegiatan", $fields);
    }
 
    public function down() {
