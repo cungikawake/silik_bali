@@ -594,8 +594,9 @@ Kegiatan.init = function () {
 	
 	$(document).on('click', '.btn-edit-bitly', function () {
 		var bitlyLink = $(this).parent().find('.generateBitlyLinkTarget').val().replace("bit.ly/","");
-		
-		if(bitlyLink.indexOf('https://bgpbali.id') >= 0){
+		var baseUrl = $('[name="base_url"]').val();
+
+		if(bitlyLink.indexOf(baseUrl) >= 0){
 			bitlyLink = "";
 		}
 		
@@ -609,8 +610,9 @@ Kegiatan.init = function () {
 	
 	$(document).on('click', '.btn-edit-spd-link', function () {
 		var bitlyLink = $(this).parent().find('.input-edit-spd-link').val().replace("bit.ly/","");
+		var baseUrl = $('[name="base_url"]').val();
 		
-		if(bitlyLink.indexOf('https://bgpbali.id') >= 0){
+		if(bitlyLink.indexOf(baseUrl) >= 0){
 			bitlyLink = "";
 		}
 		

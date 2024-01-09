@@ -8,22 +8,21 @@
 		<div class="row">
 			<div class="col-md-12">
 
-				<?php
-					$linkRegistrasiType = "link_".$komponen->code;
+				<?php					
 					$linkRegistrasi = "";
 					$linkRegistrasiOn = "";
 					$linkRegistrasiTargetClass = "generateBitlyLinkTargetOff";					
 
-					if ($kegiatan[$linkRegistrasiType."_on"]) {
+					if (isset($kegiatan_options["link_on"]) && !empty($kegiatan_options["link_on"])) {
 						$linkRegistrasiOn = 'checked="checked"';
 						$linkRegistrasiTargetClass = "";
 					}
 				
 					$linkRegisUrl = base_url("/kegiatan/registrasi_".$komponen->code."/".$kegiatan["id"]);
 				
-					if (!empty($kegiatan[$linkRegistrasiType]) && !empty($kegiatan[$linkRegistrasiType]["custom_bitlinks"])) {
+					if (isset($kegiatan_options["link"]["custom_bitlinks"]) && !empty($kegiatan_options["link"]["custom_bitlinks"])) {
 						
-						$linkRegisUrl = $kegiatan[$linkRegistrasiType]["custom_bitlinks"];
+						$linkRegisUrl = $kegiatan_options["link"]["custom_bitlinks"];
 					}
 				
 					$linkRegistrasi = '<input type="text" class="generateBitlyLinkTarget '.$linkRegistrasiTargetClass.'" value="'.$linkRegisUrl.'" readonly="readonly" /><button class="btn btn-edit-bitly" title="Edit Bitly Link"><i class="fas fa-edit"></i></button>';
