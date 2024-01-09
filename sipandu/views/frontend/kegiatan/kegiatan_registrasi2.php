@@ -235,47 +235,30 @@
                 <?php
 					$showForm = 0;
 					
-					if ($type == "Peserta" && $kegiatan["link_peserta_on"]) {
-						$showForm = 1;
+					foreach($kegiatan_options as $key => $value){
+						if(isset($value['key']) && $value['key'] == 'link_on' && $value['value'] == 1){
+							$showForm = 1;
+							break;
+						} 
+						
 					}
-					else if ($type == "Narasumber" && $kegiatan["link_narasumber_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Panitia" && $kegiatan["link_panitia_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Moderator" && $kegiatan["link_moderator_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Pengajar Praktek" && $kegiatan["link_pp_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Fasilitator" && $kegiatan["link_fasil_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Instruktur" && $kegiatan["link_instruktur_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Pengawas" && $kegiatan["link_pengawas_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "Kepala Sekolah" && $kegiatan["link_kepala_sekolah_on"]) {
-						$showForm = 1;
-					}
-					
+					 
 					if (!$showForm) {
-				?>
-                		<div class="card-block" style="text-align: center;">
-                        	<h4>Opss...! Formulir Pendaftaran Sudah Tidak Tersedia</h4>
-                            <div>Mohon menghubungi Panitia untuk informasi lebih lanjut. Terima kasih</div>
-                        </div>
-                <?php
-					}
-					else {
+					?>
+							<div class="card-block" style="text-align: center;">
+								<h4>Opss...! Formulir Pendaftaran Sudah Tidak Tersedia</h4>
+								<div>Mohon menghubungi Panitia untuk informasi lebih lanjut. Terima kasih</div>
+							</div>
+					<?php
+
+					} else {
+
 				?>
                     <div class="card-block">
                         <form action="/kegiatan/registrasi_save2" method="post" class="form-submit-registrasi2">
                             <input type="hidden" name="type" class="form-control" value="<?php print $type; ?>"  />
+							<input type="hidden" name="code_komponen" class="form-control" value="<?php print $komponen->code; ?>"  />
+							<input type="hidden" name="table_komponen" class="form-control" value="<?php print $komponen->table_name; ?>"  />
                             <input type="hidden" name="kegiatan_id" class="form-control" value="<?php print $kegiatan["id"]; ?>"  />
                             <div class="modal-body">
                                 <div class="form-group m-b-10">
@@ -474,34 +457,14 @@
                                 
                                 <?php
                                     $showBank = false;
-                                
-                                    if ($type == "Narasumber" && $kegiatan["form_show_bank_narasumber"]) {
-                                        $showBank = true;
-                                    }
-                                    else if ($type == "Panitia" && $kegiatan["form_show_bank_panitia"]) {
-                                        $showBank = true;
-                                    }
-                                    else if ($type == "Peserta" && $kegiatan["form_show_bank_peserta"]) {
-                                        $showBank = true;
-                                    }
-									else if ($type == "Moderator" && $kegiatan["form_show_bank_moderator"]) {
-										$showBank = true;
-									}
-									else if ($type == "Pengajar Praktek" && $kegiatan["form_show_bank_pp"]) {
-										$showBank = true;
-									}
-									else if ($type == "Fasilitator" && $kegiatan["form_show_bank_fasil"]) {
-										$showBank = true;
-									}
-									else if ($type == "Instruktur" && $kegiatan["form_show_bank_instruktur"]) {
-										$showBank = true;
-									}
-									else if ($type == "Pengawas" && $kegiatan["form_show_bank_pengawas"]) {
-										$showBank = true;
-									}
-									else if ($type == "Kepala Sekolah" && $kegiatan["form_show_bank_kepala_sekolah"]) {
-										$showBank = true;
-									}
+									
+									foreach($kegiatan_options as $key => $value){
+										if(isset($value['key']) && $value['key'] == 'form_show_bank' && $value['value'] == 1){
+											$showBank = true;
+											break;
+										} 
+										
+									} 
                                 
                                     if ($showBank) {
                                 ?>
@@ -555,73 +518,22 @@
 								<?php
 									$showUploadSurtug = false;
 									$wajibUploadSurtug = false;
-                                
-                                    if ($type == "Narasumber" && $kegiatan["form_upload_surtug_narasumber"]) {
-                                        $showUploadSurtug = true;
-                                    }
-                                    else if ($type == "Panitia" && $kegiatan["form_upload_surtug_panitia"]) {
-                                        $showUploadSurtug = true;
-                                    }
-                                    else if ($type == "Peserta" && $kegiatan["form_upload_surtug_peserta"]) {
-                                        $showUploadSurtug = true;
-                                    }
-									else if ($type == "Moderator" && $kegiatan["form_upload_surtug_moderator"]) {
-										$showUploadSurtug = true;
+									
+									foreach($kegiatan_options as $key => $value){
+										if(isset($value['key']) && $value['key'] == 'form_upload_surtug' && $value['value'] == 1){
+											$showUploadSurtug = true;
+											break;
+										} 
+										
 									}
-									else if ($type == "Pengajar Praktek" && $kegiatan["form_upload_surtug_pp"]) {
-										$showUploadSurtug = true;
-									}
-									else if ($type == "Fasilitator" && $kegiatan["form_upload_surtug_fasil"]) {
-										$showUploadSurtug = true;
-									}
-									else if ($type == "Instruktur" && $kegiatan["form_upload_surtug_instruktur"]) {
-										$showUploadSurtug = true;
-									}
-									else if ($type == "Pengawas" && $kegiatan["form_upload_surtug_pengawas"]) {
-										$showUploadSurtug = true;
-									}
-									else if ($type == "Kepala Sekolah" && $kegiatan["form_upload_surtug_kepala_sekolah"]) {
-										$showUploadSurtug = true;
-									}
-						
-						
-									if ($type == "Narasumber" && $kegiatan["form_wajib_surtug_narasumber"]) {
-										$showUploadSurtug = true;
-                                        $wajibUploadSurtug = true;
-                                    }
-                                    else if ($type == "Panitia" && $kegiatan["form_wajib_surtug_panitia"]) {
-										$showUploadSurtug = true;
-                                        $wajibUploadSurtug = true;
-                                    }
-                                    else if ($type == "Peserta" && $kegiatan["form_wajib_surtug_peserta"]) {
-										$showUploadSurtug = true;
-                                        $wajibUploadSurtug = true;
-                                    }
-									else if ($type == "Moderator" && $kegiatan["form_wajib_surtug_moderator"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-									else if ($type == "Pengajar Praktek" && $kegiatan["form_wajib_surtug_pp"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-									else if ($type == "Fasilitator" && $kegiatan["form_wajib_surtug_fasil"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-									else if ($type == "Instruktur" && $kegiatan["form_wajib_surtug_instruktur"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-									else if ($type == "Pengawas" && $kegiatan["form_wajib_surtug_pengawas"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-									else if ($type == "Kepala Sekolah" && $kegiatan["form_wajib_surtug_kepala_sekolah"]) {
-										$showUploadSurtug = true;
-										$wajibUploadSurtug = true;
-									}
-						
+
+									foreach($kegiatan_options as $key => $value){
+										if(isset($value['key']) && $value['key'] == 'form_wajib_surtug' && $value['value'] == 1){
+											$wajibUploadSurtug = true;
+											break;
+										} 
+										
+									} 
                                 
                                     if ($showUploadSurtug) {
 										
@@ -661,9 +573,18 @@
 										$kategori = $kegiatan["kategori"];
 										$kategories = array();
 										
-										if ($type == "Peserta" && isset($kategori["peserta"]) && !empty($kategori["peserta"])) {
-											$kategories = explode("\n", $kategori["peserta"]);
-										}
+										foreach($kegiatan_options as $key => $value){
+											if(isset($value['key']) && $value['key'] == 'kategori' && $value['value'] != '' ){
+												$title =  explode('\n', $value["value"]);
+												$kategories = str_replace('"', '', $title);
+												break;
+											} 
+											
+										} 
+
+										// if ($type == "Peserta" && isset($kategori["peserta"]) && !empty($kategori["peserta"])) {
+										// 	$kategories = explode("\n", $kategori["peserta"]);
+										// }
 										
 										
 										if (!empty($kategories)) {
@@ -701,34 +622,16 @@
                                 
                                 <?php
                                     $showConfirmPaket = false;
-                                
-                                    if ($type == "Narasumber" && $kegiatan["form_show_confirm_paket_narasumber"]) {
-                                        $showConfirmPaket = true;
-                                    }
-                                    else if ($type == "Panitia" && $kegiatan["form_show_confirm_paket_panitia"]) {
-                                        $showConfirmPaket = true;
-                                    }
-                                    else if ($type == "Peserta" && $kegiatan["form_show_confirm_paket_peserta"]) {
-                                        $showConfirmPaket = true;
-                                    }
-									else if ($type == "Moderator" && $kegiatan["form_show_confirm_paket_moderator"]) {
-										$showConfirmPaket = true;
-									}
-									else if ($type == "Pengajar Praktek" && $kegiatan["form_show_confirm_paket_pp"]) {
-										$showConfirmPaket = true;
-									}
-									else if ($type == "Fasilitator" && $kegiatan["form_show_confirm_paket_fasil"]) {
-										$showConfirmPaket = true;
-									}
-									else if ($type == "Instruktur" && $kegiatan["form_show_confirm_paket_instruktur"]) {
-										$showConfirmPaket = true;
-									}
-									else if ($type == "Pengawas" && $kegiatan["form_show_confirm_paket_pengawas"]) {
-										$showConfirmPaket = true;
-									}
-									else if ($type == "Kepala Sekolah" && $kegiatan["form_show_confirm_paket_kepala_sekolah"]) {
-										$showConfirmPaket = true;
-									}
+									
+									foreach($kegiatan_options as $key => $value){
+										if(isset($value['key']) && $value['key'] == 'form_show_confirm_paket' && $value['value'] == 1){
+											$showConfirmPaket = true;
+											break;
+										} 
+										
+									} 
+
+                                     
                                 
                                     if ($showConfirmPaket) {
                                 ?>
@@ -749,34 +652,14 @@
                                 
                                 <?php
                                     $showTtd = false;
-                                
-                                    if ($type == "Narasumber" && $kegiatan["form_ttd_narasumber"]) {
-                                        $showTtd = true;
-                                    }
-                                    else if ($type == "Panitia" && $kegiatan["form_ttd_panitia"]) {
-                                        $showTtd = true;
-                                    }
-                                    else if ($type == "Peserta" && $kegiatan["form_ttd_peserta"]) {
-                                        $showTtd = true;
-                                    }
-									else if ($type == "Moderator" && $kegiatan["form_ttd_moderator"]) {
-										$showTtd = true;
-									}
-									else if ($type == "Pengajar Praktek" && $kegiatan["form_ttd_pp"]) {
-										$showTtd = true;
-									}
-									else if ($type == "Fasilitator" && $kegiatan["form_ttd_fasil"]) {
-										$showTtd = true;
-									}
-									else if ($type == "Instruktur" && $kegiatan["form_ttd_instruktur"]) {
-										$showTtd = true;
-									}
-									else if ($type == "Pengawas" && $kegiatan["form_ttd_pengawas"]) {
-										$showTtd = true;
-									}
-									else if ($type == "Kepala Sekolah" && $kegiatan["form_ttd_kepala_sekolah"]) {
-										$showTtd = true;
-									}
+									
+									foreach($kegiatan_options as $key => $value){
+										if(isset($value['key']) && $value['key'] == 'form_ttd' && $value['value'] == 1){
+											$showConfirmPaket = true;
+											break;
+										} 
+										
+									}  
                                 
                                     if ($showTtd) {
                                 ?>
