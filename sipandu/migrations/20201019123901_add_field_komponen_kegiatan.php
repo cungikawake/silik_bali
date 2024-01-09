@@ -12,7 +12,7 @@ class  Migration_add_field_komponen_kegiatan extends CI_Migration {
             "after" => "zoom_code_kegiatan"
          )
       );
-      //$this->dbforge->add_column("kegiatan", $fields);
+      $this->dbforge->add_column("kegiatan", $fields);
    }
 
    public function down() {

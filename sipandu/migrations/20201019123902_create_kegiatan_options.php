@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class  Migration_create_master_komponen_kegiatan extends CI_Migration {
+class  Migration_create_kegiatan_options extends CI_Migration {
 
    public function up() {
 
@@ -13,31 +13,29 @@ class  Migration_create_master_komponen_kegiatan extends CI_Migration {
             'unsigned' => TRUE,
             'auto_increment' => TRUE
          ),
-         'name' => array(
-            'type' => 'VARCHAR',
-            'constraint' => '100',
-         ),
-         'code' => array(
-            'type' => 'VARCHAR',
-            'constraint' => '100',
-         ),
-         'table_name' => array(
-            'type' => 'VARCHAR',
-            'constraint' => '100',
-         ),
-         'status' => array(
+         'kegiatan_id' => array(
             'type' => 'INT',
-            'constraint' => '1',
-            'default'=>1
+         ),
+         'code_komponen' => array(
+            'type' => 'VARCHAR',
+            'constraint' => '100',
+         ),
+         'key' => array(
+            'type' => 'VARCHAR',
+            'constraint' => '100',
+         ),
+         'value' => array(
+            'type' => 'text',
+            'null' => TRUE,
          ),
       ));
 
       $this->dbforge->add_key('id', TRUE);
-      $this->dbforge->create_table('master_komponen_kegiatan');
+      $this->dbforge->create_table('kegiatan_options');
 
    }
 
    public function down() {
-      $this->dbforge->drop_table('master_komponen_kegiatan');
+      $this->dbforge->drop_table('kegiatan_options');
    }
 }
