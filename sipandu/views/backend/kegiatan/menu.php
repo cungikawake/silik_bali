@@ -59,11 +59,13 @@
 						<div class="keg-opt-form">
 							<form action="/admin/kegiatan/save_more_opt" method="post" class="form-submit" autocomplete="off">
 								<input type="hidden" name="id" value="<?php print $kegiatan["id"]; ?>" />
-								<input type="hidden" name="form_show_bank_<?php print $komKode; ?>" value="0" />
-								<input type="hidden" name="form_show_confirm_paket_<?php print $komKode; ?>" value="0" />
-								<input type="hidden" name="form_ttd_<?php print $komKode; ?>" value="0" />
-								<input type="hidden" name="form_upload_surtug_<?php print $komKode; ?>" value="0" />
-								<input type="hidden" name="form_wajib_surtug_<?php print $komKode; ?>" value="0" />
+								<input type="hidden" name="komponen" value="<?php print $kom->code; ?>" />
+								<input type="hidden" name="base_url" value="<?php print base_url(); ?>" />
+								<input type="hidden" name="option[form_show_bank]" value="0" />
+								<input type="hidden" name="option[form_show_confirm_paket]" value="0" />
+								<input type="hidden" name="option[form_ttd]" value="0" />
+								<input type="hidden" name="option[form_upload_surtug]" value="0" />
+								<input type="hidden" name="option[form_wajib_surtug]" value="0" />
 								<?php
 									$bank = '';
 									$paket = '';
@@ -71,23 +73,23 @@
 									$upSurtug = '';
 									$surtug = '';
 
-									if ($kegiatan["form_show_bank_".$komKode]) {
+									if (isset($kegiatan_options["form_show_bank"]) && $kegiatan_options["form_show_bank"] == 1) {
 										$bank = 'checked="checked"';
 									}
 
-									if ($kegiatan["form_show_confirm_paket_".$komKode]) {
+									if (isset($kegiatan_options["form_show_confirm_paket"]) && $kegiatan_options["form_show_confirm_paket"] == 1) {
 										$paket = 'checked="checked"';
 									}
-
-									if ($kegiatan["form_ttd_".$komKode]) {
+									
+									if (isset($kegiatan_options["form_ttd"]) && $kegiatan_options["form_ttd"] == 1) {
 										$ttd = 'checked="checked"';
 									}
-												
-									if ($kegiatan["form_upload_surtug_".$komKode]) {
+									
+									if (isset($kegiatan_options["form_upload_surtug"]) && $kegiatan_options["form_upload_surtug"] == 1) {
 										$upSurtug = 'checked="checked"';
 									}
-												
-									if ($kegiatan["form_wajib_surtug_".$komKode]) {
+									
+									if (isset($kegiatan_options["form_wajib_surtug"]) && $kegiatan_options["form_wajib_surtug"] == 1) {
 										$surtug = 'checked="checked"';
 									}
 								?>
@@ -129,25 +131,25 @@
 														<label>Form Pendaftaran <?php print $kom->name;?></label>
 														<div class="form-group">
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-																<input type="checkbox" name="form_show_bank_<?php print $komKode;?>" id="checkbox-p-1" <?php print $bank; ?> value="1" />
+																<input type="checkbox" name="option[form_show_bank]" id="checkbox-p-1" <?php print $bank; ?> value="1" />
 																<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
 															</div>
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-																<input type="checkbox" name="form_show_confirm_paket_<?php print $komKode;?>" id="checkbox-p-2" <?php print $paket; ?> value="1" />
+																<input type="checkbox" name="option[form_show_confirm_paket]" id="checkbox-p-2" <?php print $paket; ?> value="1" />
 																<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
 															</div>
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-																<input type="checkbox" name="form_ttd_<?php print $komKode;?>" id="checkbox-p-x1" <?php print $ttd; ?> value="1" />
+																<input type="checkbox" name="option[form_ttd]" id="checkbox-p-x1" <?php print $ttd; ?> value="1" />
 																<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
 															</div>
 														</div>
 														<div class="form-group">
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-																<input type="checkbox" name="form_upload_surtug_<?php print $komKode;?>" id="checkbox-st-1" <?php print $upSurtug; ?> value="1" />
+																<input type="checkbox" name="option[form_upload_surtug]" id="checkbox-st-1" <?php print $upSurtug; ?> value="1" />
 																<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
 															</div>
 															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
-																<input type="checkbox" name="form_wajib_surtug_<?php print $komKode;?>" id="checkbox-st-2" <?php print $surtug; ?> value="1" />
+																<input type="checkbox" name="option[form_wajib_surtug]" id="checkbox-st-2" <?php print $surtug; ?> value="1" />
 																<label for="checkbox-st-2" class="cr">Peserta Wajib Upload Surat Tugas</label>
 															</div>
 														</div>
@@ -155,11 +157,11 @@
 														<div class="form-group">
 															<?php
 																$pengkelasan = "";
-																if (isset($kegiatan["kategori"][$komKode]) && !empty($kegiatan["kategori"][$komKode])) {
-																	$pengkelasan = $kegiatan["kategori"][$komKode];
+																if (isset($kegiatan_options["kategori"]) && !empty($kegiatan_options["kategori"])) {
+																	$pengkelasan = $kegiatan_options["kategori"];
 																}
 															?>
-															<textarea class="form-control" rows="4" name="kategori[<?php print $komKode;?>]"><?php print $pengkelasan; ?></textarea>
+															<textarea class="form-control" rows="4" name="option[kategori]"><?php print $pengkelasan; ?></textarea>
 															<small>Kosongkan jika tidak ada pengkelasan; Enter untuk tiap nama kelas.</small>
 														</div>
 														
@@ -171,7 +173,13 @@
 																<div class="input-group-prepend">
 																	<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #25d366; color: #fff;"><i class="fab fa-whatsapp"></i></span>
 																</div>
-																<input type="text" class="form-control" name="wa_grup_<?php print $komKode;?>" value="<?php print $kegiatan["wa_grup_".$komKode]; ?>" />
+																<?php
+																	$waGrup = "";
+																	if (isset($kegiatan_options["wa_grup"]) && !empty($kegiatan_options["wa_grup"])) {
+																		$waGrup = $kegiatan_options["wa_grup"];
+																	}
+																?>
+																<input type="text" class="form-control" name="option[wa_grup]" value="<?php print $waGrup; ?>" />
 															</div>
 														</div>
 
@@ -181,7 +189,13 @@
 																<div class="input-group-prepend">
 																	<span class="input-group-text" id="inputGroup-sizing-sm" style="background-color: #0088cc; color: #fff;"><i class="fab fa-telegram-plane"></i></span>
 																</div>
-																<input type="text" class="form-control" name="tele_grup_<?php print $komKode;?>" value="<?php print $kegiatan["tele_grup_".$komKode]; ?>" />
+																<?php
+																	$teleGrup = "";
+																	if (isset($kegiatan_options["tele_grup"]) && !empty($kegiatan_options["tele_grup"])) {
+																		$teleGrup = $kegiatan_options["tele_grup"];
+																	}
+																?>
+																<input type="text" class="form-control" name="option[tele_grup]" value="<?php print $teleGrup; ?>" />
 															</div>
 															<small>Link akan ditampilkan setelah pendaftaran berhasil</small>
 														</div>
@@ -231,19 +245,43 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label>Nama Pejabat Tujuan Perjalanan Dinas</label>
-															<input type="text" class="form-control" name="spd_nama" value="<?php print $kegiatan["spd_nama"]; ?>" />
+															<?php
+																$spdNama = "";
+																if (isset($kegiatan_options["spd_nama"]) && !empty($kegiatan_options["spd_nama"])) {
+																	$spdNama = $kegiatan_options["spd_nama"];
+																}
+															?>
+															<input type="text" class="form-control" name="option[spd_nama]" value="<?php print $spdNama; ?>" />
 														</div>
 														<div class="form-group">
 															<label>NIP Pejabat Tujuan Perjalanan Dinas</label>
-															<input type="text" class="form-control" name="spd_nip" value="<?php print $kegiatan["spd_nip"]; ?>" />
+															<?php
+																$spdNip = "";
+																if (isset($kegiatan_options["spd_nip"]) && !empty($kegiatan_options["spd_nip"])) {
+																	$spdNip = $kegiatan_options["spd_nip"];
+																}
+															?>
+															<input type="text" class="form-control" name="option[spd_nip]" value="<?php print $spdNip; ?>" />
 														</div>
 														<div class="form-group">
 															<label>Jabatan Pejabat Tujuan Perjalanan Dinas</label>
-															<input type="text" class="form-control" name="spd_jabatan" value="<?php print $kegiatan["spd_jabatan"]; ?>" />
+															<?php
+																$spdJabatan = "";
+																if (isset($kegiatan_options["spd_jabatan"]) && !empty($kegiatan_options["spd_jabatan"])) {
+																	$spdJabatan = $kegiatan_options["spd_jabatan"];
+																}
+															?>
+															<input type="text" class="form-control" name="option[spd_jabatan]" value="<?php print $spdJabatan; ?>" />
 														</div>
 														<div class="form-group">
 															<label>Nama Unit Kerja Pejabat Tujuan Perjalanan Dinas</label>
-															<input type="text" class="form-control" name="spd_satker" value="<?php print $kegiatan["spd_satker"]; ?>" />
+															<?php
+																$spdSatker = "";
+																if (isset($kegiatan_options["spd_satker"]) && !empty($kegiatan_options["spd_satker"])) {
+																	$spdSatker = $kegiatan_options["spd_satker"];
+																}
+															?>
+															<input type="text" class="form-control" name="option[spd_satker]" value="<?php print $spdSatker; ?>" />
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -284,7 +322,13 @@
 													<div class="col-md-6">
 														<div class="form-group" style="width: 70%;">
 															<label>Template Sertifikat Peserta</label>
-															<select id="select-serticate" class="form-control" name="sertificate_<?php print $komKode;?>" data-selected-sertificate="<?php print $kegiatan["sertificate_".$komKode]; ?>"></select>
+															<?php
+																$sertifikat = "";
+																if (isset($kegiatan_options["sertificate"]) && !empty($kegiatan_options["sertificate"])) {
+																	$sertifikat = $kegiatan_options["sertificate"];
+																}
+															?>
+															<select id="select-serticate" class="form-control" name="option[sertificate]" data-selected-sertificate="<?php print $sertifikat; ?>"></select>
 														</div>
 													</div>
 												</div>

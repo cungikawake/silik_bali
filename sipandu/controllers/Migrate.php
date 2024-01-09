@@ -26,10 +26,14 @@ class Migrate extends CI_Controller {
             "peserta", "panitia", "narasumber", "moderator", "instruktur", "fasil", "pp", "pengawas", "kepala_sekolah"
         );
 
+        $data = array();
+
         foreach ($kegiatan as $out) {
             $out = (array) $out;
 
+            $data[$out["id"]] = array();
             
+            // Pharsing
             if (isset($out["link_peserta"]) && !empty($out["link_peserta"])) {
                 $out["link_peserta"] = (array) json_decode($out["link_peserta"]);
             }
@@ -85,8 +89,32 @@ class Migrate extends CI_Controller {
             $options = array();
 
             foreach ($komponen as $kom) {
-                $options["link_".$kom] = $out["link_".$kom];
+                $komNew = $kom;
+
+                if ($kom == "pp") {
+                    $komNew = "pengajar_praktik";
+                }
+
+                if ($kom == "fasil") {
+                    $komNew = "fasilitator";
+                }
+
+                $data[$out["id"]][$komNew]["link"] = $out["link_".$kom];
+                $data[$out["id"]][$komNew]["link_on"] = $out["link_".$kom."_on"];
+                $data[$out["id"]][$komNew]["form_show_bank"] = $out["form_show_bank_".$kom];
+                $data[$out["id"]][$komNew]["form_show_confirm_paket"] = $out["form_show_confirm_paket_".$kom];
+                $data[$out["id"]][$komNew]["form_ttd"] = $out["form_ttd_".$kom];
+                $data[$out["id"]][$komNew]["wa_grup"] = $out["wa_grup_".$kom];
+                $data[$out["id"]][$komNew]["tele_grup"] = $out["tele_grup_".$kom];
+                $data[$out["id"]][$komNew]["form_upload_surtug"] = $out["form_upload_surtug_".$kom];
+                $data[$out["id"]][$komNew]["form_wajib_surtug"] = $out["form_wajib_surtug_".$kom];
+                $data[$out["id"]][$komNew]["kategori"] = $out["kategori"][$kom];
+                exit();
             }
+
+            print "<pre>";
+            print_r($data);
+            print "</pre>";
         }
     }
 }
