@@ -316,8 +316,8 @@
 				
 					$this->bootgrid->setCustomFilter("kabupaten_kota");
 				
-					if (isset($kegiatan["kategori"][$komponen->code]) && !empty($kegiatan["kategori"][$komponen->code])) {
-						$this->bootgrid->setCustomFilter("kelas", $kegiatan["kategori"][$komponen->code]);
+					if (isset($kegiatan_options["kategori"]) && !empty($kegiatan_options["kategori"])) {
+						$this->bootgrid->setCustomFilter("kelas", $kegiatan_options["kategori"]);
 					}
 
 					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","add")) {

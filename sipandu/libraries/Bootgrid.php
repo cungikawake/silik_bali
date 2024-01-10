@@ -512,6 +512,7 @@
 					$kabKota = '';
 					$modelKabKota = '';
 					$filKelas = '';
+					$modelKelas = '';
 					
 					if (!empty($this->customFilter)) {
 						foreach ($this->customFilter as $cf) {
@@ -592,6 +593,10 @@
 									$filKelas .= '$("#bootgrid-'.$this->tableId.'-header").find(".bootgrid-filter_kelas-filter select").change(function () { Table.reloadTable("bootgrid-'.$this->tableId.'"); });';
 								
 								$filKelas .= '} ';
+
+								$modelKelas = 'if ($("#bootgrid-'.$this->tableId.'-header").find(".bootgrid-filter_kelas-filter").length) {
+									model.filterKelas = $("#bootgrid-'.$this->tableId.'-header").find(".bootgrid-filter_kelas-filter select").val();
+								} else {model.filterKelas = ""; }';
 							}
 						}
 					}
@@ -656,6 +661,8 @@
 									'.$modelYearCreatedDate.'
 									
 									'.$modelKabKota.'
+
+									'.$modelKelas.'
 
 									return JSON.stringify(model);
 								},
