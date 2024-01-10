@@ -374,6 +374,31 @@ Kegiatan.switchRegistration = function (keg, type, val) {
 	});
 }
 
+Kegiatan.switchDaftarHadir = function (keg, type, date, val) {
+	
+	if (val) {
+		$(".group-switch-"+date).removeClass("link-off");
+	}
+	else {
+		$(".group-switch-"+date).addClass("link-off");
+	}
+		
+	// $.ajax({
+	// 	type: "POST",
+	// 	url: "/admin/kegiatan/switchRegistration/?v="+Math.random(),
+	// 	data: {
+	// 		kegiatanId: keg,
+	// 		type: type,
+	// 		switch: val,
+	// 		version: Math.random()				
+	// 	},
+	// 	dataType: 'json',
+	// 	success: function(obj){
+
+	// 	}
+	// });
+}
+
 Kegiatan.loadDakungList = function (kegiatanId, section) {
 	$('.wrap-dakung[data-section="'+section+'"]').html('<div class="d-flex justify-content-center dakung-loader"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	
@@ -564,6 +589,15 @@ Kegiatan.init = function () {
 			$(this)[0].selectionStart = $(this)[0].selectionEnd;
 		}
 	});
+
+	$(document).on('click','.form-link-dh', function () {
+		if (!$(this).closest('.form-group').hasClass("link-off")) {
+			$(this).select();
+		}
+		else {
+			$(this)[0].selectionStart = $(this)[0].selectionEnd;
+		}
+	});
 	
 	$(document).on('click','.input-edit-spd-link', function () {
 		$(this).select();
@@ -722,6 +756,30 @@ Kegiatan.init = function () {
 				});
 			}
 		});
+	});
+
+	$(document).on("change", ".bitly-dh", function () {
+		var kegiatanId = $(this).attr('data-kegiatan');
+		var type = $(this).attr('data-type');
+		var date = $(this).attr('data-date');
+		
+		if ($(this).is(':checked')) {
+			// if (!$('.generateBitlyLinkTarget').length) {
+			// 	var modalHtml = Kegiatan.getBitlyModal("");
+			
+			// 	$('#modal-bitly').remove();
+			// 	$('body').append(modalHtml);
+				
+			// 	$('#modal-bitly').modal('show');
+			// 	$('#modal-bitly [name="bitly_link"]').focus();
+			// }
+			// else {
+				Kegiatan.switchDaftarHadir(kegiatanId, type, date, 1);
+			// }
+		}
+		else {
+			Kegiatan.switchDaftarHadir(kegiatanId, type, date, 0);
+		}
 	});
 	
 	if ($('.wrap-dakung').length) {

@@ -919,166 +919,22 @@ $config["user_akses"] = array(
 			"name" => "Duplikat Kegiatan"
 		)
 	),
-	"peserta_kegiatan" => array(
+	"kegiatan_item" => array(
 		"list" => array(
 			"value" => 1,
-			"name" => "List Peserta"
+			"name" => "List Item"
 		),
 		"add" => array(
 			"value" => 0,
-			"name" => "Add Peserta"
+			"name" => "Add Item"
 		),
 		"edit" => array(
 			"value" => 0,
-			"name" => "Edit Peserta"
+			"name" => "Edit Item"
 		),
 		"delete" => array(
 			"value" => 0,
-			"name" => "Delete Peserta"
-		),
-	),
-	"narasumber_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Narasumber"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Narasumber"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Narasumber"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Narasumber"
-		),
-	),
-	"panitia_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Panitia"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Panitia"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Panitia"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Panitia"
-		),
-	),
-	"instruktur_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Instruktur"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Instruktur"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Instruktur"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Instruktur"
-		),
-	),
-	"moderator_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Moderator"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Moderator"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Moderator"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Moderator"
-		),
-	),
-	"pengajar_praktek_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Pengajar Praktek"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Pengajar Praktek"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Pengajar Praktek"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Pengajar Praktek"
-		),
-	),
-	"fasilitator_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Fasilitator"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Fasilitator"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Fasilitator"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Fasilitator"
-		),
-	),
-	"pengawas_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Pengawas"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Pengawas"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Pengawas"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Pengawas"
-		),
-	),
-	"kepala_sekolah_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Kepala Sekolah"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Kepala Sekolah"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Kepala Sekolah"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Kepala Sekolah"
+			"name" => "Delete Item"
 		),
 	),
 	

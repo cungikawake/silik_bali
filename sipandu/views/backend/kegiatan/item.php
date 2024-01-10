@@ -320,7 +320,7 @@
 						$this->bootgrid->setCustomFilter("kelas", $kegiatan_options["kategori"]);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","add")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","add")) {
 						$addButton = array(
 							"text" => "Tambah",
 							"parent" => $kegiatan["id"],
@@ -336,7 +336,7 @@
 						$this->bootgrid->setAddButton($addButton);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","edit")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","edit")) {
 						$editButton = array(
 							"text" => "Edit",
 							"parent" => $kegiatan["id"],
@@ -347,7 +347,7 @@
 						$this->bootgrid->setEditButton($editButton);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","delete")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","delete")) {
 						$deleteButton = array(
 							"text" => "Delete"
 						);
