@@ -23,11 +23,11 @@
 		}
 	?>
 
-	<?php /*if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
+	<?php if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
 	<li class="nav-item">
 		<a class="nav-link <?php if ($url_2 == "data_dukung") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/data_dukung/".$kegiatan["id"]."/"); ?>">Data Dukung</a>
 	</li>
-	<?php }*/ ?>
+	<?php } ?>
 	
 	<?php if ($showMoreOpt) { ?>
 		<li class="nav-more-opt"><a data-toggle="collapse" href="#<?php print $opt; ?>" role="button" aria-expanded="true" aria-controls="<?php print $opt; ?>"><i class="fas fa-angle-down"></i></a></li>
@@ -37,6 +37,12 @@
 	.btn-edit-spd-link { padding: 6px 10px; margin: 0 0 4px; }
 	.btn-edit-spd-link i { margin: 0; }
 	.input-edit-spd-link { width: 85%; padding: 7px 12px; display: inline-block; cursor: pointer; }
+	.d-inline { display: inline-block; }
+	.form-link-dh { padding: 6px; height: 30px; min-height: 30px }
+	.switch-dh { margin-left: 10px; }
+	.btn-edit-dh-bitly { padding: 2px 0 0; background:none;}
+	.form-control.form-link-dh { border: 1px solid #c2defd; background-color: #ddecfd; cursor: pointer; font-size:13px; color:#222; }
+	.link-off .form-link-dh { border: 1px solid #EFEFEF; background: #EFEFEF; color: #888; cursor: default;}
 </style>
 
 <div class="keg-more-opt">
@@ -204,7 +210,7 @@
 											</div>
 											<div class="tab-pane" id="dh-<?php print $kom->code;?>">
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-4">
 														<?php
 															if ($kegiatan["tipe_kegiatan"] == "Daring") {
 																$start_date = new DateTime($kegiatan["tgl_mulai_kegiatan"]);
@@ -229,10 +235,24 @@
 
 																foreach ($date_sign as $tglDetail) {
 																	?>
-																		<div class="form-group">
+																		<div class="form-group group-switch-<?php print strtotime($tglDetail); ?>">
 																			<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
-																			<input type="text" class="form-control" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+																			<div class="switch switch-dh d-inline">
+																				<input type="checkbox" class="bitly-dh" data-kegiatan="<?php print $kegiatan["id"]; ?>" data-type="<?php print $komponen->code; ?>" data-date="<?php print strtotime($tglDetail); ?>" name="bitly_daftar_hadir[<?php print date("d-m-Y", strtotime($tglDetail)); ?>]" id="switchDH-<?php print strtotime($tglDetail); ?>" value="1" />
+																				<label for="switchDH-<?php print strtotime($tglDetail); ?>" class="cr" style="top:10px;" title="Aktifkan Registrasi"></label>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-md-10">
+																				<input type="text" class="form-control form-link-dh" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+																				</div>
+																				<div class="col-md-2 pl-0">
+																					<button class="btn btn-edit-dh-bitly" title="Edit Bitly Link"><i class="fas fa-edit"></i></button>
+																				</div>
+																			</div>
 																		</div>
+																		
+																		
 																<?php
 																}
 															}
