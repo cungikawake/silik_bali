@@ -611,5 +611,13 @@
 			
 			return $out;
 		}
+
+		function generateSlug($str) { 
+			$str = strtolower($str); 
+			$str = str_replace(' ', '_', $str); 
+			$str = preg_replace('/[^a-z0-9_]/', '', $str); 
+	
+			return $str;
+		}
 	}
 ?>
