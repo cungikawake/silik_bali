@@ -1015,6 +1015,7 @@ class Bootgrids extends CI_Controller {
 			$deleteBtn = isset($data->deleteBtn) ? $data->deleteBtn : array();
 			$filterYearCreatedDate = isset($data->filterYearCreatedDate) ? $data->filterYearCreatedDate : "";
 			$filterKabKota = isset($data->filterKabKota) ? $data->filterKabKota : "";
+			$filterKelas = isset($data->filterKelas) ? $data->filterKelas : "";
 			
 			$where = "";
 		
@@ -1069,6 +1070,19 @@ class Bootgrids extends CI_Controller {
 				}
 				else {
 					$where .= "kab_unit_kerja = '".$filterKabKota."'";
+				}
+			}
+
+			if (!empty($filterKelas) && $filterKelas != "Semua Kelas") {
+				if (!empty($where)) {
+					$where .= " AND ";
+				}
+				
+				if ($table == "spj_item") {
+					$where .= "kategori = '".$filterKelas."'";
+				}
+				else {
+					$where .= "kategori = '".$filterKelas."'";
 				}
 			}
 			
@@ -1513,34 +1527,6 @@ class Bootgrids extends CI_Controller {
 				$data["table"] = $table;
 				$data["code_komponen"] = $_POST["unsur"];
 				$data["unsur"] = $_POST["unsur"];
-
-				// if ($table == "kegiatan_narasumber") {
-				// 	$data["unsur"] = "narasumber";
-				// }
-				// else if ($table == "kegiatan_panitia") {
-				// 	$data["unsur"] = "panitia";
-				// }
-				// else if ($table == "kegiatan_fasilitator") {
-				// 	$data["unsur"] = "fasilitator";
-				// }
-				// else if ($table == "kegiatan_instruktur") {
-				// 	$data["unsur"] = "instruktur";
-				// }
-				// else if ($table == "kegiatan_pengajar_praktek") {
-				// 	$data["unsur"] = "pengajar praktek";
-				// }
-				// else if ($table == "kegiatan_peserta") {
-				// 	$data["unsur"] = "peserta";
-				// }
-				// else if ($table == "kegiatan_moderator") {
-				// 	$data["unsur"] = "moderator";
-				// }
-				// else if ($table == "kegiatan_pengawas") {
-				// 	$data["unsur"] = "pengawas";
-				// }
-				// else if ($table == "kegiatan_kepala_sekolah") {
-				// 	$data["unsur"] = "kepala sekolah";
-				// }
 			}
 			
 			if ($view == "backend/spj/modal_edit_item") {

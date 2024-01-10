@@ -106,10 +106,8 @@ class Komponen_kegiatan_model extends CI_Model{
 		
 		return $id;
 	}
-	
 	 
 	public function delete ($table, $id) {
-		
 		$this->db->where('id', $id);
 		$this->db->delete($table);
 		$this->db->reset_query();
@@ -135,6 +133,87 @@ class Komponen_kegiatan_model extends CI_Model{
 		
 		return $out;
 	}
+
+	public function getItemById ($code_komponen, $id) {
+		$out = array();
+		
+		// Komponen
+		$this->db->select("*");
+		$this->db->from("master_komponen_kegiatan");
+		$this->db->where("code", $code_komponen);
+		
+		$query = $this->db->get();
+
+		$komponen = array();
+
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$komponen = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+
+		// Item
+		$this->db->select("*");
+		$this->db->from($komponen["table_name"]);
+		$this->db->where("id", $id);
+		
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$out = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+		
+		return $out;
+	}
 	
-	 
+	public function getItemByKegiatanId ($code_komponen, $kegiatanId, $sortKab = false) {
+		$out = array();
+
+		// Komponen
+		$this->db->select("*");
+		$this->db->from("master_komponen_kegiatan");
+		$this->db->where("code", $code_komponen);
+		
+		$query = $this->db->get();
+
+		$komponen = array();
+
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$komponen = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+
+		if (!empty($komponen)) {
+			$this->db->select("*");
+			$this->db->from($komponen["table_name"]);
+			$this->db->where("kegiatan_id", $kegiatanId);
+			
+			$this->db->order_by('kategori', 'ASC');
+			
+			if ($sortKab) {
+				$this->db->order_by('kab_unit_kerja', 'ASC');
+			}
+			
+			$query = $this->db->get();
+			
+			if($query->num_rows() > 0) {
+				foreach ($query->result_array() as $row) {
+					$out[] = $row;
+				}
+			}
+			
+			$this->db->reset_query();
+		}
+		
+		return $out;
+	}
 }
