@@ -22,7 +22,7 @@
 						 
 						$this->bootgrid->setTable("master_komponen_kegiatan");
 						$this->bootgrid->setTitle("MASTER KOMPONEN KEGIATAN");
-						$this->bootgrid->sortBy("name");
+						$this->bootgrid->sortBy("order");
 						$this->bootgrid->sortType("ASC");
 
 						$columns = array();
