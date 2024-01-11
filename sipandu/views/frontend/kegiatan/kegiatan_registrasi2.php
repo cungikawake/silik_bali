@@ -256,9 +256,7 @@
 				?>
                     <div class="card-block">
                         <form action="/kegiatan/registrasi_save2" method="post" class="form-submit-registrasi2">
-                            <input type="hidden" name="type" class="form-control" value="<?php print $type; ?>"  />
-							<input type="hidden" name="code_komponen" class="form-control" value="<?php print $komponen->code; ?>"  />
-							<input type="hidden" name="table_komponen" class="form-control" value="<?php print $komponen->table_name; ?>"  />
+                            <input type="hidden" name="komponen" class="form-control" value="<?php print $komponen->code; ?>"  />
                             <input type="hidden" name="kegiatan_id" class="form-control" value="<?php print $kegiatan["id"]; ?>"  />
                             <div class="modal-body">
                                 <div class="form-group m-b-10">

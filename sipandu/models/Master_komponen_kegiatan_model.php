@@ -17,8 +17,11 @@ class Master_komponen_kegiatan_model extends CI_Model {
     }
 
     public function get_record_by_code($code) {
-        
         return $this->db->get_where('master_komponen_kegiatan', array('code' => $code))->row();
+    }
+
+    public function get_record_by_table($table) {
+        return $this->db->get_where('master_komponen_kegiatan', array('table_name' => $table))->row();
     }
 
     public function insert_record($data) {

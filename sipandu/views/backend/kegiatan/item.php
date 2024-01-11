@@ -327,9 +327,7 @@
 							"modal" => array(
 								"view" => "backend/kegiatan/modal_kegiatan_item",
 								"data" => array(
-									"table" => $komponen->table_name,
-									"unsur" => $komponen->name,
-									'code_komponen' => $komponen->code,
+									"table" => $komponen->table_name
 								)
 							)
 						);

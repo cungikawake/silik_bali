@@ -21,6 +21,7 @@ class Kegiatan extends CI_Controller {
 		$this->load->model("pengaturan_model");
 		$this->load->model("master_komponen_kegiatan_model");
 		$this->load->model("komponen_kegiatan_model");
+		$this->load->model("kegiatan_options_model");
 	}
 	
 	public function index() {
@@ -383,337 +384,193 @@ class Kegiatan extends CI_Controller {
 		if (isset($_POST) && !empty($_POST)) {
 			$kegiatanId = $_POST["kegiatan_id"];
 			
+			$code_komponen = $_POST['komponen'];
+			unset($_POST["komponen"]);
+
 			$ktp = $_POST["nik"];
 			unset($_POST["nik"]);
-			
-			$type = $_POST["type"];
-			unset($_POST["type"]);
 			
 			if ($_POST["kab_unit_kerja"] == "Lainnya") {
 				$_POST["kab_unit_kerja"] = $_POST["kab_unit_kerja_lainnya"];
 			}
 			unset($_POST["kab_unit_kerja_lainnya"]);
-			
+
 			if (isset($_POST["buku_tabungan"])) {
-			    unset($_POST["buku_tabungan"]);
+				unset($_POST["buku_tabungan"]);
 			}
 			
 			$id = 0;
 			$data = $_POST;
 			$data["ktp"] = $ktp;
 			
-			// tgl lahir format
+			// Tgl lahir format
 			if (isset($data["tgl_lahir"]) && !empty($data["tgl_lahir"])) {
-				$data["tgl_lahir"] = date("Y-m-d",strtotime(str_replace(array("/"),array("-"),$data["tgl_lahir"])));
+				$data["tgl_lahir"] = date("Y-m-d", strtotime(str_replace(array("/"),array("-"),$data["tgl_lahir"])));
 			}
 			
 			$kegiatan = $this->kegiatan_model->getKegiatanById($kegiatanId);
-			$komponen = $this->master_komponen_kegiatan_model->get_record_by_code($_POST['code_komponen']);
-			 
-			$user = $this->komponen_kegiatan_model->getDetailByNik($data['table_komponen'], $kegiatanId, $data["ktp"]);
+			$komponen = $this->master_komponen_kegiatan_model->get_record_by_code($code_komponen);
 			
-			if (!empty($user)) {
-				$id = $user["id"];
-			}
-			unset($data['code_komponen']);
-			unset($data['table_komponen']);
-
-			$id = $this->komponen_kegiatan_model->save($_POST['table_komponen'], $_POST['code_komponen'], $data, $id);
- 
-			// if ($type == "Narasumber") {
-			// 	// Check Narasumber Apakah Sudah Pernah Daftar
-			// 	$narasumber = $this->narasumber_model->getNarasumber($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($narasumber)) {
-			// 		$id = $narasumber["id"];
-			// 	}
-
-			// 	$id = $this->narasumber_model->save($data, $id);
-			// }
-			// else if ($type == "Panitia") {
-			// 	// Check Panitia Apakah Sudah Pernah Daftar
-			// 	$panitia = $this->panitia_model->getPanitia($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($panitia)) {
-			// 		$id = $panitia["id"];
-			// 	}
-
-			// 	$id = $this->panitia_model->save($data, $id);
-			// }
-			// else if ($type == "Moderator") {
-			// 	// Check Moderator Apakah Sudah Pernah Daftar
-			// 	$pa = $this->moderator_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($pa)) {
-			// 		$id = $pa["id"];
-			// 	}
-
-			// 	$id = $this->moderator_model->save($data, $id);
-			// }
-			// else if ($type == "Pengajar Praktek") {
-			// 	// Check Pengajar Praktek Apakah Sudah Pernah Daftar
-			// 	$pp = $this->pengajar_praktek_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($pp)) {
-			// 		$id = $pp["id"];
-			// 	}
-
-			// 	$id = $this->pengajar_praktek_model->save($data, $id);
-			// }
-			// else if ($type == "Fasilitator") {
-			// 	// Check Fasilitator Apakah Sudah Pernah Daftar
-			// 	$fasil = $this->fasilitator_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($fasil)) {
-			// 		$id = $fasil["id"];
-			// 	}
-
-			// 	$id = $this->fasilitator_model->save($data, $id);
-			// }
-			// else if ($type == "Instruktur") {
-			// 	// Check Fasilitator Apakah Sudah Pernah Daftar
-			// 	$instruktur = $this->instruktur_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($instruktur)) {
-			// 		$id = $instruktur["id"];
-			// 	}
-
-			// 	$id = $this->instruktur_model->save($data, $id);
-			// }
-			// else if ($type == "Pengawas") {
-			// 	// Check Pengawas Apakah Sudah Pernah Daftar
-			// 	$pengawas = $this->pengawas_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($pengawas)) {
-			// 		$id = $pengawas["id"];
-			// 	}
-
-			// 	$id = $this->pengawas_model->save($data, $id);
-			// }
-			// else if ($type == "Kepala Sekolah") {
-			// 	// Check Kepala Sekolah Apakah Sudah Pernah Daftar
-			// 	$kepsek = $this->kepala_sekolah_model->get($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($kepsek)) {
-			// 		$id = $kepsek["id"];
-			// 	}
-
-			// 	$id = $this->kepala_sekolah_model->save($data, $id);
-			// }
-			// else {
-			// 	// Check Peserta Apakah Sudah Pernah Daftar
-			// 	$peserta = $this->peserta_model->getPeserta($kegiatanId, $data["ktp"]);
-
-			// 	if (!empty($peserta)) {
-			// 		$id = $peserta["id"];
-			// 	}
-
-			// 	$id = $this->peserta_model->save($data, $id);
-			// }
-			$registered = $this->komponen_kegiatan_model->getDetailByNik($_POST['table_komponen'], $kegiatanId, $data["ktp"]);
-			
-			// if ($type == "Narasumber") {
-			// 	$registered = $this->narasumber_model->getNarasumber($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Panitia") {
-			// 	$registered = $this->panitia_model->getPanitia($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Moderator") {
-			// 	$registered = $this->moderator_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Pengajar Praktek") {
-			// 	$registered = $this->pengajar_praktek_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Fasilitator") {
-			// 	$registered = $this->fasilitator_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Instruktur") {
-			// 	$registered = $this->instruktur_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Pengawas") {
-			// 	$registered = $this->pengawas_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else if ($type == "Kepala Sekolah") {
-			// 	$registered = $this->kepala_sekolah_model->get($kegiatanId, $data["ktp"]);
-			// }
-			// else {
-			// 	$registered = $this->peserta_model->getPesertaById($id);
-			// }
-			
-			// handle surat tugas
-			if (isset($_FILES['surat_tugas']) && !empty($_FILES['surat_tugas'])) {
-				$files = array();
-				$allowed = array('pdf', 'jpg', 'jpeg', 'png');
-				$allowedSize = 3145728; // 3 Mb
+			if (!empty($komponen)) {
+				// Cek Jika Sudah Pernah Registrasi
+				$user = $this->komponen_kegiatan_model->getDetailByNik($komponen->table_name, $kegiatanId, $data["ktp"]);
 				
-				$tempFile = $_FILES['surat_tugas']["tmp_name"];          
-      
-				$targetPath = $dir = APPPATH . "../assets/surat_tugas/".$kegiatan["kode"];
-				
-				is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
-				
-				$filename = $_FILES['surat_tugas']['name'];
-				$ext = pathinfo($filename, PATHINFO_EXTENSION);
+				// Jika Sudah Registrasi, Set ID ke Registrasi Sebelumnya
+				if (!empty($user)) {
+					$id = $user["id"];
+				}
 
-				$targetFile =  "Surat_Tugas_".$registered["kode"].".".$ext;
-
-				move_uploaded_file($tempFile,$targetPath. "/" .$targetFile);
+				$id = $this->komponen_kegiatan_model->save($komponen->table_name, $komponen->code, $data, $id);
 				
-				$data["surat_tugas"] = $targetFile;
+				$registered = $this->komponen_kegiatan_model->getDetailByNik($komponen->table_name, $kegiatanId, $data["ktp"]);
 				
-				$id = $this->komponen_kegiatan_model->save($_POST['table_komponen'], $_POST['code_komponen'], $data, $id);
-				
-				// if ($type == "Narasumber") {
-				// 	$id = $this->narasumber_model->save($data, $id);
-				// }
-				// else if ($type == "Panitia") {
-				// 	$id = $this->panitia_model->save($data, $id);
-				// }
-				// else if ($type == "Moderator") {
-				// 	$id = $this->moderator_model->save($data, $id);
-				// }
-				// else if ($type == "Pengajar Praktek") {
-				// 	$id = $this->pengajar_praktek_model->save($data, $id);
-				// }
-				// else if ($type == "Fasilitator") {
-				// 	$id = $this->fasilitator_model->save($data, $id);
-				// }
-				// else if ($type == "Instruktur") {
-				// 	$id = $this->instruktur_model->save($data, $id);
-				// }
-				// else if ($type == "Pengawas") {
-				// 	$id = $this->pengawas_model->save($data, $id);
-				// }
-				// else if ($type == "Kepala Sekolah") {
-				// 	$id = $this->kepala_sekolah_model->save($data, $id);
-				// }
-				// else {
-				// 	$id = $this->peserta_model->save($data, $id);
-				// }
-			}
-			
-			// handle buku tabungan
-			if (isset($_FILES['buku_tabungan']) && !empty($_FILES['buku_tabungan'])) {
-				$files = array();
-				$allowed = array('pdf', 'jpg', 'jpeg', 'png');
-				$allowedSize = 3145728; // 3 Mb
-				
-				$tempFile = $_FILES['buku_tabungan']["tmp_name"];          
-      
-				$targetPath = $dir = APPPATH . "../assets/buku_tabungan";
-				
-				is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
-				
-				$filename = $_FILES['buku_tabungan']['name'];
-				$ext = pathinfo($filename, PATHINFO_EXTENSION);
-
-				$targetFile =  "tabungan_".$ktp.".".$ext;
-
-				move_uploaded_file($tempFile,$targetPath. "/" .$targetFile);
-				
-				if ($ext == "jpeg" || $ext == "jpg" || $ext == "png") {
+				// handle surat tugas
+				if (isset($_FILES['surat_tugas']) && !empty($_FILES['surat_tugas'])) {
+					$files = array();
+					$allowed = array('pdf', 'jpg', 'jpeg', 'png');
+					$allowedSize = 3145728; // 3 Mb
 					
-					if ($ext == "jpeg" || $ext == "jpg") {
-						$imageTmp = imagecreatefromjpeg($targetPath. "/" .$targetFile);
+					$tempFile = $_FILES['surat_tugas']["tmp_name"];
+					
+					$dir = APPPATH . "../assets/surat_tugas";
+
+					is_dir($dir) || @mkdir($dir) || die("Can't Create folder");
+		
+					$targetPath = $dir."/".$kegiatan["kode"];
+					
+					is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
+					
+					$filename = $_FILES['surat_tugas']['name'];
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+					$targetFile =  "Surat_Tugas_".$registered["kode"].".".$ext;
+
+					move_uploaded_file($tempFile, $targetPath. "/" .$targetFile);
+					
+					$data["surat_tugas"] = $targetFile;
+					
+					$id = $this->komponen_kegiatan_model->save($komponen->table_name, $komponen->code, $data, $id);
+				}
+
+				// handle buku tabungan
+				if (isset($_FILES['buku_tabungan']) && !empty($_FILES['buku_tabungan'])) {
+					$files = array();
+					$allowed = array('pdf', 'jpg', 'jpeg', 'png');
+					$allowedSize = 3145728; // 3 Mb
+					
+					$tempFile = $_FILES['buku_tabungan']["tmp_name"];
+		
+					$targetPath = APPPATH . "../assets/buku_tabungan";
+					
+					is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
+					
+					$filename = $_FILES['buku_tabungan']['name'];
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+					$targetFile =  "tabungan_".$ktp.".".$ext;
+
+					move_uploaded_file($tempFile,$targetPath. "/" .$targetFile);
+					
+					if ($ext == "jpeg" || $ext == "jpg" || $ext == "png") {
+						
+						if ($ext == "jpeg" || $ext == "jpg") {
+							$imageTmp = imagecreatefromjpeg($targetPath. "/" .$targetFile);
+						}
+						else if ($ext == "png") {
+							$imageTmp = imagecreatefrompng($targetPath. "/" .$targetFile);
+						}
+						
+						imagejpeg($imageTmp, $targetPath. "/" ."tabungan_".$ktp.".jpg", 25);
+						imagedestroy($imageTmp);
+						
+						if ($ext != "jpg") {
+							unlink($targetPath. "/" .$targetFile);
+						}
 					}
-					else if ($ext == "png") {
-						$imageTmp = imagecreatefrompng($targetPath. "/" .$targetFile);
-					}
-				    
-				    imagejpeg($imageTmp, $targetPath. "/" ."tabungan_".$ktp.".jpg", 25);
-                    imagedestroy($imageTmp);
-                    
-					if ($ext != "jpg") {
-						unlink($targetPath. "/" .$targetFile);
+					
+					if (file_exists($targetPath. "/" ."tabungan_".$ktp.".jpg")) {
+						$im = new imagick($targetPath. "/" ."tabungan_".$ktp.".jpg");
+						$im->setImageCompression(true);
+						$im->setCompression(Imagick::COMPRESSION_JPEG);
+						$im->setCompressionQuality(25); 
+						$im->setImageFormat("jpg");
+						$im->stripImage();
+
+						$im->writeImage($targetPath. "/" ."tabungan_".$ktp.".jpg"); 
+						$im->clear(); 
+						$im->destroy();
 					}
 				}
-				
-				if (file_exists($targetPath. "/" ."tabungan_".$ktp.".jpg")) {
-					$im = new imagick($targetPath. "/" ."tabungan_".$ktp.".jpg");
-					$im->setImageCompression(true);
-					$im->setCompression(Imagick::COMPRESSION_JPEG);
-					$im->setCompressionQuality(25); 
-					$im->setImageFormat("jpg");
-					$im->stripImage();
 
-					$im->writeImage($targetPath. "/" ."tabungan_".$ktp.".jpg"); 
-					$im->clear(); 
-					$im->destroy();
+				// handle ttd
+				if (isset($data["tanda_tangan"]) && !empty($data["tanda_tangan"])) {
+					$data_uri = $data["tanda_tangan"];
+					$encoded_image = explode(",", $data_uri)[1];
+					$decoded_image = base64_decode($encoded_image);
+					
+					$dir = APPPATH . "../assets/ttd/".$kegiatan["kode"]; // Full Path
+					$name = 'ttd-'.$ktp.'.png';
+
+					is_dir($dir) || @mkdir($dir) || die("Can't Create folder");
+					
+					file_put_contents($dir."/".$name, $decoded_image);
+					
+					$this->utility->resize_image($dir."/".$name, 200);
 				}
-			}
-			
-			// handle ttd
-			if (isset($data["tanda_tangan"]) && !empty($data["tanda_tangan"])) {
-				$data_uri = $data["tanda_tangan"];
-				$encoded_image = explode(",", $data_uri)[1];
-				$decoded_image = base64_decode($encoded_image);
-				
-				$dir = APPPATH . "../assets/ttd/".$kegiatan["kode"]; // Full Path
-				$name = 'ttd-'.$ktp.'.png';
 
-				is_dir($dir) || @mkdir($dir) || die("Can't Create folder");
+				// Update data Biodata
+				if (isset($data["konfirmasi_paket"])) {
+					unset($data["konfirmasi_paket"]);
+				}
 				
-				file_put_contents($dir."/".$name, $decoded_image);
+				if (isset($data["tanda_tangan"])) {
+					unset($data["tanda_tangan"]);
+				}
 				
-				$this->utility->resize_image($dir."/".$name, 200);
-			}
-			
-			// Update data Biodata
-			if (isset($data["konfirmasi_paket"])) {
-				unset($data["konfirmasi_paket"]);
-			}
-			
-			if (isset($data["tanda_tangan"])) {
-				unset($data["tanda_tangan"]);
-			}
-			
-			if (isset($data["surat_tugas"])) {
-				unset($data["surat_tugas"]);
-			}
-			
-			if (isset($data["kategori"])) {
-				unset($data["kategori"]);
-			}
-			
-			$this->biodata_model->updateByNIK($data);
-			
-			
-			// Prepare For Preview
-			$out["error"] = false;
-			$out["msg"] = "Berhasil melakukan pendaftaran!";
-			$data["kegiatan"] = $kegiatan;
-			
-			$data[$komponen->code] = $registered;
+				if (isset($data["surat_tugas"])) {
+					unset($data["surat_tugas"]);
+				}
+				
+				if (isset($data["kategori"])) {
+					unset($data["kategori"]);
+				}
+				
+				$this->biodata_model->updateByNIK($data);
 
-			// if ($type == "Narasumber") {
-			// 	$data["narasumber"] = $registered;
-			// }
-			// else if ($type == "Panitia") {
-			// 	$data["panitia"] = $registered;
-			// }
-			// else if ($type == "Moderator") {
-			// 	$data["moderator"] = $registered;
-			// }
-			// else if ($type == "Pengajar Praktek") {
-			// 	$data["pp"] = $registered;
-			// }
-			// else if ($type == "Fasilitator") {
-			// 	$data["fasil"] = $registered;
-			// }
-			// else if ($type == "Instruktur") {
-			// 	$data["instruktur"] = $registered;
-			// }
-			// else if ($type == "Pengawas") {
-			// 	$data["pengawas"] = $registered;
-			// }
-			// else if ($type == "Kepala Sekolah") {
-			// 	$data["kepala_sekolah"] = $registered;
-			// }
-			// else {
-			// 	$data["peserta"] = $registered;
-			// }
-			
-			$out["html"] = $this->load->view('frontend/kegiatan/kegiatan_registrasi_berhasil', $data, true);
+
+				// Prepare For Preview
+				$out["error"] = false;
+				$out["msg"] = "Berhasil melakukan pendaftaran!";
+				$data["kegiatan"] = $kegiatan;
+				
+				$data["item"] = $registered;
+				$data["komponen"] = $komponen;
+
+				// Kegiatan Options
+				$kegiatan_options = $this->kegiatan_options_model->get($kegiatan["id"], $komponen->code);
+
+				$data["wa_grup"] = "";
+				$data["tele_grup"] = "";
+
+				if (!empty($kegiatan_options)) {
+					foreach ($kegiatan_options as $opts) {
+						if ($opts["key"] == "wa_grup") {
+							$data["wa_grup"] = $opts["value"];
+						}
+
+						if ($opts["key"] == "tele_grup") {
+							$data["tele_grup"] = $opts["value"];
+						}
+					}
+				}
+
+				$out["html"] = $this->load->view('frontend/kegiatan/kegiatan_registrasi_berhasil', $data, true);
+			}
+			else {
+				$out["error"] = true;
+				$out["msg"] = "Gagal melakukan pendaftaran!";
+				$data["kegiatan"] = $kegiatan;
+			}
 		}
 		
 		print json_encode($out);
