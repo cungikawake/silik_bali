@@ -23,11 +23,11 @@
 		}
 	?>
 
-	<?php if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
+	<?php /*if ($this->utility->hasUserAccess("data_dukung_kegiatan","list")) { ?>
 	<li class="nav-item">
 		<a class="nav-link <?php if ($url_2 == "data_dukung") { print "active"; } ?>" href="<?php print base_url("admin/kegiatan/data_dukung/".$kegiatan["id"]."/"); ?>">Data Dukung</a>
 	</li>
-	<?php } ?>
+	<?php }*/ ?>
 	
 	<?php if ($showMoreOpt) { ?>
 		<li class="nav-more-opt"><a data-toggle="collapse" href="#<?php print $opt; ?>" role="button" aria-expanded="true" aria-controls="<?php print $opt; ?>"><i class="fas fa-angle-down"></i></a></li>

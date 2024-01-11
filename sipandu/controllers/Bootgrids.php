@@ -1522,11 +1522,14 @@ class Bootgrids extends CI_Controller {
 					$data["satker"] = $dataSatker;
 				}
 				
-				
-				$table = $_POST["table"];
-				$data["table"] = $table;
-				$data["code_komponen"] = $_POST["unsur"];
-				$data["unsur"] = $_POST["unsur"];
+				if (isset($_POST["table"]) && !empty($_POST["table"])) {
+					$this->load->model("master_komponen_kegiatan_model");
+					$komponen = $this->master_komponen_kegiatan_model->get_record_by_table($_POST["table"]);
+					
+					$data["table"] = $komponen->table_name;
+					$data["code_komponen"] = $komponen->code;
+					$data["unsur"] = $komponen->code;
+				}
 			}
 			
 			if ($view == "backend/spj/modal_edit_item") {
@@ -1731,121 +1734,24 @@ class Bootgrids extends CI_Controller {
 					}
 				}
 			}
-			
-			if ($_POST["table"] == "kegiatan_peserta") {
-				$this->load->model("peserta_model");
-				$peserta = $this->peserta_model->getPesertaById($_POST["id"]);
+
+			// Hanlde Delete Kegiatan Komponen Item
+			if (substr($_POST["table"], 0, strlen("kegiatan_")) === "kegiatan_") {
+				$this->load->model("master_komponen_kegiatan_model");
+				$this->load->model("komponen_kegiatan_model");
+
+				$komponen = $this->master_komponen_kegiatan_model->get_record_by_table($_POST["table"]);
 				
-				if (isset($peserta["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($peserta["kegiatan_id"]);
+				if (!empty($komponen)) {
+					$item = $this->komponen_kegiatan_model->getItemById($komponen->code, $_POST["id"]);
 					
-					$this->utility->deleteTtd($kegiatan["kode"], $peserta["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $peserta["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_narasumber") {
-				$this->load->model("narasumber_model");
-				$narasumber = $this->narasumber_model->getNarasumberById($_POST["id"]);
-				
-				if (isset($narasumber["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($narasumber["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $narasumber["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $narasumber["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_moderator") {
-				$this->load->model("moderator_model");
-				$moderator = $this->moderator_model->getById($_POST["id"]);
-				
-				if (isset($moderator["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($moderator["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $moderator["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $moderator["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_panitia") {
-				$this->load->model("panitia_model");
-				$panitia = $this->panitia_model->getPanitiaById($_POST["id"]);
-				
-				if (isset($panitia["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($panitia["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $panitia["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $panitia["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_fasilitator") {
-				$this->load->model("fasilitator_model");
-				$fasilitator = $this->fasilitator_model->getById($_POST["id"]);
-				
-				if (isset($fasilitator["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($fasilitator["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $fasilitator["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $fasilitator["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_instruktur") {
-				$this->load->model("instruktur_model");
-				$instruktur = $this->instruktur_model->getById($_POST["id"]);
-				
-				if (isset($instruktur["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($instruktur["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $instruktur["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $instruktur["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_pengajar_praktek") {
-				$this->load->model("pengajar_praktek_model");
-				$pengajar_praktek = $this->pengajar_praktek_model->getById($_POST["id"]);
-				
-				if (isset($pengajar_praktek["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($pengajar_praktek["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $pengajar_praktek["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $pengajar_praktek["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_pengawas") {
-				$this->load->model("pengawas_model");
-				$pengawas = $this->pengawas_model->getById($_POST["id"]);
-				
-				if (isset($pengawas["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($pengawas["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $pengawas["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $pengawas["surat_tugas"]);
-				}
-			}
-			
-			if ($_POST["table"] == "kegiatan_kepala_sekolah") {
-				$this->load->model("kepala_sekolah_model");
-				$kepala_sekolah = $this->kepala_sekolah_model->getById($_POST["id"]);
-				
-				if (isset($kepala_sekolah["kegiatan_id"])) {
-					$this->load->model("kegiatan_model");
-					$kegiatan = $this->kegiatan_model->getKegiatanById($kepala_sekolah["kegiatan_id"]);
-					
-					$this->utility->deleteTtd($kegiatan["kode"], $kepala_sekolah["kode"]);
-					$this->utility->deleteSurTug($kegiatan["kode"], $kepala_sekolah["surat_tugas"]);
+					if (isset($item["kegiatan_id"])) {
+						$this->load->model("kegiatan_model");
+						$kegiatan = $this->kegiatan_model->getKegiatanById($item["kegiatan_id"]);
+						
+						$this->utility->deleteTtd($kegiatan["kode"], $item["kode"]);
+						$this->utility->deleteSurTug($kegiatan["kode"], $item["surat_tugas"]);
+					}
 				}
 			}
 			
@@ -1903,14 +1809,20 @@ class Bootgrids extends CI_Controller {
 
 				$out["error"] = false;
 				
-				if ($_POST["table"] == "kegiatan_peserta") {
-					$this->load->model("peserta_model");
-					$this->peserta_model->refreshNoUrutPeserta($peserta["kegiatan_id"]);
+				if (substr($_POST["table"], 0, strlen("kegiatan_")) === "kegiatan_") {
+					$this->load->model("master_komponen_kegiatan_model");
+					$this->load->model("komponen_kegiatan_model");
+	
+					$komponen = $this->master_komponen_kegiatan_model->get_record_by_table($_POST["table"]);
+					
+					if (!empty($komponen) && isset($item["kegiatan_id"])) {
+						$this->komponen_kegiatan_model->refreshNoUrut($komponen->code, $item["kegiatan_id"]);
+					}
 				}
 			}
 			else {
 				$out["error"] = true;
-				$out["msg"] = "Gagal menghapus spby";
+				$out["msg"] = "Gagal menghapus item";
 			}
 		}
 		
