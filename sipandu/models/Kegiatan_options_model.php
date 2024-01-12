@@ -35,6 +35,10 @@ class Kegiatan_options_model extends CI_Model{
 					$row["value"] = json_decode($row["value"], true);
 				}
 
+				if ($row["key"] == "daftar_hadir") {
+					$row["value"] = json_decode($row["value"], true);
+				}
+
 				$out[$row["id"]] = $row;
 			}
 		}

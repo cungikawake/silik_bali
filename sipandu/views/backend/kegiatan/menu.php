@@ -234,17 +234,25 @@
 																}
 
 																foreach ($date_sign as $tglDetail) {
-																	?>
-																		<div class="form-group group-switch-<?php print strtotime($tglDetail); ?>">
+																	$strDate = strtotime($tglDetail);
+																	$checked = "";
+																	$readOnly = "link-off";
+
+																	if (isset($kegiatan_options["daftar_hadir"][$strDate]["link_on"]) && !empty($kegiatan_options["daftar_hadir"][$strDate]["link_on"])) {
+																		$checked = 'checked="checked"';
+																		$readOnly = "";
+																	}																
+																?>
+																		<div class="form-group group-switch-<?php print $strDate; ?> <?php print $readOnly; ?>">
 																			<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
 																			<div class="switch switch-dh d-inline">
-																				<input type="checkbox" class="bitly-dh" data-kegiatan="<?php print $kegiatan["id"]; ?>" data-type="<?php print $komponen->code; ?>" data-date="<?php print strtotime($tglDetail); ?>" name="bitly_daftar_hadir[<?php print date("d-m-Y", strtotime($tglDetail)); ?>]" id="switchDH-<?php print strtotime($tglDetail); ?>" value="1" />
-																				<label for="switchDH-<?php print strtotime($tglDetail); ?>" class="cr" style="top:10px;" title="Aktifkan Registrasi"></label>
+																				<input type="checkbox" <?php print $checked; ?> class="bitly-dh" data-kegiatan="<?php print $kegiatan["id"]; ?>" data-type="<?php print $komponen->code; ?>" data-date="<?php print $strDate; ?>" name="bitly_daftar_hadir[<?php print date("d-m-Y", $strDate); ?>]" id="switchDH-<?php print $strDate; ?>" value="1" />
+																				<label for="switchDH-<?php print $strDate; ?>" class="cr" style="top:10px;" title="Aktifkan Registrasi"></label>
 																			</div>
 
 																			<div class="row">
 																				<div class="col-md-10">
-																				<input type="text" class="form-control form-link-dh" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".strtotime($tglDetail)); ?>" />
+																				<input type="text" class="form-control form-link-dh" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".$strDate); ?>" />
 																				</div>
 																				<div class="col-md-2 pl-0">
 																					<button class="btn btn-edit-dh-bitly" title="Edit Bitly Link"><i class="fas fa-edit"></i></button>
