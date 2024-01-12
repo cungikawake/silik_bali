@@ -374,29 +374,30 @@ Kegiatan.switchRegistration = function (keg, type, val) {
 	});
 }
 
-Kegiatan.switchDaftarHadir = function (keg, type, date, val) {
+Kegiatan.switchDaftarHadir = function (keg, komponen, tanggal, val) {
 	
 	if (val) {
-		$(".group-switch-"+date).removeClass("link-off");
+		$(".group-switch-"+tanggal).removeClass("link-off");
 	}
 	else {
-		$(".group-switch-"+date).addClass("link-off");
+		$(".group-switch-"+tanggal).addClass("link-off");
 	}
 		
-	// $.ajax({
-	// 	type: "POST",
-	// 	url: "/admin/kegiatan/switchRegistration/?v="+Math.random(),
-	// 	data: {
-	// 		kegiatanId: keg,
-	// 		type: type,
-	// 		switch: val,
-	// 		version: Math.random()				
-	// 	},
-	// 	dataType: 'json',
-	// 	success: function(obj){
+	$.ajax({
+		type: "POST",
+		url: "/admin/kegiatan/switchDaftarHadir/?v="+Math.random(),
+		data: {
+			kegiatanId: keg,
+			komponen: komponen,
+			tanggal: tanggal,
+			switch: val,
+			version: Math.random()				
+		},
+		dataType: 'json',
+		success: function(obj){
 
-	// 	}
-	// });
+		}
+	});
 }
 
 Kegiatan.loadDakungList = function (kegiatanId, section) {
@@ -760,25 +761,14 @@ Kegiatan.init = function () {
 
 	$(document).on("change", ".bitly-dh", function () {
 		var kegiatanId = $(this).attr('data-kegiatan');
-		var type = $(this).attr('data-type');
+		var komponen = $(this).attr('data-type');
 		var date = $(this).attr('data-date');
 		
 		if ($(this).is(':checked')) {
-			// if (!$('.generateBitlyLinkTarget').length) {
-			// 	var modalHtml = Kegiatan.getBitlyModal("");
-			
-			// 	$('#modal-bitly').remove();
-			// 	$('body').append(modalHtml);
-				
-			// 	$('#modal-bitly').modal('show');
-			// 	$('#modal-bitly [name="bitly_link"]').focus();
-			// }
-			// else {
-				Kegiatan.switchDaftarHadir(kegiatanId, type, date, 1);
-			// }
+			Kegiatan.switchDaftarHadir(kegiatanId, komponen, date, 1);
 		}
 		else {
-			Kegiatan.switchDaftarHadir(kegiatanId, type, date, 0);
+			Kegiatan.switchDaftarHadir(kegiatanId, komponen, date, 0);
 		}
 	});
 	

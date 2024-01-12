@@ -804,6 +804,52 @@ class Kegiatan extends CI_Controller {
 		print json_encode($out);
 		exit();
 	}
+
+	public function switchDaftarHadir () {
+		$this->auth->login();
+		
+		$out = array();
+		$out["error"] = true;
+		
+		if (isset($_POST["kegiatanId"]) && !empty($_POST["kegiatanId"])) {
+			$kegiatanId = $_POST["kegiatanId"];
+			$komponen = $_POST["komponen"];
+			$tanggal = $_POST["tanggal"];
+			$switch = $_POST["switch"];
+
+			$kegiatanOptions = $this->kegiatan_options_model->get($kegiatanId, $komponen);
+			$optionId = 0;
+			$optionValue = array();
+
+			if (isset($kegiatanOptions) && !empty($kegiatanOptions)) {
+				foreach ($kegiatanOptions as $ops) {
+					if ($ops["key"] == "daftar_hadir") {
+						$optionId = $ops["id"];
+						$optionValue = $ops["value"];
+					}
+				}
+			}
+
+			if (!isset($optionValue[$tanggal])) {
+				$optionValue[$tanggal] = array();
+			}
+
+			$optionValue[$tanggal]["link_on"] = $switch;  
+
+			$foo = array();
+			$foo["kegiatan_id"] = $kegiatanId;
+			$foo["code_komponen"] = $komponen;
+			$foo["key"] = "daftar_hadir";
+			$foo["value"] = json_encode($optionValue);
+
+			$this->kegiatan_options_model->save($foo, $optionId);
+			
+			$out["error"] = false;
+		}
+		
+		print json_encode($out);
+		exit();
+	}
 	
 	public function download_biodata ($kegiatanId, $type) {
 		$this->auth->login();
