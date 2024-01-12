@@ -1,7 +1,10 @@
-/sipandu/config/database.php
+# /sipandu/config/database.php
 /mysql-data/*
 /assets/user_dokumen/*
 /assets/laporan_perjadin/*
 /assets/surat_tugas/*
 /assets/ttd/*
 /assets/images/sertifikat/*
+/assets/buku_tabungan/*
+.env
+/vendor

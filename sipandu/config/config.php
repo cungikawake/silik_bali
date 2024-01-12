@@ -25,9 +25,10 @@ date_default_timezone_set('Asia/Makassar');
 | a PHP script and you can easily do that on your own.
 |
 */
+ 
 $config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-$config['site_name'] = 'SILIK BALI';
-$config['site_description'] = 'Sistem Layanan Informasi Dan Konsultasi BGP Provinsi Bali';
+$config['site_name'] = $_ENV['APP_NAME'];
+$config['site_description'] = $_ENV['APP_DETAIL'];
 
 /**
  * Migration database
@@ -148,7 +149,8 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = "vendor/autoload.php";
+//$config['composer_autoload'] = "vendor/autoload.php";
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
