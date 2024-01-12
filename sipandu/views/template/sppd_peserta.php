@@ -19,13 +19,6 @@
 	if (isset($kegiatan["id"]) && $kegiatan["id"] == "126") {
 		$kegiatan["kab_tempat_kegiatan"] = $pejabat_peserta["kab"];
 	}
-	
-	$lokasi = array(
-		"unit_kerja" => $kegiatan["spd_satker"], 
-		"nama" => $kegiatan["spd_nama"], 
-		"nip" => $kegiatan["spd_nip"], 
-		"jabatan" => $kegiatan["spd_jabatan"]
-	);
 ?>
 <table cellpadding="0" cellspacing="0" class="bordered">
 	<tr>
@@ -173,17 +166,8 @@
 				</tr>
 				<tr>
 					<td class="no-border"></td>
-					<td class="no-border">&nbsp;</td>
-					<td class="no-border"></td>
-				</tr>
-				<tr>
-					<td class="no-border"></td>
 					<td class="no-border ttd">&nbsp;</td>
 					<td class="no-border"></td>
-				</tr>
-				<tr>
-					<td class="no-border"></td>
-					<td class="no-border" colspan="2">&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="no-border"></td>
@@ -210,17 +194,8 @@
 				</tr>
 				<tr>
 					<td class="no-border"></td>
-					<td class="no-border">&nbsp;</td>
-					<td class="no-border"></td>
-				</tr>
-				<tr>
-					<td class="no-border"></td>
 					<td class="no-border ttd">&nbsp;</td>
 					<td class="no-border"></td>
-				</tr>
-				<tr>
-					<td class="no-border"></td>
-					<td class="no-border" colspan="2">&nbsp;</td>
 				</tr>
 				<tr>
 					<td class="no-border"></td>
