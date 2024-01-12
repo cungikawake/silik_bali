@@ -136,25 +136,25 @@
 													<div class="col-md-6">
 														<label>Form Pendaftaran <?php print $kom->name;?></label>
 														<div class="form-group">
-															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+															<div class="checkbox checkbox-primary" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="option[form_show_bank]" id="checkbox-p-1" <?php print $bank; ?> value="1" />
 																<label for="checkbox-p-1" class="cr">Tampilkan Form Akun Bank</label>
 															</div>
-															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+															<div class="checkbox checkbox-primary" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="option[form_show_confirm_paket]" id="checkbox-p-2" <?php print $paket; ?> value="1" />
 																<label for="checkbox-p-2" class="cr">Tampilkan Form Konfirmasi Penerimaan Paket Data</label>
 															</div>
-															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+															<div class="checkbox checkbox-primary" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="option[form_ttd]" id="checkbox-p-x1" <?php print $ttd; ?> value="1" />
 																<label for="checkbox-p-x1" class="cr">Tampilkan Form Tanda Tangan</label>
 															</div>
 														</div>
 														<div class="form-group">
-															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+															<div class="checkbox checkbox-primary" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="option[form_upload_surtug]" id="checkbox-st-1" <?php print $upSurtug; ?> value="1" />
 																<label for="checkbox-st-1" class="cr">Tampilkan Form Upload Surat Tugas</label>
 															</div>
-															<div class="checkbox checkbox-primary d-inline" style="padding: 0; margin: 5px 0 0;">
+															<div class="checkbox checkbox-primary" style="padding: 0; margin: 5px 0 0;">
 																<input type="checkbox" name="option[form_wajib_surtug]" id="checkbox-st-2" <?php print $surtug; ?> value="1" />
 																<label for="checkbox-st-2" class="cr">Peserta Wajib Upload Surat Tugas</label>
 															</div>
@@ -343,7 +343,7 @@
 														<div class="form-group" style="width: 70%;">
 															<label>Template Sertifikat Peserta</label>
 															<?php
-																$sertifikat = "";
+																$sertifikat = "0";
 																if (isset($kegiatan_options["sertificate"]) && !empty($kegiatan_options["sertificate"])) {
 																	$sertifikat = $kegiatan_options["sertificate"];
 																}

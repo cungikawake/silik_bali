@@ -7,7 +7,6 @@ class Komponen_kegiatan_model extends CI_Model{
 		// 	$this->tablePeserta = "kegiatan_peserta_".$_SESSION["tahun_anggaran"];
 		// }
     }
-	
 	 
 	public function save ($table, $code_komponen, $data, $id = 0) {
 
@@ -190,6 +189,87 @@ class Komponen_kegiatan_model extends CI_Model{
 		}
 		
 		$this->db->reset_query();
+		
+		return $out;
+	}
+
+	public function getItemByKode ($code_komponen, $kode) {
+		$out = array();
+		
+		// Komponen
+		$this->db->select("*");
+		$this->db->from("master_komponen_kegiatan");
+		$this->db->where("code", $code_komponen);
+		
+		$query = $this->db->get();
+
+		$komponen = array();
+
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$komponen = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+
+		// Item
+		$this->db->select("*");
+		$this->db->from($komponen["table_name"]);
+		$this->db->where("kode", $kode);
+		
+		$query = $this->db->get();
+		
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$out = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+		
+		return $out;
+	}
+
+	public function getAllItemByNik ($nik) {
+		$out = array();
+		
+		// Komponen
+		$this->db->select(array("code", "table_name"));
+		$this->db->from("master_komponen_kegiatan");
+		
+		$query = $this->db->get();
+
+		$komponen = array();
+
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$komponen[] = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+
+		if (!empty($komponen)) {
+			foreach ($komponen as $komp) {
+				// Item
+				$this->db->select("*");
+				$this->db->from($komp["table_name"]);
+				$this->db->where("ktp", $nik);
+				
+				$query = $this->db->get();
+				
+				if($query->num_rows() > 0) {
+					$out[$komp["code"]] = array();
+
+					foreach ($query->result_array() as $row) {
+						$out[$komp["code"]][] = $row;
+					}
+				}
+				
+				$this->db->reset_query();
+			}
+		}
 		
 		return $out;
 	}
