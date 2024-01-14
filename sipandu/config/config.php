@@ -1158,7 +1158,7 @@ $config["unsur_satuan"] = array(
 // Automatic Year
 $yearNow = date("Y");
 
-foreach (range(2022, $yearNow) as $confYear) {
+foreach (range($_ENV['START_YEAR'], $yearNow) as $confYear) {
 	$config["tahun_anggaran"][] = $confYear;
 }
 
