@@ -343,7 +343,7 @@
 	
 	Biodata.kabupatenProvinsi = function (provinsi) {
 		var items = [];
-		provinsi = typeof provinsi !== 'undefined' ? provinsi : "Bali";
+		provinsi = typeof provinsi !== 'undefined' ? provinsi : $_ENV['DEFAULT_PROVINSI'];
 		var kabupaten = [];
 		
 		<?php

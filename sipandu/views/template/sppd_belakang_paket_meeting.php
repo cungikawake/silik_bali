@@ -121,7 +121,7 @@
 						<td><?php print $item["jabatan"]." ".$item["unit_kerja"]; ?></td>
 						<td align="center"><?php print $item["kab_asal"]; ?></td>
 						<td class="center">C</td>
-						<td align="center">Angkutan <?php if ($item["provinsi_tujuan"] == "Bali") { print "Darat"; } else {print "Darat & Udara"; } ?></td>
+						<td align="center">Angkutan <?php if ($item["provinsi_tujuan"] == $_ENV['DEFAULT_PROVINSI']) { print "Darat"; } else {print "Darat & Udara"; } ?></td>
 						<td align="center"><?php print $item["nomor_surat"]; ?></td>
 						<td align="center"><?php print $this->utility->formatDateIndo($item["tgl_surat"]); ?></td>
 						<td align="center"><?php print $this->utility->formatDateIndo($item["tgl_mulai_tugas"]); ?></td>

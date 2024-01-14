@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 	<head>
-		<title>BGP Provinsi Bali</title>
+		<title>BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></title>
 		<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 11]>
@@ -12,8 +12,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="description" content="BGP Provinsi Bali" />
-		<meta name="author" content="BGP Provinsi Bali"/>
+		<meta name="description" content="BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?>" />
+		<meta name="author" content="BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?>"/>
 
 		<?php //Favicon icon ?>
 		<link rel="icon" href="<?php print base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
@@ -77,7 +77,7 @@
 		<div class="wrap-logo">
 			<div class="logo">
 				<img src="<?php print base_url("/assets/images/logo-kemdikbud.jpg"); ?>" width="120px" /><br >
-				<div class="logo-text">BGP Provinsi Bali</div>
+				<div class="logo-text">BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></div>
 				<div class="logo-moto">Saguyub Nangun Janakerthih</div>
 				<h4 class="alert alert-danger">Tanda Tangan Tidak Ditemukan</h4>
 			</div>

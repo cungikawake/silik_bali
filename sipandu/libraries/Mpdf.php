@@ -272,7 +272,7 @@
 				$mpdf->Output($setName.'.pdf', 'D');
 			}
 			else {
-				$mpdf->Output('sertifikat-bgpbali.pdf', 'I');
+				$mpdf->Output('sertifikat.pdf', 'I');
 			}
 		}
 		
@@ -392,7 +392,7 @@
 				$mpdf->Output($setName.'.pdf', 'D');
 			}
 			else {
-				$mpdf->Output('sertifikat-bgpbali.pdf', 'I');
+				$mpdf->Output('sertifikat.pdf', 'I');
 			}
 		}
 		

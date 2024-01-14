@@ -16,7 +16,7 @@
 				<div class="b-bg">
 				   <img src="<?php print base_url("/assets/images/logo-kemdikbud-icon.png"); ?>" />
 			   </div>
-			   <span class="b-title" title="Sistem Layanan Informasi dan Konsultasi BGP Provinsi Bali">SILIK BALI</span>
+			   <span class="b-title" title="Sistem Layanan Informasi dan Konsultasi BGP Provinsi"><?php echo $_ENV['APP_NAME'] ?></span>
 			</a>
 			<a class="mobile-menu <?php if (!$showMenu) { print "on"; } ?>" id="mobile-collapse" href="javascript:"><span></span></a>
 		</div>
