@@ -1,4 +1,4 @@
-# /sipandu/config/database.php
+/sipandu/config/database.php
 /mysql-data/*
 /assets/user_dokumen/*
 /assets/laporan_perjadin/*

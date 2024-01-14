@@ -2,10 +2,13 @@
 
 class Komponen_kegiatan_model extends CI_Model{
 	 
-    function __construct() {
-		// if (isset($_SESSION["tahun_anggaran"]) && !empty($_SESSION["tahun_anggaran"]) && $_SESSION["tahun_anggaran"] < date("Y")) {
-		// 	$this->tablePeserta = "kegiatan_peserta_".$_SESSION["tahun_anggaran"];
-		// }
+    protected $group_prefix = 'transaction_';
+	protected $new_db = '';
+
+    function __construct() { 
+		$db_tahun = $this->group_prefix . $_SESSION['tahun_anggaran']; 
+		$this->new_db = $this->load->database($db_tahun, true);
+		 
     }
 	 
 	public function save ($table, $code_komponen, $data, $id = 0) {
@@ -34,11 +37,11 @@ class Komponen_kegiatan_model extends CI_Model{
 				// Kegiatan
 				$kegiatan = array();
 			
-				$this->db->select("id, no_urut_terakhir, kode");
-				$this->db->from('kegiatan');
-				$this->db->where("id", $data["kegiatan_id"]);
+				$this->new_db->select("id, no_urut_terakhir, kode");
+				$this->new_db->from('kegiatan');
+				$this->new_db->where("id", $data["kegiatan_id"]);
 
-				$query = $this->db->get();
+				$query = $this->new_db->get();
 
 				if($query->num_rows() > 0) {
 					foreach ($query->result_array() as $row) {
@@ -57,7 +60,7 @@ class Komponen_kegiatan_model extends CI_Model{
 					$kegiatan["no_urut_terakhir"][$code_komponen] = 1;
 				}
 
-				$this->db->reset_query();
+				$this->new_db->reset_query();
 				
 
 				$data['kode']  = "";
@@ -69,20 +72,20 @@ class Komponen_kegiatan_model extends CI_Model{
 					$data['diubah_oleh'] = $_SESSION["user"]["id"];	
 				}
 				
-				$this->db->insert($table, $data);
-				$id = $this->db->insert_id();
-				$this->db->reset_query();
+				$this->new_db->insert($table, $data);
+				$id = $this->new_db->insert_id();
+				$this->new_db->reset_query();
 
 				
 				// Kode
 				$queryNoUrut = "";
 				$queryIdIn = array();
 			
-				$this->db->select("id");
-				$this->db->from($table);
-				$this->db->where("kegiatan_id", $data["kegiatan_id"]);
+				$this->new_db->select("id");
+				$this->new_db->from($table);
+				$this->new_db->where("kegiatan_id", $data["kegiatan_id"]);
 
-				$query = $this->db->get();
+				$query = $this->new_db->get();
 				
 				$urutkan = 1;
 				
@@ -101,16 +104,16 @@ class Komponen_kegiatan_model extends CI_Model{
 						END 
 						WHERE id IN(".implode(",",$queryIdIn).");";
 				
-				$this->db->query($sql);
-				$this->db->reset_query(); 
+				$this->new_db->query($sql);
+				$this->new_db->reset_query(); 
 				
 				$kegiatan["no_urut_terakhir"][$code_komponen] = $urutkan;
 
 				$lastQueue = array();
 				$lastQueue["no_urut_terakhir"] = json_encode($kegiatan["no_urut_terakhir"]);
-				$this->db->where("id", $kegiatan["id"]);
-				$this->db->update("kegiatan", $lastQueue);
-				$this->db->reset_query();
+				$this->new_db->where("id", $kegiatan["id"]);
+				$this->new_db->update("kegiatan", $lastQueue);
+				$this->new_db->reset_query();
 			}
 			else {
 				$data['diubah_tgl'] = date("Y-m-d H:i:s");
@@ -119,9 +122,9 @@ class Komponen_kegiatan_model extends CI_Model{
 					$data['diubah_oleh'] = $_SESSION["user"]["id"];	
 				}
 				
-				$this->db->where("id", $id);
-				$this->db->update($table, $data);
-				$this->db->reset_query();
+				$this->new_db->where("id", $id);
+				$this->new_db->update($table, $data);
+				$this->new_db->reset_query();
 			}
 		}
 		
@@ -129,20 +132,20 @@ class Komponen_kegiatan_model extends CI_Model{
 	}
 	 
 	public function delete ($table, $id) {
-		$this->db->where('id', $id);
-		$this->db->delete($table);
-		$this->db->reset_query();
+		$this->new_db->where('id', $id);
+		$this->new_db->delete($table);
+		$this->new_db->reset_query();
 	}
 
 	public function getDetailByNik ($table,  $kegiatan, $nik) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from($table);
-		$this->db->where("kegiatan_id", $kegiatan);
-		$this->db->where("ktp", $nik);
+		$this->new_db->select("*");
+		$this->new_db->from($table);
+		$this->new_db->where("kegiatan_id", $kegiatan);
+		$this->new_db->where("ktp", $nik);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -150,7 +153,7 @@ class Komponen_kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -176,11 +179,11 @@ class Komponen_kegiatan_model extends CI_Model{
 		$this->db->reset_query();
 
 		// Item
-		$this->db->select("*");
-		$this->db->from($komponen["table_name"]);
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from($komponen["table_name"]);
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -188,7 +191,7 @@ class Komponen_kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -214,11 +217,11 @@ class Komponen_kegiatan_model extends CI_Model{
 		$this->db->reset_query();
 
 		// Item
-		$this->db->select("*");
-		$this->db->from($komponen["table_name"]);
-		$this->db->where("kode", $kode);
+		$this->new_db->select("*");
+		$this->new_db->from($komponen["table_name"]);
+		$this->new_db->where("kode", $kode);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -226,7 +229,7 @@ class Komponen_kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -253,11 +256,11 @@ class Komponen_kegiatan_model extends CI_Model{
 		if (!empty($komponen)) {
 			foreach ($komponen as $komp) {
 				// Item
-				$this->db->select("*");
-				$this->db->from($komp["table_name"]);
-				$this->db->where("ktp", $nik);
+				$this->new_db->select("*");
+				$this->new_db->from($komp["table_name"]);
+				$this->new_db->where("ktp", $nik);
 				
-				$query = $this->db->get();
+				$query = $this->new_db->get();
 				
 				if($query->num_rows() > 0) {
 					$out[$komp["code"]] = array();
@@ -267,7 +270,7 @@ class Komponen_kegiatan_model extends CI_Model{
 					}
 				}
 				
-				$this->db->reset_query();
+				$this->new_db->reset_query();
 			}
 		}
 		
@@ -295,17 +298,17 @@ class Komponen_kegiatan_model extends CI_Model{
 		$this->db->reset_query();
 
 		if (!empty($komponen)) {
-			$this->db->select("*");
-			$this->db->from($komponen["table_name"]);
-			$this->db->where("kegiatan_id", $kegiatanId);
+			$this->new_db->select("*");
+			$this->new_db->from($komponen["table_name"]);
+			$this->new_db->where("kegiatan_id", $kegiatanId);
 			
-			$this->db->order_by('kategori', 'ASC');
+			$this->new_db->order_by('kategori', 'ASC');
 			
 			if ($sortKab) {
-				$this->db->order_by('kab_unit_kerja', 'ASC');
+				$this->new_db->order_by('kab_unit_kerja', 'ASC');
 			}
 			
-			$query = $this->db->get();
+			$query = $this->new_db->get();
 			
 			if($query->num_rows() > 0) {
 				foreach ($query->result_array() as $row) {
@@ -313,7 +316,7 @@ class Komponen_kegiatan_model extends CI_Model{
 				}
 			}
 			
-			$this->db->reset_query();
+			$this->new_db->reset_query();
 		}
 		
 		return $out;
@@ -340,11 +343,11 @@ class Komponen_kegiatan_model extends CI_Model{
 
 		$kegiatan = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->where("id", $kegiatanId);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->where("id", $kegiatanId);
 
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -357,11 +360,11 @@ class Komponen_kegiatan_model extends CI_Model{
 		$queryNoUrut = "";
 		$queryIdIn = array();
 
-		$this->db->select("id");
-		$this->db->from($komponen["table_name"]);
-		$this->db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->select("id");
+		$this->new_db->from($komponen["table_name"]);
+		$this->new_db->where("kegiatan_id", $kegiatanId);
 
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 
 		$urutkan = 1;
 
@@ -381,8 +384,8 @@ class Komponen_kegiatan_model extends CI_Model{
 				  END 
 				  WHERE id IN(".implode(",",$queryIdIn).");";
 		
-			$this->db->query($sql);
-			$this->db->reset_query();
+			$this->new_db->query($sql);
+			$this->new_db->reset_query();
 		}
 	}
 }
