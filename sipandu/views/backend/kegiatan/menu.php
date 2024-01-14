@@ -43,6 +43,8 @@
 	.btn-edit-dh-bitly { padding: 2px 0 0; background:none;}
 	.form-control.form-link-dh { border: 1px solid #c2defd; background-color: #ddecfd; cursor: pointer; font-size:13px; color:#222; }
 	.link-off .form-link-dh { border: 1px solid #EFEFEF; background: #EFEFEF; color: #888; cursor: default;}
+	.btn.btn-edit-dh-bitly { font-size:16px; }
+	.btn.btn-edit-dh-bitly[disabled] { opacity:0.4; }
 </style>
 
 <div class="keg-more-opt">
@@ -237,14 +239,21 @@
 																	$strDate = strtotime($tglDetail);
 																	$checked = "";
 																	$readOnly = "link-off";
+																	$disabled = "disabled";
+																	$linkDaftarHadir = base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".$strDate);
 
 																	if (isset($kegiatan_options["daftar_hadir"][$strDate]["link_on"]) && !empty($kegiatan_options["daftar_hadir"][$strDate]["link_on"])) {
 																		$checked = 'checked="checked"';
 																		$readOnly = "";
-																	}																
+																		$disabled = "";
+																	}
+																	
+																	if (isset($kegiatan_options["daftar_hadir"][$strDate]["link"]["custom_bitlinks"]) && !empty($kegiatan_options["daftar_hadir"][$strDate]["link"]["custom_bitlinks"])) {
+																		$linkDaftarHadir = $kegiatan_options["daftar_hadir"][$strDate]["link"]["custom_bitlinks"];
+																	}
 																?>
-																		<div class="form-group group-switch-<?php print $strDate; ?> <?php print $readOnly; ?>">
-																			<label>Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
+																		<div class="form-group form-group-switch group-switch-<?php print $strDate; ?> <?php print $readOnly; ?>">
+																			<label class="label-daftar-hadir">Daftar Hadir (<?php print $this->utility->formatShortDateIndo($tglDetail); ?>)</label>
 																			<div class="switch switch-dh d-inline">
 																				<input type="checkbox" <?php print $checked; ?> class="bitly-dh" data-kegiatan="<?php print $kegiatan["id"]; ?>" data-type="<?php print $komponen->code; ?>" data-date="<?php print $strDate; ?>" name="bitly_daftar_hadir[<?php print date("d-m-Y", $strDate); ?>]" id="switchDH-<?php print $strDate; ?>" value="1" />
 																				<label for="switchDH-<?php print $strDate; ?>" class="cr" style="top:10px;" title="Aktifkan Registrasi"></label>
@@ -252,10 +261,10 @@
 
 																			<div class="row">
 																				<div class="col-md-10">
-																				<input type="text" class="form-control form-link-dh" readonly value="<?php print base_url("daftar_hadir_".$kom->code."/".$kegiatan["id"]."/".$strDate); ?>" />
+																				<input type="text" class="form-control form-link-dh form-link-dh-<?php print $strDate; ?>" readonly value="<?php print $linkDaftarHadir; ?>" />
 																				</div>
 																				<div class="col-md-2 pl-0">
-																					<button class="btn btn-edit-dh-bitly" title="Edit Bitly Link"><i class="fas fa-edit"></i></button>
+																					<button class="btn btn-edit-dh-bitly" <?php print $disabled; ?> type="button" data-tanggal="<?php print $strDate; ?>" title="Edit Bitly Link"><i class="fas fa-edit"></i></button>
 																				</div>
 																			</div>
 																		</div>
@@ -313,15 +322,10 @@
 														</div>
 													</div>
 													<div class="col-md-6">
-														<label>Link SPD Peserta</label>
+														<label>Link SPD</label>
 														<div class="form-group">
 															<?php
-																if (!isset($kegiatan["link_spd_peserta"]) || (isset($kegiatan["link_spd_peserta"]) && empty($kegiatan["link_spd_peserta"]))) {
-																	$spdLink = base_url("/download/sppd_peserta/".$kegiatan["id"]);
-																}
-																else {
-																	$spdLink = $kegiatan["link_spd_peserta"];
-																}
+																$spdLink = base_url("/download/sppd_".$kom->code."/".$kegiatan["id"]);
 															?>
 															<input type="text" class="form-control input-edit-spd-link" value="<?php print $spdLink; ?>" readonly /> <!--<button type="button" class="btn btn-info btn-edit-spd-link" title="Edit SPD Link"><i class="fas fa-edit"></i></button>--><br />
 															<small>Link untuk download SPD apabila peserta perlu membawa SPD</small>

@@ -39,7 +39,7 @@
 				<?php } ?>
 				
 				<?php
-					if ($this->utility->hasUserAccess("hai_bgp","list")) { 
+					/*if ($this->utility->hasUserAccess("hai_bgp","list")) { 
 						$count = $this->notif->getNotifHAI();
 						$notif = "";
 						
@@ -50,7 +50,7 @@
 					<li class="nav-item <?php if ($url_1 == "tiket") print "active"; ?>">
 						<a href="<?php print base_url('/admin/tiket/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-message-circle"></i></span><span class="pcoded-mtext">HAI BGP</span><?php print $notif; ?></a>
 					</li>
-				<?php } ?>
+				<?php }*/ ?>
 				
 				<li class="nav-item pcoded-menu-caption">
 					<label>Privasi</label>

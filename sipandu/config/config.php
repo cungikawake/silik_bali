@@ -950,12 +950,12 @@ $config["user_akses"] = array(
 			"name" => "Add Data Dukung"
 		),
 	),
-	"hai_bgp" => array(
+	/*"hai_bgp" => array(
 		"list" => array(
 			"value" => 1,
 			"name" => "List Hai BGP"
 		)
-	),
+	),*/
 	"keuangan" => array(
 		"apr_perjadin" => array(
 			"value" => 0,

@@ -199,36 +199,6 @@
 	}
 </style>
 
-<?php
-	if ($type == "narasumber") {
-		$komponen = "Narasumber";
-	}
-	else if ($type == "panitia") {
-		$komponen = "Panitia";
-	}
-	else if ($type == "moderator") {
-		$komponen = "Moderator";
-	}
-	else if ($type == "pengajar_praktik") {
-		$komponen = "Pengajar Praktik";
-	}
-	else if ($type == "fasilitator") {
-		$komponen = "Fasilitator";
-	}
-	else if ($type == "instruktur") {
-		$komponen = "Instruktur";
-	}
-	else if ($type == "pengawas") {
-		$komponen = "Pengawas";
-	}
-	else if ($type == "kepala_sekolah") {
-		$komponen = "Kepala Sekolah";
-	}
-	else {
-		$komponen = "Peserta";
-	}
-?>
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -239,7 +209,7 @@
 							<img src="/assets/images/logo-kemdikbud.jpg" width="120px" />
 						</div>
 						<div class="col-md-9">
-							<div class="head1">Daftar Hadir <?php print $komponen; ?></div>
+							<div class="head1">Daftar Hadir <?php print $komponen->name; ?></div>
 							<div class="head2">Kegiatan <?php print $kegiatan["nama"]; ?></div>
 							
 							<p class="meta-keg">Hari/Tgl:
@@ -265,36 +235,10 @@
                 
                 <?php
 					$showForm = 0;
-					
-					if ($type == "peserta" && $kegiatan["link_peserta_on"]) {
-						$showForm = 1;
+
+					if (isset($link_on)) {
+						$showForm = $link_on;
 					}
-					else if ($type == "narasumber" && $kegiatan["link_narasumber_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "panitia" && $kegiatan["link_panitia_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "moderator" && $kegiatan["link_moderator_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "pengajar_praktik" && $kegiatan["link_pp_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "fasilitator" && $kegiatan["link_fasil_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "instruktur" && $kegiatan["link_instruktur_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "pengawas" && $kegiatan["link_pengawas_on"]) {
-						$showForm = 1;
-					}
-					else if ($type == "kepala_sekolah" && $kegiatan["link_kepala_sekolah_on"]) {
-						$showForm = 1;
-					}
-				
-					$showForm = 1;
 					
 					if (!$showForm) {
 				?>

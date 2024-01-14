@@ -598,6 +598,23 @@ class Kegiatan extends CI_Controller {
 		if (!empty($kegiatan)) {
 			$data["title"] .= " Kegiatan ".$kegiatan["nama"];
 			$data["kegiatan"] = $kegiatan;
+			$data["link_on"] = 0;
+
+			// Lookup Link On/Off
+			$kegiatanOptions = $this->kegiatan_options_model->get($idKegiatan, $type);
+
+			if (isset($kegiatanOptions) && !empty($kegiatanOptions)) {
+				foreach ($kegiatanOptions as $ops) {
+					if ($ops["key"] == "daftar_hadir" && isset($ops["value"][$tglKegiatan]["link_on"])) {
+						$data["link_on"] = $ops["value"][$tglKegiatan]["link_on"];
+					}
+				}
+			}
+
+			// Lookup Komponen
+			$this->load->model("master_komponen_kegiatan_model");
+			$data["komponen"] = $this->master_komponen_kegiatan_model->get_record_by_code($type);
+
             $this->load->view('frontend/kegiatan/daftar_hadir', $data);
 		}
 		else {

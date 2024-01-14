@@ -601,7 +601,7 @@
 											</div>
 											<div id="collapseOneKategori" class="collapse in" aria-labelledby="headingOne" data-parent="#accordion-3">
 												<div class="form-group">
-													<label>Pilih Kelas <?php print $star; ?></label>
+													<label>Pilih Kategori <?php print $star; ?></label>
 													<select class="form-control select2" name="kategori" required>
 														<option value=""></option>
 														<?php
@@ -653,7 +653,7 @@
 									
 									foreach($kegiatan_options as $key => $value){
 										if(isset($value['key']) && $value['key'] == 'form_ttd' && $value['value'] == 1){
-											$showConfirmPaket = true;
+											$showTtd = true;
 											break;
 										} 
 										
