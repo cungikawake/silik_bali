@@ -8,15 +8,6 @@ class Kegiatan extends CI_Controller {
 		
 		$this->load->model("kegiatan_model");
 		$this->load->model("kegiatan_options_model");
-		// $this->load->model("peserta_model");
-		// $this->load->model("narasumber_model");
-		// $this->load->model("moderator_model");
-		// $this->load->model("pengajar_praktek_model");
-		// $this->load->model("fasilitator_model");
-		// $this->load->model("instruktur_model");
-		// $this->load->model("pengawas_model");
-		// $this->load->model("kepala_sekolah_model");
-		// $this->load->model("panitia_model");
 		$this->load->model("biodata_model");
 		$this->load->model("dakung_model");
 		$this->load->model("pengaturan_model");
@@ -958,6 +949,8 @@ class Kegiatan extends CI_Controller {
 		
 		$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
 
+		$data["kegiatan_options"] = $this->kegiatan_options_model->get($kegiatanId, $type);
+
 		$data["biodata"] = $this->komponen_kegiatan_model->getItemByKegiatanId($type, $kegiatanId);
 		
 		$html = '<h3 style="text-align:center;">Tidak ada Data</h3>';
@@ -1051,156 +1044,6 @@ class Kegiatan extends CI_Controller {
 		$this->excel->create($exportData, "export_".$type."_".$data["kegiatan"]["kode"]);
 	}
 	
-	protected function registrasi_form ($type = "Peserta", $kegiatanId) {
-		$data = array();
-		$data["type"] = $type;
-		
-		// Lookup Satker Header
-		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
-		
-		if (!empty($pengaturan)) {
-			foreach ($pengaturan as $foo) {
-				$data["satker"][$foo["sistem"]] = $foo["value"];
-			}
-		}
-		
-		// Lookup Kegiatan
-		$kegiatan = $this->kegiatan_model->getKegiatanById($kegiatanId);
-		$data["kegiatan"] = $kegiatan;
-		
-		// Load View
-		$this->load->view('frontend/kegiatan_registrasi', $data);
-	}
-	
-	public function registrasi_peserta ($kegiatanId) {
-		$this->registrasi_form("Peserta", $kegiatanId);
-	}
-	
-	public function registrasi_panitia ($kegiatanId) {
-		$this->registrasi_form("Panitia", $kegiatanId);
-	}
-	
-	public function registrasi_narasumber ($kegiatanId) {
-		$this->registrasi_form("Narasumber", $kegiatanId);
-	}
-	
-	public function registrasi_save () {
-		$out = array();
-		$out["error"] = true;
-		$out["msg"] = "Gagal melakukan pendaftaran!";
-		
-		if (isset($_POST) && !empty($_POST)) {
-			$kegiatanId = $_POST["kegiatan_id"];
-			
-			$ktp = $_POST["nik"];
-			unset($_POST["nik"]);
-			
-			$type = $_POST["type"];
-			unset($_POST["type"]);
-			
-			$id = 0;
-			$data = $_POST;
-			$data["ktp"] = $ktp;
-			
-			// tgl lahir format
-			if (isset($data["tgl_lahir"]) && !empty($data["tgl_lahir"])) {
-				$data["tgl_lahir"] = date("Y-m-d",strtotime(str_replace(array("/"),array("-"),$data["tgl_lahir"])));
-			}
-			
-			$kegiatan = $this->kegiatan_model->getKegiatanById($kegiatanId);
-			
-			if ($type == "Narasumber") {
-				// Check Narasumber Apakah Sudah Pernah Daftar
-				$narasumber = $this->narasumber_model->getNarasumber($kegiatanId, $data["ktp"]);
-
-				if (!empty($narasumber)) {
-					$id = $narasumber["id"];
-				}
-
-				$id = $this->narasumber_model->save($data, $id);
-			}
-			else if ($type == "Panitia") {
-				// Check Panitia Apakah Sudah Pernah Daftar
-				$panitia = $this->panitia_model->getPanitia($kegiatanId, $data["ktp"]);
-
-				if (!empty($panitia)) {
-					$id = $panitia["id"];
-				}
-
-				$id = $this->panitia_model->save($data, $id);
-			}
-			else {
-				// Check Peserta Apakah Sudah Pernah Daftar
-				$peserta = $this->peserta_model->getPeserta($kegiatanId, $data["ktp"]);
-
-				if (!empty($peserta)) {
-					$id = $peserta["id"];
-				}
-
-				$id = $this->peserta_model->save($data, $id);
-			}
-			
-			
-			if ($type == "Narasumber") {
-				$registered = $this->narasumber_model->getNarasumber($kegiatanId, $data["ktp"]);
-			}
-			else if ($type == "Panitia") {
-				$registered = $this->panitia_model->getPanitia($kegiatanId, $data["ktp"]);
-			}
-			else {
-				$registered = $this->peserta_model->getPeserta($kegiatanId, $data["ktp"]);
-			}
-			
-			// handle ttd
-			if (isset($data["tanda_tangan"]) && !empty($data["tanda_tangan"])) {
-				$data_uri = $data["tanda_tangan"];
-				$encoded_image = explode(",", $data_uri)[1];
-				$decoded_image = base64_decode($encoded_image);
-				
-				$dir = APPPATH . "../assets/ttd/".$kegiatan["kode"]; // Full Path
-				$name = 'ttd-'.$registered["kode"].'.png';
-
-				is_dir($dir) || @mkdir($dir) || die("Can't Create folder");
-				
-				file_put_contents($dir."/".$name, $decoded_image);
-				
-				$this->utility->resize_image($dir."/".$name, 200);
-			}
-			
-			// Update data Biodata
-			if (isset($data["konfirmasi_paket"])) {
-				unset($data["konfirmasi_paket"]);
-			}
-			
-			if (isset($data["tanda_tangan"])) {
-				unset($data["tanda_tangan"]);
-			}
-			
-			$this->biodata_model->updateByNIK($data);
-			
-			
-			// Prepare For Preview
-			$out["error"] = false;
-			$out["msg"] = "Berhasil melakukan pendaftaran!";
-			$data["kegiatan"] = $kegiatan;
-			
-			if ($type == "Narasumber") {
-				$data["narasumber"] = $registered;
-			}
-			else if ($type == "Panitia") {
-				$data["panitia"] = $registered;
-			}
-			else {
-				$data["peserta"] = $registered;
-			}
-			
-			$out["html"] = $this->load->view('frontend/kegiatan_registrasi_berhasil', $data, true);
-		}
-		
-		print json_encode($out);
-		exit();
-	}
-	
 	function sertificate_typehead () {
 		$out = array();
 		
@@ -1232,11 +1075,7 @@ class Kegiatan extends CI_Controller {
 			$data["unsur"] = $unsur;
 			$data["report_kab"] = array();
 			
-			
-			
-			if ($unsur == "peserta") {
-				$items = $this->peserta_model->getPesertaKegiatan($id, true);
-			}
+			$items = $this->komponen_kegiatan_model->getItemByKegiatanId($unsur, $id, true);
 			
 			$unsurSatuan = $this->config->item("unsur_satuan");
 			
