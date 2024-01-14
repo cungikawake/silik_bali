@@ -332,18 +332,18 @@
 														</div>
 														
 														<div class="alert alert-info">
-															<div><label>Informasi Data Kasubbag Umum BGP Provinsi Bali</label></div>
+															<div><label>Informasi Data Kasubbag Umum BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></label></div>
 															<div class="form-group mb-1">
-																<div>I Made Abdi Wismana, S.T., M.T</div>
+																<div><?php print $biodata_kasubag['nama']; ?></div>
 															</div>
 															<div class="form-group">
-																<div>NIP 197705032001121003</div>
+																<div>NIP <?php print $biodata_kasubag['nip']; ?></div>
 															</div>
 															<div class="form-group mb-1">
 																<div>Kasubbag Umum</div>
 															</div>
 															<div class="form-group mb-0">
-																<div>Balai Guru Penggerak Provinsi Bali</div>
+																<div>Balai Guru Penggerak Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></div>
 															</div>
 														</div>
 													</div>

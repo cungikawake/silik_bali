@@ -266,10 +266,10 @@
 							$monevGroup1 = array();
 							$monevGroup1["tgl_mulai_tugas"] = "";
 							$monevGroup1["tgl_selesai_tugas"] = "";
-							$monevGroup1["provinsi_asal"] = "Bali";
-							$monevGroup1["provinsi_tujuan"] = "Bali";
-							$monevGroup1["kab_asal"] = "Denpasar";
-							$monevGroup1["kab_tujuan"] = "Badung";
+							$monevGroup1["provinsi_asal"] = $_ENV['DEFAULT_PROVINSI'];
+							$monevGroup1["provinsi_tujuan"] = $_ENV['DEFAULT_PROVINSI'];
+							$monevGroup1["kab_asal"] = $_ENV['DEFAULT_KABUPATEN'];
+							$monevGroup1["kab_tujuan"] = $_ENV['DEFAULT_KABUPATEN'];
 							$monevGroup1["tempat_tujuan"] = "";
 							$monevGroup1["petugas"] = array();
 						

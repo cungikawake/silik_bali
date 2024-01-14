@@ -268,10 +268,10 @@
 							$monevGroup1 = array();
 							$monevGroup1["tgl_mulai_tugas"] = "";
 							$monevGroup1["tgl_selesai_tugas"] = "";
-							$monevGroup1["provinsi_asal"] = "Bali";
-							$monevGroup1["provinsi_tujuan"] = "Bali";
-							$monevGroup1["kab_asal"] = "Denpasar";
-							$monevGroup1["kab_tujuan"] = "Badung";
+							$monevGroup1["provinsi_asal"] = $_ENV['DEFAULT_PROVINSI'];
+							$monevGroup1["provinsi_tujuan"] = $_ENV['DEFAULT_PROVINSI'];
+							$monevGroup1["kab_asal"] = $_ENV['DEFAULT_KABUPATEN'];
+							$monevGroup1["kab_tujuan"] = $_ENV['DEFAULT_KABUPATEN'];
 							$monevGroup1["tempat_tujuan"] = "";
 							$monevGroup1["petugas"] = array();
 						
@@ -614,7 +614,7 @@
 							foreach ($provinsis as $provinsi => $provinsiKabupatens) {
 								$selected = "";
 
-								if ($provinsi == "Bali") {
+								if ($provinsi == $_ENV['DEFAULT_PROVINSI']) {
 									$selected = 'selected="selected"';
 								}
 
@@ -628,12 +628,12 @@
 					<select class="form-control kab-asal select2-after-dom" required>
 						<?php
 							foreach ($provinsis as $provinsi => $provinsiKabupatens) {
-								if ($provinsi == "Bali") {
+								if ($provinsi == $_ENV['DEFAULT_PROVINSI']) {
 
 									foreach ($provinsiKabupatens as $kabupaten) {
 										$selected = "";
 
-										if ($kabupaten == "Denpasar") {
+										if ($kabupaten == $_ENV['DEFAULT_KABUPATEN']) {
 											$selected = 'selected="selected"';
 										}
 
@@ -657,7 +657,7 @@
 							foreach ($provinsis as $provinsi => $provinsiKabupatens) {
 								$selected = "";
 
-								if ($provinsi == "Bali") {
+								if ($provinsi == $_ENV['DEFAULT_PROVINSI']) {
 									$selected = 'selected="selected"';
 								}
 
@@ -671,7 +671,7 @@
 					<select class="form-control kab-tujuan select2-after-dom" required>
 						<?php
 							foreach ($provinsis as $provinsi => $provinsiKabupatens) {
-								if ($provinsi == "Bali") {
+								if ($provinsi == $_ENV['DEFAULT_PROVINSI']) {
 
 									foreach ($provinsiKabupatens as $kabupaten) {
 										$selected = "";

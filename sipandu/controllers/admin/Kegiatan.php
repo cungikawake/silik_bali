@@ -315,7 +315,20 @@ class Kegiatan extends CI_Controller {
 		$this->load->model("master_komponen_kegiatan_model");
 		$data["komponen"] = $this->master_komponen_kegiatan_model->get_record_by_code($komponen);
 		$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 		 
+		$data["biodata_kasubag"] = array();   
+		$kasubbag = $this->pengaturan_model->getPengaturanBySistem('kasubbag');
+		if (!empty($kasubbag)) {
+			$biodataId = $kasubbag["value"];
+
+			$data["biodata_kasubag"] = $this->biodata_model->getBiodataById($biodataId);
+		}
+		  
+		
 		$this->load->view('backend/kegiatan/item', $data);
 	}
 	

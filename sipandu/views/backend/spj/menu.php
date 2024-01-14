@@ -26,7 +26,7 @@
 
 	if (isset($penugasan) && !empty($penugasan) && isset($penugasan["petugas"]) && !empty($penugasan["petugas"])) {
 		foreach ($penugasan["petugas"] as $petugasDetail) {
-			if ($petugasDetail["provinsi_asal"] != "Bali" || $petugasDetail["provinsi_tujuan"] != "Bali") {
+			if ($petugasDetail["provinsi_asal"] != $_ENV['DEFAULT_PROVINSI'] || $petugasDetail["provinsi_tujuan"] != $_ENV['DEFAULT_PROVINSI']) {
 				$showTiket = true;
 				$showTransport = false;
 				$showHonor = false;
