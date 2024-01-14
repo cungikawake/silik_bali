@@ -26,8 +26,13 @@ class Komponen_kegiatan extends CI_Controller {
 			unset($data["id"]);
 			
 			if (isset($data["name"]) && !empty($data["name"])) {
-				$data["code"] = $this->generate_slug($data["name"]);
+				$data["code"] = $this->utility->generateSlug($data["name"]);
                 $data['table_name'] = 'kegiatan_'.$data["code"]; 
+			}
+
+			if (!empty($id)) {
+				unset($data["code"]);
+				unset($data["table_name"]);
 			}
              
 			$result = $this->komponen_model->save($data, $id);
@@ -40,14 +45,6 @@ class Komponen_kegiatan extends CI_Controller {
 		
 		print json_encode($out);
 		exit();
-	} 
-
-    public function generate_slug($str) { 
-        $str = strtolower($str); 
-        $str = str_replace(' ', '_', $str); 
-        $str = preg_replace('/[^a-z0-9_]/', '', $str); 
-
-        return $str;
-    }
+	}
 }
 ?>

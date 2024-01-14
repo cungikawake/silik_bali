@@ -5,3 +5,7 @@
 /assets/surat_tugas/*
 /assets/ttd/*
 /assets/images/sertifikat/*
+/assets/buku_tabungan/*
+.env
+/vendor
+composer.lock

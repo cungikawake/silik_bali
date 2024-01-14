@@ -295,7 +295,7 @@
 				</tr>
 				<tr>
 					<td class="no-border"></td>
-					<td class="no-border" colspan="2">Balai Guru Penggerak Provinsi Bali</td>
+					<td class="no-border" colspan="2"><?php print $satker["upt"]; ?></td>
 				</tr>
 				<tr>
 					<td class="no-border"></td>

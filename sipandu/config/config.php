@@ -25,9 +25,10 @@ date_default_timezone_set('Asia/Makassar');
 | a PHP script and you can easily do that on your own.
 |
 */
+ 
 $config['base_url'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-$config['site_name'] = 'SILIK BALI';
-$config['site_description'] = 'Sistem Layanan Informasi Dan Konsultasi BGP Provinsi Bali';
+$config['site_name'] = $_ENV['APP_NAME'];
+$config['site_description'] = $_ENV['APP_DETAIL'];
 
 /**
  * Migration database
@@ -148,7 +149,8 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = "vendor/autoload.php";
+//$config['composer_autoload'] = "vendor/autoload.php";
+$config['composer_autoload'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -919,166 +921,22 @@ $config["user_akses"] = array(
 			"name" => "Duplikat Kegiatan"
 		)
 	),
-	"peserta_kegiatan" => array(
+	"kegiatan_item" => array(
 		"list" => array(
 			"value" => 1,
-			"name" => "List Peserta"
+			"name" => "List Item"
 		),
 		"add" => array(
 			"value" => 0,
-			"name" => "Add Peserta"
+			"name" => "Add Item"
 		),
 		"edit" => array(
 			"value" => 0,
-			"name" => "Edit Peserta"
+			"name" => "Edit Item"
 		),
 		"delete" => array(
 			"value" => 0,
-			"name" => "Delete Peserta"
-		),
-	),
-	"narasumber_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Narasumber"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Narasumber"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Narasumber"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Narasumber"
-		),
-	),
-	"panitia_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Panitia"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Panitia"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Panitia"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Panitia"
-		),
-	),
-	"instruktur_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Instruktur"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Instruktur"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Instruktur"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Instruktur"
-		),
-	),
-	"moderator_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Moderator"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Moderator"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Moderator"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Moderator"
-		),
-	),
-	"pengajar_praktek_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Pengajar Praktek"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Pengajar Praktek"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Pengajar Praktek"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Pengajar Praktek"
-		),
-	),
-	"fasilitator_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Fasilitator"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Fasilitator"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Fasilitator"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Fasilitator"
-		),
-	),
-	"pengawas_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Pengawas"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Pengawas"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Pengawas"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Pengawas"
-		),
-	),
-	"kepala_sekolah_kegiatan" => array(
-		"list" => array(
-			"value" => 1,
-			"name" => "List Kepala Sekolah"
-		),
-		"add" => array(
-			"value" => 0,
-			"name" => "Add Kepala Sekolah"
-		),
-		"edit" => array(
-			"value" => 0,
-			"name" => "Edit Kepala Sekolah"
-		),
-		"delete" => array(
-			"value" => 0,
-			"name" => "Delete Kepala Sekolah"
+			"name" => "Delete Item"
 		),
 	),
 	
@@ -1092,12 +950,12 @@ $config["user_akses"] = array(
 			"name" => "Add Data Dukung"
 		),
 	),
-	"hai_bgp" => array(
+	/*"hai_bgp" => array(
 		"list" => array(
 			"value" => 1,
 			"name" => "List Hai BGP"
 		)
-	),
+	),*/
 	"keuangan" => array(
 		"apr_perjadin" => array(
 			"value" => 0,
@@ -1291,7 +1149,7 @@ $config["unsur_satuan"] = array(
 	"SPNF SKB" => array("spnf skb", "skb", "sp skb","spnf-skb","uptd skb","uptd spnf skb"),
 	"Universitas/Perguruan Tinggi" => array("fakultas", "universitas", "perguruan tinggi", "institut", "sekolah tinggi", "stkip agama hindu", "politeknik ganesha guru", "stah negeri mpu kuturan"),
 	"Dinas Pendidikan" => array("disdik", "dinas pendidikan", "upt disdikpora", "korwil dinas pendidikan", "upt dissikpora", "dinas dikpora", "dinas dokpora", "upt.disdikpora", "upt disdipora"),
-	"BGP Bali" => array("bgp bali", "bgp provinsi bali", "balai guru penggerak provinsi bali"),
+	$_ENV['BGP_CONFIG_3'] => array($_ENV['BGP_CONFIG_1'], $_ENV['BGP_CONFIG_2'], $_ENV['BGP_CONFIG_3']),
 	"BGP BBGP" => array("bgp", "bbgp", "balai guru penggerak", "balai besar guru penggerak"),
 	"BPMP BBPMP" => array("bpmp", "bbpmp", "balai penjaminan mutu pendidikan", "balai besar penjaminan mutu pendidikan"),
 	"Kemenag" => array("kemenag", "kementerian agama", "krmenterian agama")
@@ -1303,3 +1161,15 @@ $yearNow = date("Y");
 foreach (range(2022, $yearNow) as $confYear) {
 	$config["tahun_anggaran"][] = $confYear;
 }
+
+// TABLE MASTER & TRANSACTION
+$config["db_master_table"] = array(
+	"biodata",
+	"kutipan",
+	"master_komponen_kegiatan",
+	"migrations",
+	"pengaturan",
+	"sertifikat",
+	"user",
+	"user_document"
+);

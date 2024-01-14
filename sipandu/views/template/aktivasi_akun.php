@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>The HHRMA Bali</title>
+    <title>The  Bali</title>
     
   <style type="text/css">
 		img{
@@ -213,7 +213,7 @@
                         <tbody>
                           <tr>
                             <td valign="top" style="padding:20px 0;text-align:center;" class="mobile-center">
-                              <img src="<?php print base_url("assets/images/logo-kemdikbud-70.jpg"); ?>" alt="BGP Bali">
+                              <img src="<?php print base_url("assets/images/logo-kemdikbud-70.jpg"); ?>" alt="<?php echo $_ENV['BGP_CONFIG_1'] ?>">
                             </td>
                           </tr>
                         </tbody>

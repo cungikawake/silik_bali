@@ -131,7 +131,7 @@
 				<tr>
 					<td class="center middle">5</td>
 					<td class="middle">Alat angkut yang dipergunakan</td>
-					<td><?php print ($item["provinsi_tujuan"] == "Bali") ? "Darat" : "Darat & udara" ?></td>
+					<td><?php print ($item["provinsi_tujuan"] == $_ENV['DEFAULT_PROVINSI']) ? "Darat" : "Darat & udara" ?></td>
 				</tr>
 				<tr>
 					<td class="center">6</td>

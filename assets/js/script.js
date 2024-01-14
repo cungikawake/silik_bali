@@ -374,6 +374,34 @@ Kegiatan.switchRegistration = function (keg, type, val) {
 	});
 }
 
+Kegiatan.switchDaftarHadir = function (keg, komponen, tanggal, val) {
+	
+	if (val) {
+		$(".group-switch-"+tanggal).removeClass("link-off");
+		$(".group-switch-"+tanggal+" .btn-edit-dh-bitly").removeAttr("disabled");
+	}
+	else {
+		$(".group-switch-"+tanggal).addClass("link-off");
+		$(".group-switch-"+tanggal+" .btn-edit-dh-bitly").attr("disabled", "disabled");
+	}
+		
+	$.ajax({
+		type: "POST",
+		url: "/admin/kegiatan/switchDaftarHadir/?v="+Math.random(),
+		data: {
+			kegiatanId: keg,
+			komponen: komponen,
+			tanggal: tanggal,
+			switch: val,
+			version: Math.random()				
+		},
+		dataType: 'json',
+		success: function(obj){
+
+		}
+	});
+}
+
 Kegiatan.loadDakungList = function (kegiatanId, section) {
 	$('.wrap-dakung[data-section="'+section+'"]').html('<div class="d-flex justify-content-center dakung-loader"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
 	
@@ -531,7 +559,13 @@ Kegiatan.duplikat = function (e) {
 }
 
 Kegiatan.getBitlyModal = function (bitlyLink) {
-	var modalHtml = '<div class="modal fade" data-remove-modal="false" id="modal-bitly" tabindex="-1" role="dialog" aria-labelledby="modal-button-row" aria-hidden="true" data-backdrop="static"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h5 class="modal-title">Generate Bitly Link</h5></div><form action="" method="post" class="" autocomplete="off"><input type="hidden" name="kegiatan_id" class="form-control" value="" /><div class="modal-body"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-sm">bit.ly/</span></div><input type="text" class="form-control" name="bitly_link" value="'+bitlyLink+'" /></div></div></form><div class="modal-footer"><button type="submit" class="btn btn-info btn-submit-generate-link">Generate</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button></div></div></div></div>';
+	var modalHtml = '<div class="modal fade" data-remove-modal="false" id="modal-bitly" tabindex="-1" role="dialog" aria-labelledby="modal-button-row" aria-hidden="true" data-backdrop="static"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h5 class="modal-title">Generate Bitly Registrasi</h5></div><form action="" method="post" class="" autocomplete="off"><input type="hidden" name="kegiatan_id" class="form-control" value="" /><div class="modal-body"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-sm">bit.ly/</span></div><input type="text" class="form-control" name="bitly_link" value="'+bitlyLink+'" /></div></div></form><div class="modal-footer"><button type="submit" class="btn btn-info btn-submit-generate-link">Generate</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button></div></div></div></div>';
+	
+	return modalHtml;
+}
+
+Kegiatan.getBitlyDaftarHadirModal = function (bitlyLink, labelBitly, tanggal) {
+	var modalHtml = '<div class="modal fade" data-remove-modal="false" id="modal-bitly" tabindex="-1" role="dialog" aria-labelledby="modal-button-row" aria-hidden="true" data-backdrop="static"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h5 class="modal-title">Generate Bitly - '+labelBitly+'</h5></div><form action="" method="post" class="" autocomplete="off"><div class="modal-body"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-sm">bit.ly/</span></div><input type="text" class="form-control" name="bitly_link" value="'+bitlyLink+'" /></div></div></form><div class="modal-footer"><button type="submit" class="btn btn-info btn-submit-generate-df-link" data-tanggal="'+tanggal+'">Generate</button><button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button></div></div></div></div>';
 	
 	return modalHtml;
 }
@@ -558,6 +592,15 @@ Kegiatan.init = function () {
 	
 	$(document).on('click','.generateBitlyLinkTarget', function () {
 		if (!$(this).hasClass("generateBitlyLinkTargetOff")) {
+			$(this).select();
+		}
+		else {
+			$(this)[0].selectionStart = $(this)[0].selectionEnd;
+		}
+	});
+
+	$(document).on('click','.form-link-dh', function () {
+		if (!$(this).closest('.form-group').hasClass("link-off")) {
 			$(this).select();
 		}
 		else {
@@ -601,6 +644,24 @@ Kegiatan.init = function () {
 		}
 		
 		var modalHtml = Kegiatan.getBitlyModal(bitlyLink);
+		$('#modal-bitly').remove();
+		$('body').append(modalHtml);
+
+		$('#modal-bitly').modal('show');
+		$('#modal-bitly [name="bitly_link"]').focus();
+	});
+
+	$(document).on('click', '.btn-edit-dh-bitly', function () {
+		var bitlyLink = $(this).closest('.form-group-switch').find('.form-link-dh').val().replace("bit.ly/","");
+		var labelBitly = $(this).closest('.form-group-switch').find('.label-daftar-hadir').text();
+		var tanggal = $(this).attr("data-tanggal");
+		var baseUrl = $('[name="base_url"]').val();
+
+		if(bitlyLink.indexOf(baseUrl) >= 0){
+			bitlyLink = "";
+		}
+		
+		var modalHtml = Kegiatan.getBitlyDaftarHadirModal(bitlyLink, labelBitly, tanggal);
 		$('#modal-bitly').remove();
 		$('body').append(modalHtml);
 
@@ -672,6 +733,55 @@ Kegiatan.init = function () {
 		});
 	});
 	
+	$(document).on('click', '.btn-submit-generate-df-link', function () {
+		var kegiatanId = $('.keg-opt-form [name="id"]').val();
+		var komponen = $('.keg-opt-form [name="komponen"]').val();
+		var customLink = $('[name="bitly_link"]').val();
+		var tanggal = $(this).attr("data-tanggal");
+		$('#modal-bitly').modal('hide');
+		
+		Loader.start();
+		
+		$.ajax({
+			type: "POST",
+			url: "/admin/kegiatan/generateBitlyDaftarHadir/?v="+Math.random(),
+			data: {
+				kegiatanId: kegiatanId,
+				komponen: komponen,
+				customLink: customLink,
+				tanggal: tanggal,
+				version: Math.random()			
+			},
+			dataType: 'json',
+			success: function(obj){
+				Loader.stop();
+				
+				if (obj.error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Oops...',
+						text: obj.desc
+					}).then(function() {
+						$('#modal-bitly').modal('show');
+					});
+				}
+				else {
+					Kegiatan.switchDaftarHadir(kegiatanId, komponen, tanggal, 1);
+					$('.form-link-dh-'+tanggal).val(obj.custom_bitlinks);
+					
+					Swal.fire({
+					  icon: 'success',
+						title: 'Sukses...',
+					  text: 'Generate Link Berhasil',
+					  showConfirmButton: true,
+					}).then(function() {
+						$('#modal-bitly').modal('hide');
+						$('#modal-bitly').remove();
+					});
+				}
+			}
+		});
+	});
 	
 	$(document).on('click','.add-dakung', function () {
 		var kegiatan = $(this).attr("data-kegiatan");
@@ -722,6 +832,19 @@ Kegiatan.init = function () {
 				});
 			}
 		});
+	});
+
+	$(document).on("change", ".bitly-dh", function () {
+		var kegiatanId = $(this).attr('data-kegiatan');
+		var komponen = $(this).attr('data-type');
+		var date = $(this).attr('data-date');
+		
+		if ($(this).is(':checked')) {
+			Kegiatan.switchDaftarHadir(kegiatanId, komponen, date, 1);
+		}
+		else {
+			Kegiatan.switchDaftarHadir(kegiatanId, komponen, date, 0);
+		}
 	});
 	
 	if ($('.wrap-dakung').length) {

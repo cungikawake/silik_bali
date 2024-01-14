@@ -12884,6 +12884,10 @@ hr {
 	margin: 3px 0 0;
 }
 
+.bootgrid-filter_kelas-filter {
+  margin-right: 15px;
+}
+
 @media only screen and (max-width: 575px) {
 	.bootgrid-header .search {
 		width: 100%;

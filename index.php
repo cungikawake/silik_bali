@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -317,4 +318,11 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+require_once __DIR__ . '/vendor/autoload.php';  
+// Load environment variables
+use Symfony\Component\Dotenv\Dotenv;
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__ . '/.env');
+
 require_once BASEPATH.'core/CodeIgniter.php';
+ 

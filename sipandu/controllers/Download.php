@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Download extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+
+		$this->load->model("pengaturan_model");
 	}
 	
 	public function index() {
@@ -14,99 +16,68 @@ class Download extends CI_Controller {
 		$data = array();
 		
 		if (!empty($kode)) {
-			$this->load->model("narasumber_model");
-			$this->load->model("peserta_model");
-			$this->load->model("panitia_model");
-			$this->load->model("moderator_model");
-			$this->load->model("instruktur_model");
-			$this->load->model("pengajar_praktek_model");
-			$this->load->model("fasilitator_model");
 			$this->load->model("sertifikat_model");
 			$this->load->model("kegiatan_model");
+			$this->load->model("komponen_kegiatan_model");
+			$this->load->model("kegiatan_options_model");
+			$this->load->model("master_komponen_kegiatan_model");
 			
-			$data = array();
-			$jabatan = "peserta";
-			$data["person"] = $this->peserta_model->getPesertaAllYearsByKode($kode);
-			
-			if (empty($data["person"])) {
-				$jabatan = "panitia";
-				$data["person"] = $this->panitia_model->getPanitiaByKode($kode);
-			}
-			
-			if (empty($data["person"])) {
-				$jabatan = "narasumber";
-				$data["person"] = $this->narasumber_model->getNarasumberByKode($kode);
-			}
-			
-			if (empty($data["person"])) {
-				$jabatan = "moderator";
-				$data["person"] = $this->moderator_model->getByKode($kode);
-			}
-			
-			if (empty($data["person"])) {
-				$jabatan = "instruktur";
-				$data["person"] = $this->instruktur_model->getByKode($kode);
-			}
-			
-			if (empty($data["person"])) {
-				$jabatan = "pengajar_praktek";
-				$data["person"] = $this->pengajar_praktek_model->getByKode($kode);
-			}
-			
-			if (empty($data["person"])) {
-				$jabatan = "fasilitator";
-				$data["person"] = $this->fasilitator_model->getByKode($kode);
-			}
-			
-			if (!empty($data["person"])) {
-				$kegiatanId = $data["person"]["kegiatan_id"];
-				
-				$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
-				
-				// Generate QR Code
-				$this->load->library('qr_code');
-				$urlSertifikat = base_url("/download/sertifikat/".$kode);
-				$data["qr_code"] = $this->qr_code->create(400, $urlSertifikat);
-				
-				// HACK Sertifikat Nomor to Slash
-				$countHype = substr_count ($kode, '-');
+			// Find Short Code
+			$shortCodes = explode("-", $kode);
 
-				if ($countHype == 2) {
-					$kodeItem = explode("-", $data["person"]["kode"]);
+			if (!empty($shortCodes)) {
+				$shortCode = $shortCodes["1"];
 
-					$kodeBaru = $kodeItem[0]."/".$kodeItem[2].".".$kodeItem[1];
-					$data["person"]["kode"] = $kodeBaru;
+				$komponen = $this->master_komponen_kegiatan_model->get_record_by_short_code($shortCode);
+				
+				$data = array();
+
+				$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+				if (!empty($pengaturan)) {
+					foreach ($pengaturan as $foo) {
+						$data["satker"][$foo["sistem"]] = $foo["value"];
+					}
 				}
+
+				$data["person"] = $this->komponen_kegiatan_model->getItemByKode($komponen->code, $kode);
 				
-				
-				if (!empty($data["kegiatan"])) {
-					if ($jabatan == "narasumber") {
-						$templateId = $data["kegiatan"]["sertificate_narasumber"];
-					}
-					else if ($jabatan == "panitia") {
-						$templateId = $data["kegiatan"]["sertificate_panitia"];
-					}
-					else if ($jabatan == "moderator") {
-						$templateId = $data["kegiatan"]["sertificate_moderator"];
-					}
-					else if ($jabatan == "instruktur") {
-						$templateId = $data["kegiatan"]["sertificate_instruktur"];
-					}
-					else if ($jabatan == "pengajar_praktek") {
-						$templateId = $data["kegiatan"]["sertificate_pp"];
-					}
-					else if ($jabatan == "fasilitator") {
-						$templateId = $data["kegiatan"]["sertificate_fasil"];
-					}
-					else {
-						$templateId = $data["kegiatan"]["sertificate_peserta"];
+				if (!empty($data["person"])) {
+					$kegiatanId = $data["person"]["kegiatan_id"];
+					
+					$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
+					
+					// Generate QR Code
+					$this->load->library('qr_code');
+					$urlSertifikat = base_url("/download/sertifikat/".$kode);
+					$data["qr_code"] = $this->qr_code->create(400, $urlSertifikat);
+					
+					// HACK Sertifikat Nomor to Slash
+					$countHype = substr_count ($kode, '-');
+	
+					if ($countHype == 2) {
+						$kodeItem = explode("-", $data["person"]["kode"]);
+	
+						$kodeBaru = $kodeItem[0]."/".$kodeItem[2].".".$kodeItem[1];
+						$data["person"]["kode"] = $kodeBaru;
 					}
 					
-					if ($templateId) {
-						$data["sertifikat"] = $this->sertifikat_model->getById($templateId);
-						$html = $this->load->view('template/sertifikat', $data, true);
-
-						$this->mpdf->createSertifikat($html, "sertifikat", false);	
+					if (!empty($data["kegiatan"])) {
+						$templateId = 0;
+						$template = $this->kegiatan_options_model->get($data["kegiatan"]["id"], $komponen->code, "sertificate");
+						
+						if (!empty($template)) {
+							foreach ($template as $temp) {
+								$templateId = $temp["value"];
+							}
+						}
+						
+						if ($templateId) {
+							$data["sertifikat"] = $this->sertifikat_model->getById($templateId);
+							$html = $this->load->view('template/sertifikat', $data, true);
+	
+							$this->mpdf->createSertifikat($html, "sertifikat", false);	
+						}
 					}
 				}
 			}
@@ -136,115 +107,24 @@ class Download extends CI_Controller {
 
 			// verify the response
 			if($arrResponse["success"] == '1' && $arrResponse["action"] == $action && $arrResponse["score"] >= 0.5) {
-			
 				$this->load->model("kegiatan_model");
-				$this->load->model("peserta_model");
-				$this->load->model("narasumber_model");
-				$this->load->model("moderator_model");
-				$this->load->model("instruktur_model");
-				$this->load->model("fasilitator_model");
-				$this->load->model("pengajar_praktek_model");
-				$this->load->model("panitia_model");
-
+				$this->load->model("komponen_kegiatan_model");
+				
 				$data = array();
-				$peserta = $this->peserta_model->getPesertaAllYearsByNik($_POST["nik"]);
-				$panitia = $this->panitia_model->getPanitiaByNik($_POST["nik"]);
-				$narasumber = $this->narasumber_model->getNarasumberByNik($_POST["nik"]);
-				$moderator = $this->moderator_model->getByNik($_POST["nik"]);
-				$instruktur = $this->instruktur_model->getByNik($_POST["nik"]);
-				$fasilitator = $this->fasilitator_model->getByNik($_POST["nik"]);
-				$pengajar_praktek = $this->pengajar_praktek_model->getByNik($_POST["nik"]);
+				$lookupIdKegiatan = array();
 
-				if (!empty($peserta)) {
-					foreach ($peserta as $ps) {
-						$data["sertifikats"]["peserta"][] = $ps;
-					}
-				}
-				
-				if (!empty($narasumber)) {
-					foreach ($narasumber as $ps) {
-						$data["sertifikats"]["narasumber"][] = $ps;
-					}
-				}
-				
-				if (!empty($moderator)) {
-					foreach ($moderator as $ps) {
-						$data["sertifikats"]["moderator"][] = $ps;
+				$item = $this->komponen_kegiatan_model->getAllItemByNik($_POST["nik"]);
+
+				if (!empty($item)) {
+					foreach ($item as $komponen => $foo) {
+						foreach ($foo as $boo) {
+							$data["sertifikats"][$komponen][] = $boo;
+							$lookupIdKegiatan[] = $boo["kegiatan_id"];
+						}
 					}
 				}
 
-				if (!empty($panitia)) {
-					foreach ($panitia as $ps) {
-						$data["sertifikats"]["panitia"][] = $ps;
-					}
-				}
-
-				
-
-				if (!empty($instruktur)) {
-					foreach ($instruktur as $ps) {
-						$data["sertifikats"]["instruktur"][] = $ps;
-					}
-				}
-
-				if (!empty($fasilitator)) {
-					foreach ($fasilitator as $ps) {
-						$data["sertifikats"]["fasilitator"][] = $ps;
-					}
-				}
-
-				if (!empty($pengajar_praktek)) {
-					foreach ($pengajar_praktek as $ps) {
-						$data["sertifikats"]["pengajar_praktek"][] = $ps;
-					}
-				}
-
-
-				if (!empty($data["sertifikats"])) {
-					$lookupIdKegiatan = array();
-
-					if (!empty($data["sertifikats"]["peserta"])) {
-						foreach ($data["sertifikats"]["peserta"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-					
-					if (!empty($data["sertifikats"]["narasumber"])) {
-						foreach ($data["sertifikats"]["narasumber"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-					
-					if (!empty($data["sertifikats"]["moderator"])) {
-						foreach ($data["sertifikats"]["moderator"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-
-					if (!empty($data["sertifikats"]["panitia"])) {
-						foreach ($data["sertifikats"]["panitia"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-
-					if (!empty($data["sertifikats"]["instruktur"])) {
-						foreach ($data["sertifikats"]["instruktur"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-
-					if (!empty($data["sertifikats"]["fasilitator"])) {
-						foreach ($data["sertifikats"]["fasilitator"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-
-					if (!empty($data["sertifikats"]["pengajar_praktek"])) {
-						foreach ($data["sertifikats"]["pengajar_praktek"] as $sertifikat) {
-							$lookupIdKegiatan[] = $sertifikat["kegiatan_id"];
-						}
-					}
-
+				if (!empty($data)) {
 					$lookupIdKegiatan = array_unique($lookupIdKegiatan);
 
 					$data["kegiatan"] = $this->kegiatan_model->getKegiatanByIds($lookupIdKegiatan);
@@ -260,13 +140,52 @@ class Download extends CI_Controller {
 		print $html;
 	}
 	
-	public function sppd_peserta ($kegiatanId = "", $download = null) {
+	public function sppd ($code_komponen, $kegiatanId = "", $download = null) {
 		$this->load->model("kegiatan_model");
+		$this->load->model("kegiatan_options_model");
 		
 		$data = array();
 		$data["kegiatan_id"] = $kegiatanId;
 		$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
+
+		// Pejabat Lokasi
+		$data["lokasi"] = array(
+			"unit_kerja" => "", 
+			"nama" => "", 
+			"nip" => "", 
+			"jabatan" => ""
+		);
+
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
 		
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
+			}
+		}
+
+		$kegiatanOptions = $this->kegiatan_options_model->get($kegiatanId, $code_komponen);
+
+		if (!empty($kegiatanOptions)) {
+			foreach ($kegiatanOptions as $kegiatanOption) {
+				if ($kegiatanOption["key"] == "spd_satker") {
+					$data["lokasi"]["unit_kerja"] = $kegiatanOption["value"];
+				}
+
+				if ($kegiatanOption["key"] == "spd_jabatan") {
+					$data["lokasi"]["jabatan"] = $kegiatanOption["value"];
+				}
+
+				if ($kegiatanOption["key"] == "spd_nip") {
+					$data["lokasi"]["nip"] = $kegiatanOption["value"];
+				}
+
+				if ($kegiatanOption["key"] == "spd_nama") {
+					$data["lokasi"]["nama"] = $kegiatanOption["value"];
+				}
+			}
+		}
+
 		if ($download == "execute") {
 			if (empty($kegiatanId)) {
 				$this->load->view('frontend/errors/logo');
@@ -308,6 +227,8 @@ class Download extends CI_Controller {
 						$dataPeserta["nip"] = $_GET["nip"];
 					}
 					
+
+
 					$data["pejabat_peserta"] = $dataPeserta;
 					$data["ppk"] = array("nama" => "", "nip" => "");
 
@@ -336,6 +257,14 @@ class Download extends CI_Controller {
 	public function tembak_sppd_peserta ($kegiatanId = "", $download = null) {
 		$data = array();
 		$data["kegiatan_id"] = $kegiatanId;
+
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
+			}
+		}
 		
 		if ($download == "execute") {
 			if (empty($kegiatanId)) {

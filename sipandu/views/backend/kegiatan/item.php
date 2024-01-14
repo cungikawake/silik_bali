@@ -316,27 +316,25 @@
 				
 					$this->bootgrid->setCustomFilter("kabupaten_kota");
 				
-					if (isset($kegiatan["kategori"][$komponen->code]) && !empty($kegiatan["kategori"][$komponen->code])) {
-						$this->bootgrid->setCustomFilter("kelas", $kegiatan["kategori"][$komponen->code]);
+					if (isset($kegiatan_options["kategori"]) && !empty($kegiatan_options["kategori"])) {
+						$this->bootgrid->setCustomFilter("kelas", $kegiatan_options["kategori"]);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","add")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","add")) {
 						$addButton = array(
 							"text" => "Tambah",
 							"parent" => $kegiatan["id"],
 							"modal" => array(
 								"view" => "backend/kegiatan/modal_kegiatan_item",
 								"data" => array(
-									"table" => $komponen->table_name,
-									"unsur" => $komponen->name,
-									'code_komponen' => $komponen->code,
+									"table" => $komponen->table_name
 								)
 							)
 						);
 						$this->bootgrid->setAddButton($addButton);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","edit")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","edit")) {
 						$editButton = array(
 							"text" => "Edit",
 							"parent" => $kegiatan["id"],
@@ -347,7 +345,7 @@
 						$this->bootgrid->setEditButton($editButton);
 					}
 
-					if ($this->utility->hasUserAccess($komponen->code."_kegiatan","delete")) {
+					if ($this->utility->hasUserAccess("kegiatan_item","delete")) {
 						$deleteButton = array(
 							"text" => "Delete"
 						);

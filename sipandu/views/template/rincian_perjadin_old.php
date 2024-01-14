@@ -86,7 +86,7 @@
 					<tr>
 						<td width="22%">SUDAH DITERIMA DARI</td>
 						<td width="1%">:</td>
-						<td width="76%" colspan="2">Kuasa Pengguna Anggaran Balai Guru Penggerak Provinsi Bali</td>
+						<td width="76%" colspan="2">Kuasa Pengguna Anggaran <?php print $satker["upt"]; ?></td>
 					</tr>
 					<tr>
 						<td>JUMLAH UANG</td>

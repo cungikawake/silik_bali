@@ -1,4 +1,4 @@
-<div class="copyright"><em>BGP Provinsi Bali - Saguyub Nangun Janakerthih</em></a></div>
+<div class="copyright"><em>BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI'] ?> - <?php echo $_ENV['SLOGAN_APP'] ?></em></a></div>
 				</div>
             </div>
         </div>

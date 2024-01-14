@@ -213,7 +213,7 @@
                         <tbody>
                           <tr>
                             <td valign="top" style="padding:20px 0;text-align:center;" class="mobile-center">
-                              <img src="<?php print base_url("assets/images/logo-kemdikbud-70.jpg"); ?>" alt="BGP Bali">
+                              <img src="<?php print base_url("assets/images/logo-kemdikbud-70.jpg"); ?>" alt="<?php echo $_ENV['BGP_CONFIG_1'] ?>">
                             </td>
                           </tr>
                         </tbody>
@@ -254,7 +254,7 @@
                                         	<tr>
                                                 <td class="mobile-block mobile-padding" style="text-align:left;font-size:15px;">
                                                 	<p style="text-align:center;margin-top:0;">Hai <?php print $nama; ?>,</p>
-                                                    <p style="text-align:center;">Tiket anda dengan nomor <?php print $tiket_no; ?>, telah ditanggapi oleh admin BGP Bali <br /></p>
+                                                    <p style="text-align:center;">Tiket anda dengan nomor <?php print $tiket_no; ?>, telah ditanggapi oleh admin <?php echo $_ENV['BGP_CONFIG_5'] ?> <br /></p>
                                                     <p style="text-align:center;"><a href="<?php print $link; ?>" style="display:inline-block;padding:6px 12px;background:#0171b7;border-radius:3px;color:#fff;">Lihat Tiket</a></p>
                                                 </td>
                                             </tr>

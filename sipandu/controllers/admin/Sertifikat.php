@@ -78,8 +78,16 @@ class Sertifikat extends CI_Controller {
 					$id = $this->sertifikat_model->save($data);
 					
 					$targetName = $id.".".$ext;
-					$tempFile = $file['tmp_name'];           
-					$targetPath = APPPATH."../assets/images/sertifikat/";
+					$tempFile = $file['tmp_name'];
+					
+					$dir = APPPATH . "../assets/images"; // Full Path
+
+					is_dir($dir) || @mkdir($dir) || die("Can't Create folder");
+					
+					$targetPath = $dir."/sertifikat/";
+
+					is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
+
 					$targetFile = $targetPath. $targetName;
 
 					if (move_uploaded_file($tempFile, $targetFile)) {

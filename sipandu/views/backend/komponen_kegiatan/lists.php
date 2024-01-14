@@ -5,7 +5,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-12">
 					<div class="page-header-title">
-						<h5 class="m-b-20"><i class="feather icon-layers"></i> Master Komponen Kegiatan</h5>
+						<h5 class="m-b-20"><i class="feather icon-layers"></i> Komponen Kegiatan</h5>
 					</div>
 				</div>
 			</div>
@@ -21,8 +21,8 @@
 					<?php
 						 
 						$this->bootgrid->setTable("master_komponen_kegiatan");
-						$this->bootgrid->setTitle("MASTER KOMPONEN KEGIATAN");
-						$this->bootgrid->sortBy("name");
+						$this->bootgrid->setTitle("KOMPONEN KEGIATAN");
+						$this->bootgrid->sortBy("order");
 						$this->bootgrid->sortType("ASC");
 
 						$columns = array();
@@ -54,6 +54,13 @@
 							"id" => "code",
 							"field" => "code",
 							"name" => "Kode", 
+							"visible" => "true"
+						);
+
+						$columns[] = array(
+							"id" => "short_code",
+							"field" => "short_code",
+							"name" => "Short Kode", 
 							"visible" => "true"
 						);
 

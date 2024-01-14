@@ -1,31 +1,37 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Kegiatan_model extends CI_Model{
-	
-    function __construct() {
-		
+
+	protected $group_prefix = 'transaction_';
+	protected $new_db = '';
+
+    function __construct() { 
+		$db_tahun = $this->group_prefix . $_SESSION['tahun_anggaran']; 
+		$this->new_db = $this->load->database($db_tahun, true);
+		 
     }
 
 	public function get_all() {
-        return $this->db->get('kegiatan')->result();
+        return $this->new_db->get('kegiatan')->result();
     }
 	
 	public function countKegiatan () {
-		$this->db->where("YEAR(tgl_selesai_kegiatan)", $_SESSION["tahun_anggaran"]);
-		$this->db->from('kegiatan');
 		
-		$count = $this->db->count_all_results();
+		$this->new_db->where("YEAR(tgl_selesai_kegiatan)", $_SESSION["tahun_anggaran"]);
+		$this->new_db->from('kegiatan');
 		
+		$count = $this->new_db->count_all_results();
+		 
 		return $count;
 	}
 	
 	public function getKegiatanById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -33,7 +39,7 @@ class Kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		if (isset($out["link_peserta"]) && !empty($out["link_peserta"])) {
 			$out["link_peserta"] = (array) json_decode($out["link_peserta"]);
@@ -89,11 +95,11 @@ class Kegiatan_model extends CI_Model{
 	public function getKegiatanByIds ($ids) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->where_in("id", $ids);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->where_in("id", $ids);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -101,7 +107,7 @@ class Kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -109,11 +115,11 @@ class Kegiatan_model extends CI_Model{
 	public function getKegiatanBySpjKegiatanId ($id = "0") {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->where("spj_kegiatan", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->where("spj_kegiatan", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -121,7 +127,7 @@ class Kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -134,17 +140,17 @@ class Kegiatan_model extends CI_Model{
 			$data['dibuat_oleh'] = $_SESSION["user"]["id"];
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->insert("kegiatan", $data);
-			$id = $this->db->insert_id();
+			$this->new_db->insert("kegiatan", $data);
+			$id = $this->new_db->insert_id();
 			
-			$this->db->reset_query();
+			$this->new_db->reset_query();
 			
 			$kode = array();
 			$kode['kode'] = $data['kode'].$id;
 			
-			$this->db->where("id", $id);
-			$this->db->update("kegiatan", $kode);
-			$this->db->reset_query();
+			$this->new_db->where("id", $id);
+			$this->new_db->update("kegiatan", $kode);
+			$this->new_db->reset_query();
 		}
 		else {
 			$data['diubah_tgl'] = date("Y-m-d H:i:s");
@@ -153,9 +159,9 @@ class Kegiatan_model extends CI_Model{
 				$data['diubah_oleh'] = $_SESSION["user"]["id"];	
 			}
 			
-			$this->db->where("id", $id);
-			$this->db->update("kegiatan", $data);
-			$this->db->reset_query();
+			$this->new_db->where("id", $id);
+			$this->new_db->update("kegiatan", $data);
+			$this->new_db->reset_query();
 		}
 		
 		return $id;
@@ -165,12 +171,12 @@ class Kegiatan_model extends CI_Model{
 	public function searchKegiatanByName ($term) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->like('nama', $term, 'both');
-		$this->db->order_by('nama', 'ASC');
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->like('nama', $term, 'both');
+		$this->new_db->order_by('nama', 'ASC');
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -178,7 +184,7 @@ class Kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -214,12 +220,12 @@ class Kegiatan_model extends CI_Model{
 		
 		$where .= $formOn.")";
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->where($where);
-		$this->db->order_by('id', 'ASC');
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->where($where);
+		$this->new_db->order_by('id', 'ASC');
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -227,7 +233,7 @@ class Kegiatan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}

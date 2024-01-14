@@ -256,9 +256,7 @@
 				?>
                     <div class="card-block">
                         <form action="/kegiatan/registrasi_save2" method="post" class="form-submit-registrasi2">
-                            <input type="hidden" name="type" class="form-control" value="<?php print $type; ?>"  />
-							<input type="hidden" name="code_komponen" class="form-control" value="<?php print $komponen->code; ?>"  />
-							<input type="hidden" name="table_komponen" class="form-control" value="<?php print $komponen->table_name; ?>"  />
+                            <input type="hidden" name="komponen" class="form-control" value="<?php print $komponen->code; ?>"  />
                             <input type="hidden" name="kegiatan_id" class="form-control" value="<?php print $kegiatan["id"]; ?>"  />
                             <div class="modal-body">
                                 <div class="form-group m-b-10">
@@ -603,7 +601,7 @@
 											</div>
 											<div id="collapseOneKategori" class="collapse in" aria-labelledby="headingOne" data-parent="#accordion-3">
 												<div class="form-group">
-													<label>Pilih Kelas <?php print $star; ?></label>
+													<label>Pilih Kategori <?php print $star; ?></label>
 													<select class="form-control select2" name="kategori" required>
 														<option value=""></option>
 														<?php
@@ -655,7 +653,7 @@
 									
 									foreach($kegiatan_options as $key => $value){
 										if(isset($value['key']) && $value['key'] == 'form_ttd' && $value['value'] == 1){
-											$showConfirmPaket = true;
+											$showTtd = true;
 											break;
 										} 
 										
