@@ -88,7 +88,7 @@
 				<td>&nbsp;</td>
 				<td>Transportasi yang digunakan</td>
 				<td>:</td>
-				<td><?php print ($item["provinsi_tujuan"] == "Bali") ? "Angkutan darat" : "Angkutan darat & udara" ?></td>
+				<td><?php print ($item["provinsi_tujuan"] == $_ENV['DEFAULT_PROVINSI']) ? "Angkutan darat" : "Angkutan darat & udara" ?></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

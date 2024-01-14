@@ -831,8 +831,8 @@ class Spj extends CI_Controller {
 							$spjItemId = 0;
 							$spjItemPaid = 0;
 							$pegawaiBalai = 0;
-							$provinsiAsal = "Bali";
-							$provinsiTujuan = "Bali";
+							$provinsiAsal = $_ENV['DEFAULT_PROVINSI'];
+							$provinsiTujuan = $_ENV['DEFAULT_PROVINSI'];
 							$nip = trim($item["nip"]);
 							
 							if (isset($spjKTP[$item["ktp"]])) {

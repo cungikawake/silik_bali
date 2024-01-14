@@ -74,9 +74,9 @@ class Kepegawaian extends CI_Controller {
 				$petugas = array();
 				$petugas["tgl_mulai_tugas"] = date("d/m/Y", strtotime($kegiatan["tgl_mulai_kegiatan"]));
 				$petugas["tgl_selesai_tugas"] = date("d/m/Y", strtotime($kegiatan["tgl_selesai_kegiatan"]));
-				$petugas["provinsi_asal"] = "Bali";
-				$petugas["provinsi_tujuan"] = "Bali";
-				$petugas["kab_asal"] = "Denpasar";
+				$petugas["provinsi_asal"] = $_ENV['DEFAULT_PROVINSI'];
+				$petugas["provinsi_tujuan"] = $_ENV['DEFAULT_PROVINSI'];
+				$petugas["kab_asal"] = $_ENV['DEFAULT_KABUPATEN'];
 				$petugas["kab_tujuan"] = $kegiatan["kab_tempat_kegiatan"];
 				$petugas["tempat_tujuan"] = $kegiatan["tempat_kegiatan"];
 				$petugas["petugas"] = $_POST["petugas"];
@@ -317,14 +317,14 @@ class Kepegawaian extends CI_Controller {
 						$item["tgl_selesai_tugas"] = date("Y-m-d", strtotime(str_replace(array("/"), array("-"), $detailPetugas["tgl_selesai_tugas"])));
 
 						if (!isset($detailPetugas["provinsi_asal"])) {
-							$item["provinsi_asal"] = "Bali";
+							$item["provinsi_asal"] = $_ENV['DEFAULT_PROVINSI'];
 						}
 						else {
 							$item["provinsi_asal"] = $detailPetugas["provinsi_asal"];
 						}
 
 						if (!isset($detailPetugas["provinsi_tujuan"])) {
-							$item["provinsi_tujuan"] = "Bali";
+							$item["provinsi_tujuan"] = $_ENV['DEFAULT_PROVINSI'];
 						}
 						else {
 							$item["provinsi_tujuan"] = $detailPetugas["provinsi_tujuan"];
@@ -352,7 +352,7 @@ class Kepegawaian extends CI_Controller {
 								unset($biodataPetugas["diubah_oleh"]);
 
 								if (empty($biodataPetugas["provinsi_unit_kerja"])) {
-									$biodataPetugas["provinsi_unit_kerja"] = "Bali";
+									$biodataPetugas["provinsi_unit_kerja"] = $_ENV['DEFAULT_PROVINSI'];
 								}
 
 								foreach ($biodataPetugas as $keyBio => $valBio) {

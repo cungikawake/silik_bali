@@ -782,10 +782,15 @@ class Bootgrids extends CI_Controller {
 			$class = $column->class;
 			$onclick = $column->onclick;
 			
-			$icon = '<a href="javascript:;" data-table="'.$table.'" onClick="'.$onclick.'" style="font-size:16px; color:#999; padding:0 7px; cursor:text;" class="'.$class.'" data-id="'.$res["id"].'" data-nama="'.$res["nama"].'" value="1" title="Pay"><span class="material-icons" title="Belum dibayarkan" style="margin-top:4px;">&#xe263;</span></a>';
+			$dataNama = "";
+			if (isset($res["nama"])) {
+				$dataNama = 'data-nama="'.$res["nama"].'"';
+			}
+
+			$icon = '<a href="javascript:;" data-table="'.$table.'" onClick="'.$onclick.'" style="font-size:16px; color:#999; padding:0 7px; cursor:text;" class="'.$class.'" data-id="'.$res["id"].'" '.$dataNama.' value="1" title="Pay"><span class="material-icons" title="Belum dibayarkan" style="margin-top:4px;">&#xe263;</span></a>';
 			
 			if ($value == "1") {
-				$icon = '<a href="javascript:;" data-table="'.$table.'" style="font-size:16px; color:#2ebf55; padding:0 7px; cursor:text;" class="'.$class.'" data-id="'.$res["id"].'" data-nama="'.$res["nama"].'" value="1" title="Paid"><span class="material-icons" title="Telah Dibayarkan" style="margin-top:4px;">&#xe263;</span></a>';
+				$icon = '<a href="javascript:;" data-table="'.$table.'" style="font-size:16px; color:#2ebf55; padding:0 7px; cursor:text;" class="'.$class.'" data-id="'.$res["id"].'" '.$dataNama.' value="1" title="Paid"><span class="material-icons" title="Telah Dibayarkan" style="margin-top:4px;">&#xe263;</span></a>';
 			}
 			
 			$value = $icon;
@@ -996,7 +1001,7 @@ class Bootgrids extends CI_Controller {
 				$data->table = "kegiatan_peserta_".$_SESSION["tahun_anggaran"];
 			}
 			
-			if ($_SESSION["tahun_anggaran"] < date("Y") && $data->tableJoin == "kegiatan_peserta") {
+			if ($_SESSION["tahun_anggaran"] < date("Y") && isset($data->tableJoin) && $data->tableJoin == "kegiatan_peserta") {
 				$data->tableJoin = "kegiatan_peserta_".$_SESSION["tahun_anggaran"];
 			}
 			

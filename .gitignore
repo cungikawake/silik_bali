@@ -8,3 +8,4 @@
 /assets/buku_tabungan/*
 .env
 /vendor
+composer.lock

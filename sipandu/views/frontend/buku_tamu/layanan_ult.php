@@ -13,8 +13,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Form Registrasi Kegiatan BGP Provinsi Bali" />
-    <meta name="author" content="BGP Provinsi Bali"/>
+    <meta name="description" content="Form Registrasi Kegiatan BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?>" />
+    <meta name="author" content="BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?>"/>
 	
 	<?php //Favicon icon ?>
     <link rel="icon" href="<?php print base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
@@ -163,7 +163,7 @@
 		<div class="wrap-title">
 			<div class="logo"><img src="https://bgpbali.id/assets/images/logo-kemdikbud-50.jpg"></div>
 			<div class="title">
-                <div class="bgp">BGP Provinsi Bali</div>
+                <div class="bgp">BGP Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></div>
                 <div class="lokal">Saguyub Nangun Janakerthih</div>
 			</div>
 		</div>

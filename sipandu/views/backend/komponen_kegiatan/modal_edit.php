@@ -20,7 +20,7 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label>Nama Komponen</label>
-					<input type="text" name="name" class="form-control" value="<?php print isset($name) ? $name : ""; ?>" /> 
+					<input type="text" name="name" placeholder="Peserta" class="form-control" value="<?php print isset($name) ? $name : ""; ?>" /> 
 				</div>  
 				<div class="form-group">
 					<label>Status</label>
@@ -44,9 +44,15 @@
 						?>
 					</select>
 				</div>
+				<?php if (!isset($id) || empty($id)) { ?>
+				<div class="form-group">
+					<label>Short Kode</label>
+					<input type="text" name="short_code" class="form-control" placeholder="PS " value="<?php print isset($short_code) ? $short_code : ""; ?>" /> 
+				</div>
+				<?php } ?>
 				<div class="form-group">
 					<label>Prioritas</label>
-					<input type="text" name="order" class="form-control" value="<?php print isset($order) ? $order : ""; ?>" /> 
+					<input type="text" name="order" placeholder="1" class="form-control" value="<?php print isset($order) ? $order : ""; ?>" /> 
 				</div> 
 			</div>
 			<div class="modal-footer">

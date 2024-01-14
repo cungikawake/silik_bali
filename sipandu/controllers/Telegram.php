@@ -51,7 +51,7 @@ class Telegram extends CI_Controller {
 				file_get_contents($apiURL."/sendmessage?chat_id=".$chatID."&text=".$chat."&parse_mode=HTML");
 			}
 			else {
-				$chat = "Hai! Semeton BGP Bali!";
+				$chat = "Hai! Semeton ".$_ENV['BGP_CONFIG_4'];
 				file_get_contents($apiURL."/sendmessage?chat_id=".$chatID."&text=".$chat."&parse_mode=HTML"); 
 
 
@@ -158,8 +158,8 @@ class Telegram extends CI_Controller {
 			file_get_contents($apiURL."/sendmessage?chat_id=".$chatID."&text=".$chat."&parse_mode=HTML");
 		}
 		
-		if (strpos(strtolower($message), "bgp bali") === 0) {
-			$chat = urlencode("<b>BGP BALI</b>\n<i>Saguyub Nangun Janakerthih</i>");
+		if (strpos(strtolower($message), $_ENV['BGP_CONFIG_1']) === 0) {
+			$chat = urlencode("<b>".$_ENV['BGP_CONFIG_5']."</b>\n<i>Saguyub Nangun Janakerthih</i>");
 			file_get_contents($apiURL."/sendmessage?chat_id=".$chatID."&text=".$chat."&parse_mode=HTML");
 		}
 		

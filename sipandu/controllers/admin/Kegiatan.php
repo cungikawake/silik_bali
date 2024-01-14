@@ -115,38 +115,10 @@ class Kegiatan extends CI_Controller {
 				// UNSET
 				unset($data["id"]);
 				unset($data["kode"]);
-				
-				unset($data["link_peserta"]);
-				unset($data["link_narasumber"]);
-				unset($data["link_panitia"]);
-				unset($data["link_moderator"]);
-				unset($data["link_pp"]);
-				unset($data["link_fasil"]);
-				unset($data["link_instruktur"]);
-				unset($data["link_pengawas"]);
-				unset($data["link_kepala_sekolah"]);
-				
-				unset($data["link_peserta_on"]);
-				unset($data["link_narasumber_on"]);
-				unset($data["link_panitia_on"]);
-				unset($data["link_moderator_on"]);
-				unset($data["link_pp_on"]);
-				unset($data["link_fasil_on"]);
-				unset($data["link_instruktur_on"]);
-				unset($data["link_pengawas_on"]);
-				unset($data["link_kepala_sekolah_on"]);
-				
-				unset($data["sertificate_peserta"]);
-				unset($data["sertificate_panitia"]);
-				unset($data["sertificate_narasumber"]);
-				unset($data["sertificate_pa"]);
-				unset($data["sertificate_pp"]);
-				unset($data["sertificate_fasil"]);
-				unset($data["sertificate_instruktur"]);
-				unset($data["sertificate_pengawas"]);
-				unset($data["sertificate_kepala_sekolah"]);
+
 				unset($data["no_urut_terakhir"]);
 				unset($data["spj_kegiatan"]);
+				unset($data["daftar_hadir"]);
 				
 				unset($data["dibuat_tgl"]);
 				unset($data["diubah_tgl"]);
@@ -174,14 +146,9 @@ class Kegiatan extends CI_Controller {
 		exit();
 	}
 	
-	/**save option per komponen kegiatan */
 	public function save_more_opt () {
 		$this->auth->login();
-		
-		ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		error_reporting(E_ALL);
-		
+				
 		$out = array();
 		$out["error"] = false;
 		$out["msg"] = "Berhasil menyimpan pengaturan!";
@@ -242,33 +209,12 @@ class Kegiatan extends CI_Controller {
 		
 		if (isset($_POST["kegiatan"]) && !empty($_POST["kegiatan"])) {
 			$unsur = $_POST["unsur"];
-			
-			if ($unsur == "narasumber") {
-				$out = $this->narasumber_model->getNarasumber($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "panitia") {
-				$out = $this->panitia_model->getPanitia($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "fasilitator") {
-				$out = $this->fasilitator_model->get($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "instruktur") {
-				$out = $this->instruktur_model->get($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "pengajar praktek") {
-				$out = $this->pengajar_praktek_model->get($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "peserta") {
-				$out = $this->peserta_model->getPeserta($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "moderator") {
-				$out = $this->moderator_model->get($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "pengawas") {
-				$out = $this->pengawas_model->get($_POST["kegiatan"], $_POST["nik"]);
-			}
-			else if ($unsur == "kepala sekolah") {
-				$out = $this->kepala_sekolah_model->get($_POST["kegiatan"], $_POST["nik"]);
+
+			$this->load->model("master_komponen_kegiatan_model");
+			$komponen = $this->master_komponen_kegiatan_model->get_record_by_code($unsur);
+
+			if (!empty($komponen)) {
+				$out = $this->komponen_kegiatan_model->getDetailByNik($komponen->table_name, $_POST["kegiatan"], $_POST["nik"]);
 			}
 		}
 		
@@ -287,6 +233,7 @@ class Kegiatan extends CI_Controller {
 			if ($_POST["kab_unit_kerja"] == "Lainnya") {
 				$_POST["kab_unit_kerja"] = $_POST["kab_unit_kerja_lainnya"];
 			}
+			
 			unset($_POST["kab_unit_kerja_lainnya"]);
 			
 			$data = $_POST;
@@ -311,6 +258,7 @@ class Kegiatan extends CI_Controller {
 			$code_komponen = $data['code_komponen'];
 			unset($data['table_komponen']);
 			unset($data['code_komponen']);
+
 			$success = $this->komponen_kegiatan_model->save($tabel, $code_komponen, $data, $id);
 			
 			// Update data Biodata
@@ -331,7 +279,7 @@ class Kegiatan extends CI_Controller {
 		
 		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
 		
-		if (!empty($kegiatan)) {
+		if (!empty($kegiatan) && $komponen == "peserta") {
 			// Get First Aktif Komponen
 			if (isset($kegiatan["komponen"]) && !empty($kegiatan["komponen"])) {
 				$komponenAktif = "";
@@ -367,128 +315,25 @@ class Kegiatan extends CI_Controller {
 		$this->load->model("master_komponen_kegiatan_model");
 		$data["komponen"] = $this->master_komponen_kegiatan_model->get_record_by_code($komponen);
 		$data["opsi_komponen"] = $this->master_komponen_kegiatan_model->get_all_records();
-
-
 		 
-		$this->load->view('backend/kegiatan/item', $data);
-	}
+		$data["biodata_kasubag"] = array();   
+		$kasubbag = $this->pengaturan_model->getPengaturanBySistem('kasubbag');
+		if (!empty($kasubbag)) {
+			$biodataId = $kasubbag["value"];
 
-	/*public function peserta ($id) {
-		$this->auth->login();
+			$data["biodata_kasubag"] = $this->biodata_model->getBiodataById($biodataId);
+		}
 		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
 		
-		if (!empty($kegiatan)) {
-			if (isset($kegiatan["komponen"]) && !empty($kegiatan["komponen"])) {
-				$komponenAktif = "";
-				
-				foreach ($kegiatan["komponen"] as $kom => $komAktif) {
-					if ($komAktif == "1") {
-						$komponenAktif = $kom;
-						break;
-					}
-				}
-				
-				if ($komponenAktif != "peserta") {
-					redirect(base_url("/admin/kegiatan/".$komponenAktif."/".$id."/"));
-				}
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
 			}
 		}
 		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		$data["unsur"] = "peserta";
-		
-		$this->load->view('backend/kegiatan/peserta', $data);
+		$this->load->view('backend/kegiatan/item', $data);
 	}
-	
-	public function narasumber ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/narasumber', $data);
-	}
-	
-	public function moderator ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/moderator', $data);
-	}
-	
-	public function pengajar_praktek ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/pengajar_praktek', $data);
-	}
-	
-	public function fasilitator ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/fasilitator', $data);
-	}
-	
-	public function instruktur ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/instruktur', $data);
-	}
-	
-	public function panitia ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/panitia', $data);
-	}
-	
-	public function pengawas ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/pengawas', $data);
-	}
-	
-	public function kepala_sekolah ($id) {
-		$this->auth->login();
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById($id);
-		
-		$data = array();
-		$data["kegiatan"] = $kegiatan;
-		
-		$this->load->view('backend/kegiatan/kepala_sekolah', $data);
-	}*/
 	
 	public function data_dukung ($id) {
 		$this->auth->login();
@@ -767,6 +612,170 @@ class Kegiatan extends CI_Controller {
 		print json_encode($out);
 		exit();
 	}
+
+	public function generateBitlyDaftarHadir () {
+		$this->auth->login();
+		
+		$out = array();
+		$out["error"] = true;
+		
+		if (isset($_POST["kegiatanId"]) && !empty($_POST["kegiatanId"])) {
+			$kegiatanId = $_POST["kegiatanId"];
+			$customLink = $_POST["customLink"];
+			$komponen = $_POST["komponen"];
+			$tanggal = $_POST["tanggal"];
+
+			$kegiatanOptions = $this->kegiatan_options_model->get($kegiatanId, $komponen);
+			$optionId = 0;
+			$option = array();
+
+			if (isset($kegiatanOptions) && !empty($kegiatanOptions)) {
+				foreach ($kegiatanOptions as $ops) {
+					if ($ops["key"] == "daftar_hadir") {
+						$option = $ops["value"];
+						$optionId = $ops["id"];
+					}
+				}
+			}
+			
+			if (isset($option[$tanggal]["link"]) && !empty($option[$tanggal]["link"])) {
+
+				if (empty($option[$tanggal]["link"]["custom_bitlinks"])) {
+					
+					$bitly = $this->bitly->customLink($option[$tanggal]["link"]["id"], $customLink);
+					
+					if (isset($bitly["id"])) {
+						$option[$tanggal]["link"] = $bitly;
+
+						// Save Here
+						$data = array();
+						$data["kegiatan_id"] = $kegiatanId;
+						$data["code_komponen"] = $komponen;
+						$data["key"] = "daftar_hadir";
+						$data["value"] = json_encode($option);
+						$this->kegiatan_options_model->save($data, $optionId);
+						
+						$out = $bitly;
+						$out["error"] = false;
+					}
+					else {
+						$out = $bitly;
+						$out["error"] = true;
+					}
+				}
+				else {
+					
+					if ($option[$tanggal]["link"]["custom_bitlinks"] != "bit.ly/".$customLink) {
+						// UPDATE (CREATE) NEW LINK
+						$longUrl = base_url("daftar_hadir_".$komponen."/".$kegiatanId."/".$tanggal);
+				
+						$bitly = $this->bitly->shorten($longUrl);
+
+						if (isset($bitly["id"])) {
+							$option[$tanggal]["link"] = $bitly;
+
+							// Save Here
+							$data = array();
+							$data["kegiatan_id"] = $kegiatanId;
+							$data["code_komponen"] = $komponen;
+							$data["key"] = "daftar_hadir";
+							$data["value"] = json_encode($option);
+							$this->kegiatan_options_model->save($data, $optionId);
+
+
+							$bitly = $this->bitly->customLink($bitly["id"], $customLink);
+
+							if (isset($bitly["id"])) {
+								$option[$tanggal]["link"] = $bitly;
+
+								// Save Here
+								$data = array();
+								$data["kegiatan_id"] = $kegiatanId;
+								$data["code_komponen"] = $komponen;
+								$data["key"] = "daftar_hadir";
+								$data["value"] = json_encode($option);
+								$this->kegiatan_options_model->save($data, $optionId);
+
+								$out = $bitly;
+								$out["error"] = false;
+								$out["range"] = "custom link edit";
+							}
+							else {
+								$out = $bitly;
+								$out["error"] = true;
+								$out["range"] = "bitly link edit";
+							}
+						}
+						else {
+							$out = $bitly;
+							$out["error"] = true;
+							$out["range"] = "gagal bitly link edit";
+						}
+					}
+					else {
+						$out = $option;
+						$out["error"] = false;
+						$out["range"] = "custom bitly link edit sama";
+					}
+				}
+			}
+			else {
+				$longUrl = base_url("daftar_hadir_".$komponen."/".$kegiatanId."/".$tanggal);
+				
+				$bitly = $this->bitly->shorten($longUrl);
+				
+				if (isset($bitly["id"])) {
+					$option[$tanggal]["link"] = $bitly;
+
+					// Save Here
+					$data = array();
+					$data["kegiatan_id"] = $kegiatanId;
+					$data["code_komponen"] = $komponen;
+					$data["key"] = "daftar_hadir";
+					$data["value"] = json_encode($option);
+					$optionId = $this->kegiatan_options_model->save($data);
+					
+					$bitly = $this->bitly->customLink($bitly["id"], $customLink);
+					
+					if (isset($bitly["id"])) {
+						$option[$tanggal]["link"] = $bitly;
+
+						// Save Here
+						$data = array();
+						$data["kegiatan_id"] = $kegiatanId;
+						$data["code_komponen"] = $komponen;
+						$data["key"] = "daftar_hadir";
+						$data["value"] = json_encode($option);
+						$optionId = $this->kegiatan_options_model->save($data, $optionId);
+						
+						$out = $bitly;
+						$out["error"] = false;
+					}
+					else {
+						$option[$tanggal]["link"] = "";
+
+					    // Can't make custom link, Remove Data
+						$data = array();
+						$data["kegiatan_id"] = $kegiatanId;
+						$data["code_komponen"] = $komponen;
+						$data["key"] = "daftar_hadir";
+						$data["value"] = json_encode($option);
+						$optionId = $this->kegiatan_options_model->save($data, $optionId);
+						
+						$out = $bitly;
+						$out["error"] = true;
+					}
+				}
+				else {
+					$out = $bitly;
+					$out["error"] = true;
+				}
+			}
+		}
+		
+		print json_encode($out);
+		exit();
+	}
 	
 	public function switchRegistration () {
 		$this->auth->login();
@@ -851,69 +860,9 @@ class Kegiatan extends CI_Controller {
 		exit();
 	}
 	
-	public function download_biodata ($kegiatanId, $type) {
-		$this->auth->login();
-		
-		$data = array();
-		$data["type"] = $type;
-		
-		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
-		
-		if (!empty($pengaturan)) {
-			foreach ($pengaturan as $foo) {
-				$data["satker"][$foo["sistem"]] = $foo["value"];
-			}
-		}
-		
-		$data["kegiatan"] = $this->kegiatan_model->getKegiatanById($kegiatanId);
-		
-		if ($type == "peserta") {
-			$biodatas = $this->peserta_model->getPesertaKegiatan($kegiatanId);	
-		}
-		else if ($type == "narasumber") {
-			$biodatas = $this->narasumber_model->getNarasumberKegiatan($kegiatanId);	
-		}
-		else if ($type == "moderator") {
-			$biodatas = $this->moderator_model->getByKegiatan($kegiatanId);	
-		}
-		else if ($type == "pengajar_praktek") {
-			$biodatas = $this->pengajar_praktek_model->getByKegiatan($kegiatanId);	
-		}
-		else if ($type == "fasilitator") {
-			$biodatas = $this->fasilitator_model->getByKegiatan($kegiatanId);	
-		}
-		else if ($type == "instruktur") {
-			$biodatas = $this->instruktur_model->getByKegiatan($kegiatanId);	
-		}
-		else if ($type == "pengawas") {
-			$biodatas = $this->pengawas_model->getByKegiatan($kegiatanId);	
-		}
-		else if ($type == "kepala_sekolah") {
-			$biodatas = $this->kepala_sekolah_model->getByKegiatan($kegiatanId);	
-		}
-		else {
-			$biodatas = $this->panitia_model->getPanitiaKegiatan($kegiatanId);	
-		}
-		
-		$html = '<h3 style="text-align:center;">Tidak ada Data</h3>';
-		
-		if (!empty($biodatas)) {
-			$html = '';
-			
-			foreach ($biodatas as $bio) {
-				$data["biodata"] = $bio;
-				
-				$html .= $this->load->view('template/biodata', $data, true);
-				$html .= "<pagebreak />";
-			}
-		}
-		
-		$this->mpdf->create($html,"biodata_".$type."_".$data["kegiatan"]["kode"]);
-	}
-	
 	public function download_biodata2 ($kegiatanId, $code_komponen, $page = 0) {
 		$this->auth->login();
-		
+
 		$data = array();
 		$data["type"] = $code_komponen;
 		
@@ -1368,7 +1317,6 @@ class Kegiatan extends CI_Controller {
 				$reportUnsur = $sortReportUnsur;
 			}
 			
-			
 			$data["report_kab"] = $reportKab;
 			$data["report_waktu"] = $reportWaktuDaftar;
 			$data["report_unsur"] = $reportUnsur;
@@ -1378,71 +1326,5 @@ class Kegiatan extends CI_Controller {
 		
 		print $html;
 		exit();
-	}
-	
-	function turnOffForm () {
-		$kegiatan = $this->kegiatan_model->turnOffForm();
-		
-		if (!empty($kegiatan)) {
-			foreach ($kegiatan as $keg) {
-				$id = $keg["id"];
-				
-				$data = array(
-					"link_peserta_on" => 0,
-					"link_panitia_on" => 0,
-					"link_moderator_on" => 0,
-					"link_pp_on" => 0,
-					"link_fasil_on" => 0,
-					"link_instruktur_on" => 0,
-					"link_pengawas_on" => 0,
-					"link_kepala_sekolah_on" => 0
-				);
-				
-				$this->kegiatan_model->save($data, $id);
-				
-				print "Turn Off Form Registrastion - ".$keg["nama"]." <br />";
-			}
-		}
-	}
-	
-	function testPeserta () {
-		$start = microtime(TRUE);
-		
-		$kegiatan = $this->kegiatan_model->getKegiatanById("281");
-		$peserta = $this->peserta_model->getPesertaKegiatan("281");
-		$pesertaByKode = array();
-		
-		$end = microtime(TRUE);
-		
-		if (!empty($peserta)) {
-			foreach ($peserta as $ps) {
-				$pesertaByKode[$ps["kode"]] = $ps;
-			}
-		}
-		
-		
-		$last = count($peserta) + 1;
-		
-		foreach (range(1, $last) as $no) {
-			$noKode = $this->utility->penomoran($no)."-PS-".$kegiatan["kode"];
-			
-			if (!isset($pesertaByKode[$noKode])) {
-				break;
-			}
-		}
-		
-		print "<pre>";
-print_r($noKode);
-print "</pre>";
-		
-		print $end - $start;
-		
-		/*print "<pre>";
-		print_r($last);
-		print "</pre>";
-		
-		print "<pre>";
-		print_r($pesertaByKode);
-		print "</pre>";*/
 	}
 }

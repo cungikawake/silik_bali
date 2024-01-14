@@ -950,12 +950,12 @@ $config["user_akses"] = array(
 			"name" => "Add Data Dukung"
 		),
 	),
-	"hai_bgp" => array(
+	/*"hai_bgp" => array(
 		"list" => array(
 			"value" => 1,
 			"name" => "List Hai BGP"
 		)
-	),
+	),*/
 	"keuangan" => array(
 		"apr_perjadin" => array(
 			"value" => 0,
@@ -1149,7 +1149,7 @@ $config["unsur_satuan"] = array(
 	"SPNF SKB" => array("spnf skb", "skb", "sp skb","spnf-skb","uptd skb","uptd spnf skb"),
 	"Universitas/Perguruan Tinggi" => array("fakultas", "universitas", "perguruan tinggi", "institut", "sekolah tinggi", "stkip agama hindu", "politeknik ganesha guru", "stah negeri mpu kuturan"),
 	"Dinas Pendidikan" => array("disdik", "dinas pendidikan", "upt disdikpora", "korwil dinas pendidikan", "upt dissikpora", "dinas dikpora", "dinas dokpora", "upt.disdikpora", "upt disdipora"),
-	"BGP Bali" => array("bgp bali", "bgp provinsi bali", "balai guru penggerak provinsi bali"),
+	$_ENV['BGP_CONFIG_3'] => array($_ENV['BGP_CONFIG_1'], $_ENV['BGP_CONFIG_2'], $_ENV['BGP_CONFIG_3']),
 	"BGP BBGP" => array("bgp", "bbgp", "balai guru penggerak", "balai besar guru penggerak"),
 	"BPMP BBPMP" => array("bpmp", "bbpmp", "balai penjaminan mutu pendidikan", "balai besar penjaminan mutu pendidikan"),
 	"Kemenag" => array("kemenag", "kementerian agama", "krmenterian agama")
