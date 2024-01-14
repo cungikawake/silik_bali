@@ -20,7 +20,7 @@
 				<div class="col-md-12">	
 					<div class="card">
 						<div class="card-body" style="text-align: center;">
-							<h3>Hai! Selamat datang di Layanan Online <br />Balai Guru Penggerak Provinsi Bali.</h3>
+							<h3>Hai! Selamat datang di Layanan Online <br /><?php print $satker["upt"]; ?>.</h3>
 						</div>
 					</div>
 				</div>

@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Download extends CI_Controller {
 	function __construct() {
 		parent::__construct();
+
+		$this->load->model("pengaturan_model");
 	}
 	
 	public function index() {
@@ -29,6 +31,15 @@ class Download extends CI_Controller {
 				$komponen = $this->master_komponen_kegiatan_model->get_record_by_short_code($shortCode);
 				
 				$data = array();
+
+				$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+				if (!empty($pengaturan)) {
+					foreach ($pengaturan as $foo) {
+						$data["satker"][$foo["sistem"]] = $foo["value"];
+					}
+				}
+
 				$data["person"] = $this->komponen_kegiatan_model->getItemByKode($komponen->code, $kode);
 				
 				if (!empty($data["person"])) {
@@ -145,6 +156,14 @@ class Download extends CI_Controller {
 			"jabatan" => ""
 		);
 
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
+			}
+		}
+
 		$kegiatanOptions = $this->kegiatan_options_model->get($kegiatanId, $code_komponen);
 
 		if (!empty($kegiatanOptions)) {
@@ -238,6 +257,14 @@ class Download extends CI_Controller {
 	public function tembak_sppd_peserta ($kegiatanId = "", $download = null) {
 		$data = array();
 		$data["kegiatan_id"] = $kegiatanId;
+
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
+			}
+		}
 		
 		if ($download == "execute") {
 			if (empty($kegiatanId)) {

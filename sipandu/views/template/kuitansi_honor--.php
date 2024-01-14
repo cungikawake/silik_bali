@@ -96,7 +96,7 @@
 					<tr>
 						<td width="22%">SUDAH DITERIMA DARI</td>
 						<td width="1%">:</td>
-						<td width="76%" colspan="2">Kuasa Pengguna Anggaran Balai Guru Penggerak Provinsi  <?php echo $_ENV['DEFAULT_PROVINSI']; ?></td>
+						<td width="76%" colspan="2">Kuasa Pengguna Anggaran <?php echo $satker["upt"]; ?></td>
 					</tr>
 					<tr>
 						<td class="space">&nbsp;</td>
