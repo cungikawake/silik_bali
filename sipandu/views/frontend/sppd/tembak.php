@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 	<head>
-		<title>Download SPPD Kegiatan Balai Guru Penggerak Provinsi  <?php echo $_ENV['DEFAULT_PROVINSI']; ?></title>
+		<title>Download SPPD Kegiatan <?php print $satker["upt"]; ?></title>
 		<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 11]>
@@ -12,7 +12,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="description" content="Download SPPD Kegiatan Balai Guru Penggerak Provinsi Bali" />
+		<meta name="description" content="Download SPPD Kegiatan <?php print $satker["upt"]; ?>" />
 		<meta name="author" content="BGP Provinsi Bali"/>
 
 		<?php //Favicon icon ?>

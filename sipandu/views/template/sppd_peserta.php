@@ -262,7 +262,7 @@
 				</tr>
 				<tr>
 					<td class="no-border"></td>
-					<td class="no-border" colspan="2">Balai Guru Penggerak Provinsi <?php echo $_ENV['DEFAULT_PROVINSI']; ?></td>
+					<td class="no-border" colspan="2"><?php print $satker["upt"]; ?></td>
 				</tr>
 				<tr>
 					<td class="no-border"></td>

@@ -198,7 +198,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<label>Keterangan Tugas</label>
-									<textarea name="nama" class="form-control" rows="2" required placeholder="Rapat Koordinasi Program Balai Guru Penggerak..."><?php print isset($nama) ? $nama : ""; ?></textarea>
+									<textarea name="nama" class="form-control" rows="2" required placeholder="Rapat Koordinasi Program..."><?php print isset($nama) ? $nama : ""; ?></textarea>
 								</div>
 							</div>
 						</div>

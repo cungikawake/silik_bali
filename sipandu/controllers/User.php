@@ -5,7 +5,7 @@ class User extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		
+		$this->load->model("pengaturan_model");
 		$this->load->model("guest_model");
 	}
 	
@@ -14,6 +14,14 @@ class User extends CI_Controller {
 		
 		$data = array();
 		$data["guest"] = $this->session->userdata('guest');
+
+		$pengaturan = $this->pengaturan_model->getPengaturanBySection("satker");
+		
+		if (!empty($pengaturan)) {
+			foreach ($pengaturan as $foo) {
+				$data["satker"][$foo["sistem"]] = $foo["value"];
+			}
+		}
 		
 		$this->load->view('/frontend/user/overview', $data);
 	}
