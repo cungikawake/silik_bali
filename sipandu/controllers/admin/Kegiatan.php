@@ -4,19 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Kegiatan extends CI_Controller {
 	
 	function __construct() {
-		parent::__construct();
+		parent::__construct(); 
 		
 		$this->load->model("kegiatan_model");
 		$this->load->model("kegiatan_options_model");
-		$this->load->model("peserta_model");
-		$this->load->model("narasumber_model");
-		$this->load->model("moderator_model");
-		$this->load->model("pengajar_praktek_model");
-		$this->load->model("fasilitator_model");
-		$this->load->model("instruktur_model");
-		$this->load->model("pengawas_model");
-		$this->load->model("kepala_sekolah_model");
-		$this->load->model("panitia_model");
+		// $this->load->model("peserta_model");
+		// $this->load->model("narasumber_model");
+		// $this->load->model("moderator_model");
+		// $this->load->model("pengajar_praktek_model");
+		// $this->load->model("fasilitator_model");
+		// $this->load->model("instruktur_model");
+		// $this->load->model("pengawas_model");
+		// $this->load->model("kepala_sekolah_model");
+		// $this->load->model("panitia_model");
 		$this->load->model("biodata_model");
 		$this->load->model("dakung_model");
 		$this->load->model("pengaturan_model");

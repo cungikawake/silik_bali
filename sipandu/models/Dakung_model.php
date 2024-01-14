@@ -1,18 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Dakung_model extends CI_Model{
 	
-    function __construct() {
-		
+    protected $group_prefix = 'transaction_';
+	protected $new_db = '';
+
+    function __construct() { 
+		$db_tahun = $this->group_prefix . $_SESSION['tahun_anggaran']; 
+		$this->new_db = $this->load->database($db_tahun, true);
+		 
     }
 	
 	public function getByKegiatanIdAndSection ($kegiatanId, $section) {
 		$out = array();
 		$user = array();
 		
-		$this->db->select("*");
-		$this->db->from("user");
+		$this->new_db->select("*");
+		$this->new_db->from("user");
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -20,14 +25,14 @@ class Dakung_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan_data_dukung");
-		$this->db->where("kegiatan_id", $kegiatanId);
-		$this->db->where("section", $section);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan_data_dukung");
+		$this->new_db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->where("section", $section);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -35,7 +40,7 @@ class Dakung_model extends CI_Model{
 				$out[] = $row;
 			}
 		}
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -44,10 +49,10 @@ class Dakung_model extends CI_Model{
 		$out = array();
 		$user = array();
 		
-		$this->db->select("*");
-		$this->db->from("user");
+		$this->new_db->select("*");
+		$this->new_db->from("user");
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -55,13 +60,13 @@ class Dakung_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan_data_dukung");
-		$this->db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan_data_dukung");
+		$this->new_db->where("kegiatan_id", $kegiatanId);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -69,7 +74,7 @@ class Dakung_model extends CI_Model{
 				$out[] = $row;
 			}
 		}
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -77,11 +82,11 @@ class Dakung_model extends CI_Model{
 	public function getById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("kegiatan_data_dukung");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan_data_dukung");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -89,7 +94,7 @@ class Dakung_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -102,26 +107,26 @@ class Dakung_model extends CI_Model{
 			$data['dibuat_oleh'] = $_SESSION["user"]["id"];
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->insert("kegiatan_data_dukung", $data);
-			$id = $this->db->insert_id();
-			$this->db->reset_query();
+			$this->new_db->insert("kegiatan_data_dukung", $data);
+			$id = $this->new_db->insert_id();
+			$this->new_db->reset_query();
 		}
 		else {
 			$data['diubah_tgl'] = date("Y-m-d H:i:s");
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("kegiatan_data_dukung", $data);
-			$this->db->reset_query();
+			$this->new_db->where("id", $id);
+			$this->new_db->update("kegiatan_data_dukung", $data);
+			$this->new_db->reset_query();
 		}
 		
 		return $id;
 	}
 	
 	public function delete ($id) {
-		$this->db->where('id', $id);
-		$this->db->delete('kegiatan_data_dukung');
-		$this->db->reset_query();
+		$this->new_db->where('id', $id);
+		$this->new_db->delete('kegiatan_data_dukung');
+		$this->new_db->reset_query();
 		
 		return true;
 	}
