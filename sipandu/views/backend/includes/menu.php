@@ -122,11 +122,11 @@
 					</li>
 				<?php } ?>
 				
-				<?php if ($this->utility->hasUserAccess("spj_kegiatan","list")) { ?>
+				<?php /* if ($this->utility->hasUserAccess("spj_kegiatan","list")) { ?>
 					<li class="nav-item <?php if ($url_1 == "spj" && $url_2 == "kegiatan") print "active"; ?>">
 						<a href="<?php print base_url('/admin/spj/kegiatan/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="fas fa-donate"></i></span><span class="pcoded-mtext">SPJ Kegiatan</span></a>
 					</li>
-				<?php } ?>
+				<?php }*/ ?>
 				
 				<?php if ($this->utility->hasUserAccess("keuangan","apr_perjadin")) { ?>
 					<?php
@@ -177,7 +177,7 @@
 				<?php } ?>
 				
 				<?php if ($this->utility->hasUserAccess("pengaturan","satker") || $this->utility->hasUserAccess("pengaturan","api") || $this->utility->hasUserAccess("pengaturan","pejabat") || $this->utility->hasUserAccess("pengaturan","mail")) { ?>
-					<li class="nav-item pcoded-hasmenu <?php if ($url_1 == "pengaturan") print "active pcoded-trigger"; ?>">
+					<li class="nav-item pcoded-hasmenu <?php if ($url_1 == "pengaturan" || $url_1 == "komponen_kegiatan") print "active pcoded-trigger"; ?>">
 						<a href="javascript:" class="nav-link "><span class="pcoded-micon">
 							<i class="feather icon-settings"></i></span><span class="pcoded-mtext">Umum</span>
 						</a>
@@ -192,6 +192,10 @@
 							
 							<?php if ($this->utility->hasUserAccess("pengaturan","satker")) { ?>
 								<li class="<?php if ($url_1 == "pengaturan" && $url_2 == "mak") print "active"; ?>"><a href="<?php print base_url('/admin/pengaturan/mak/'); ?>" class="">Mata Anggaran</a></li>
+							<?php } ?>
+
+							<?php if ($this->utility->hasUserAccess("komponen_kegiatan","list")) { ?>
+								<li class="<?php if ($url_1 == "komponen_kegiatan") print "active"; ?>"><a href="<?php print base_url('/admin/komponen_kegiatan/'); ?>" class="">Komponen Kegiatan</a></li>
 							<?php } ?>
 
 							<?php if ($this->utility->hasUserAccess("pengaturan","api")) { ?>
@@ -227,6 +231,11 @@
 				<?php } ?>
 				
 				<?php if ($this->utility->hasUserAccess("user","list")) { ?>
+					<li class="nav-item <?php if ($url_1 == "user") print "active"; ?>">
+						<a href="<?php print base_url('/admin/user/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">User</span></a>
+					</li>
+
+					<?php /*
 					<li class="nav-item pcoded-hasmenu <?php if (($url_1 == "user" && $url_2 == "") || $url_1 == "guest") print "active pcoded-trigger"; ?>">
 						<a href="javascript:" class="nav-link "><span class="pcoded-micon">
 							<i class="feather feather icon-user"></i></span><span class="pcoded-mtext">User</span>
@@ -241,17 +250,13 @@
 							</li>
 						</ul>
 					</li>
+					<?php */ ?>
+
 				<?php } ?>
 
 				<?php if ($this->utility->hasUserAccess("biodata","list")) { ?>
 					<li class="nav-item <?php if ($url_1 == "biodata") print "active"; ?>">
 						<a href="<?php print base_url('/admin/biodata/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Biodata</span></a>
-					</li>
-				<?php } ?>
-
-				<?php if ($this->utility->hasUserAccess("komponen_kegiatan","list")) { ?>
-					<li class="nav-item <?php if ($url_1 == "komponen_kegiatan") print "active"; ?>">
-						<a href="<?php print base_url('/admin/komponen_kegiatan/'); ?>" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Komponen Kegiatan</span></a>
 					</li>
 				<?php } ?>
 			</ul>
