@@ -7,8 +7,8 @@
 		public function __construct() {
 			$this->CI =& get_instance();
 			//$this->CI->load->database();
-
-			$group_prefix = 'transaction_'.$_SESSION['tahun_anggaran'];
+			$tahun_anggaran = (isset($_SESSION['tahun_anggaran']))? $_SESSION['tahun_anggaran'] : date('Y');
+			$group_prefix = 'transaction_'.$tahun_anggaran;
 			$this->new_db = $this->CI->load->database($group_prefix, true);
 			 
 			/*$this->new_db->select("*");
