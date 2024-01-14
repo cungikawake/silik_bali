@@ -14,10 +14,10 @@ class Dakung_model extends CI_Model{
 		$out = array();
 		$user = array();
 		
-		$this->new_db->select("*");
-		$this->new_db->from("user");
+		$this->db->select("*");
+		$this->db->from("user");
 		
-		$query = $this->new_db->get();
+		$query = $this->db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -25,7 +25,7 @@ class Dakung_model extends CI_Model{
 			}
 		}
 		
-		$this->new_db->reset_query();
+		$this->db->reset_query();
 		
 		$this->new_db->select("*");
 		$this->new_db->from("kegiatan_data_dukung");
@@ -49,8 +49,8 @@ class Dakung_model extends CI_Model{
 		$out = array();
 		$user = array();
 		
-		$this->new_db->select("*");
-		$this->new_db->from("user");
+		$this->db->select("*");
+		$this->db->from("user");
 		
 		$query = $this->new_db->get();
 		
@@ -60,7 +60,7 @@ class Dakung_model extends CI_Model{
 			}
 		}
 		
-		$this->new_db->reset_query();
+		$this->db->reset_query();
 		
 		$this->new_db->select("*");
 		$this->new_db->from("kegiatan_data_dukung");
