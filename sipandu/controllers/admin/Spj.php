@@ -10,23 +10,7 @@ class Spj extends CI_Controller {
 		$this->load->model("spj_model");
 		
 		// Decide to remove
-		$this->load->model("spj_peserta_model");
-		$this->load->model("spj_narasumber_model");
-		$this->load->model("spj_instruktur_model");
-		$this->load->model("spj_fasilitator_model");
-		$this->load->model("spj_pengajar_praktek_model");
-		$this->load->model("spj_panitia_model");
-		
 		$this->load->model("kegiatan_model");
-		$this->load->model("peserta_model");
-		$this->load->model("narasumber_model");
-		$this->load->model("panitia_model");
-		$this->load->model("moderator_model");
-		$this->load->model("fasilitator_model");
-		$this->load->model("instruktur_model");
-		$this->load->model("pengajar_praktek_model");
-		$this->load->model("kepala_sekolah_model");
-		$this->load->model("pengawas_model");
 		$this->load->model("penugasan_model");
 		$this->load->model("user_model");
 	}
