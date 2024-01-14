@@ -47,7 +47,7 @@
 				<?php if (!isset($id) || empty($id)) { ?>
 				<div class="form-group">
 					<label>Short Kode</label>
-					<input type="text" name="short_code" class="form-control" placeholder="PS" value="<?php print isset($short_code) ? $short_code : ""; ?>" /> 
+					<input type="text" name="short_code" class="form-control" placeholder="PS " value="<?php print isset($short_code) ? $short_code : ""; ?>" /> 
 				</div>
 				<?php } ?>
 				<div class="form-group">
