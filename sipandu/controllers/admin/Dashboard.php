@@ -21,16 +21,17 @@ class Dashboard extends CI_Controller {
 	public function index() {
 		$this->auth->login();
 		
-		$this->load->model("kegiatan_model");
+		$this->load->model("kegiatan_model"); 
 		$this->load->model("biodata_model");
 		$this->load->model("kutipan_model");
 		$this->load->model("tiket_model");
 		
 		$data = array();
 		$data["kegiatan"] = $this->kegiatan_model->countKegiatan();
+		
 		$data["biodata"] = $this->biodata_model->countBiodata();
 		$data["kutipan"] = $this->kutipan_model->getRandom();
-		$data["hai_ranking"] = $this->tiket_model->getHaRanking();
+		$data["hai_ranking"] = array();//$this->tiket_model->getHaRanking();
 		$data["birthday"] = $this->biodata_model->getBirthday();
 		
 		$this->load->view('backend/dashboard', $data);

@@ -1,7 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Penugasan_model extends CI_Model{
 	
-    function __construct() {
+    protected $group_prefix = 'transaction_';
+	protected $new_db = '';
+
+    function __construct() { 
+		$db_tahun = $this->group_prefix . $_SESSION['tahun_anggaran']; 
+		$this->new_db = $this->load->database($db_tahun, true);
+		 
     }
 	
 	public function save ($data, $id = 0) {
@@ -11,18 +17,18 @@ class Penugasan_model extends CI_Model{
 			$data['dibuat_oleh'] = $_SESSION["user"]["id"];
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->insert("penugasan", $data);
-			$id = $this->db->insert_id();
+			$this->new_db->insert("penugasan", $data);
+			$id = $this->new_db->insert_id();
 			
-			$this->db->reset_query();
+			$this->new_db->reset_query();
 		}
 		else {
 			$data['diubah_tgl'] = date("Y-m-d H:i:s");
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("penugasan", $data);
-			$this->db->reset_query();
+			$this->new_db->where("id", $id);
+			$this->new_db->update("penugasan", $data);
+			$this->new_db->reset_query();
 		}
 		
 		return $id;
@@ -31,11 +37,11 @@ class Penugasan_model extends CI_Model{
 	public function getById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -47,7 +53,7 @@ class Penugasan_model extends CI_Model{
 			$out["petugas"] = json_decode($out["petugas"], true);
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -55,11 +61,11 @@ class Penugasan_model extends CI_Model{
 	public function getByStatus ($status) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan");
-		$this->db->where("status", $status);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan");
+		$this->new_db->where("status", $status);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -71,7 +77,7 @@ class Penugasan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -79,11 +85,11 @@ class Penugasan_model extends CI_Model{
 	public function getByKegiatanId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan");
-		$this->db->where("kegiatan_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan");
+		$this->new_db->where("kegiatan_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -95,7 +101,7 @@ class Penugasan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -114,10 +120,10 @@ class Penugasan_model extends CI_Model{
 			$data['dibuat_oleh'] = $_SESSION["user"]["id"];
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->insert("penugasan_item", $data);
-			$id = $this->db->insert_id();
+			$this->new_db->insert("penugasan_item", $data);
+			$id = $this->new_db->insert_id();
 			
-			$this->db->reset_query();
+			$this->new_db->reset_query();
 		}
 		else {
 			if (!isset($data['diubah_tgl'])) {
@@ -126,9 +132,9 @@ class Penugasan_model extends CI_Model{
 			
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("penugasan_item", $data);
-			$this->db->reset_query();
+			$this->new_db->where("id", $id);
+			$this->new_db->update("penugasan_item", $data);
+			$this->new_db->reset_query();
 		}
 		
 		return $id;
@@ -137,11 +143,11 @@ class Penugasan_model extends CI_Model{
 	public function getItemById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan_item");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan_item");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -153,7 +159,7 @@ class Penugasan_model extends CI_Model{
 			$out["laporan_foto"] = json_decode($out["laporan_foto"], true);
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -161,11 +167,11 @@ class Penugasan_model extends CI_Model{
 	public function getItemsByPenugasanId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan_item");
-		$this->db->where("penugasan_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan_item");
+		$this->new_db->where("penugasan_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -177,7 +183,7 @@ class Penugasan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -185,11 +191,11 @@ class Penugasan_model extends CI_Model{
 	public function getItemByStatus ($status) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan_item");
-		$this->db->where("status", $status);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan_item");
+		$this->new_db->where("status", $status);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {				
@@ -197,7 +203,7 @@ class Penugasan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -205,11 +211,11 @@ class Penugasan_model extends CI_Model{
 	public function getItemBySpjItemId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("penugasan_item");
-		$this->db->where("spj_item_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan_item");
+		$this->new_db->where("spj_item_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {				
@@ -217,7 +223,7 @@ class Penugasan_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}

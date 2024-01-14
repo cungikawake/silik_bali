@@ -1115,7 +1115,15 @@ class Bootgrids extends CI_Controller {
 			
 			
 			// TOTAL
-			$this->db->from($table);
+			$config_tb = $this->config->item('db_master_table');
+			if(!in_array($table, $config_tb)){
+				$db_tahun = 'transaction_' . $_SESSION['tahun_anggaran']; 
+				$this->db = $this->load->database($db_tahun, true);
+				$this->db->from($table);
+			}else{
+				$this->db->from($table);
+			}
+			
 		
 			if (!empty($tableJoin) && !empty($tableJoinCondition)) {
 				if (!empty($tableJoinType)) {
