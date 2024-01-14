@@ -1,17 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Spj_model extends CI_Model{
 	
-    function __construct() {
-		
+    protected $group_prefix = 'transaction_';
+	protected $new_db = '';
+
+    function __construct() { 
+		$db_tahun = $this->group_prefix . $_SESSION['tahun_anggaran']; 
+		$this->new_db = $this->load->database($db_tahun, true);
+		 
     }
 	
 	public function getAll () {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -34,11 +39,11 @@ class Spj_model extends CI_Model{
 	public function getById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -61,11 +66,11 @@ class Spj_model extends CI_Model{
 	public function getByPenugasanId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("penugasan_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("penugasan_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -87,11 +92,11 @@ class Spj_model extends CI_Model{
 	public function getByKegiatanId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("kegiatan_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("kegiatan_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -113,12 +118,12 @@ class Spj_model extends CI_Model{
 	public function getByPenugasanIdKegiatanId ($penugasanId, $kegiatanId) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("penugasan_id", $penugasanId);
-		$this->db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("penugasan_id", $penugasanId);
+		$this->new_db->where("kegiatan_id", $kegiatanId);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -140,12 +145,12 @@ class Spj_model extends CI_Model{
 	public function getByKegiatanIdKomponen ($kegiatanId, $komponen) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("kegiatan_id", $kegiatanId);
-		$this->db->where("komponen", $komponen);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->where("komponen", $komponen);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -167,13 +172,13 @@ class Spj_model extends CI_Model{
 	public function getByPenugasanIdKegiatanIdKomponen ($penugasanId, $kegiatanId, $komponen) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
-		$this->db->where("penugasan_id", $penugasanId);
-		$this->db->where("kegiatan_id", $kegiatanId);
-		$this->db->where("komponen", $komponen);
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
+		$this->new_db->where("penugasan_id", $penugasanId);
+		$this->new_db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->where("komponen", $komponen);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -195,11 +200,11 @@ class Spj_model extends CI_Model{
 	public function getItemById ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -218,11 +223,11 @@ class Spj_model extends CI_Model{
 	public function getItemsByIds ($ids) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where_in('id', $ids);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where_in('id', $ids);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -240,11 +245,11 @@ class Spj_model extends CI_Model{
 	public function getItemBySpjId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spj_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spj_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -262,12 +267,12 @@ class Spj_model extends CI_Model{
 	public function getItemBySpjIdAndSpbyId ($spjId, $spbyId) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spj_id", $spjId);
-		$this->db->where("spby_id", $spbyId);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spj_id", $spjId);
+		$this->new_db->where("spby_id", $spbyId);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -285,11 +290,11 @@ class Spj_model extends CI_Model{
 	public function getItemByDaftarHadirId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("daftar_hadir", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("daftar_hadir", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -311,21 +316,21 @@ class Spj_model extends CI_Model{
 		
 		$out = array();
 		
-		/*$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
-		$this->db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
+		/*$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
+		$this->new_db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
 		
 		$where = "spj_item.spj_id='".$spjId."' AND (spj_item.spby_id='".$spbyId."' OR spj_item.spby_id='0') AND penugasan_item.status = '5' AND spj_item.tgl_kuitansi <= '".$tglSpby."'";
-		$this->db->where($where);*/
+		$this->new_db->where($where);*/
 		
 		
-		$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
+		$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
 		
 		$where = "spj_item.spj_id='".$spjId."' AND (spj_item.spby_id='".$spbyId."' OR spj_item.spby_id='0') AND spj_item.check_laporan = '1' AND spj_item.tgl_kuitansi <= '".$tglSpby."'";
-		$this->db->where($where);
+		$this->new_db->where($where);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -343,21 +348,21 @@ class Spj_model extends CI_Model{
 		
 		$out = array();
 		
-		/*$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
-		$this->db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
+		/*$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
+		$this->new_db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
 		
 		$where = "spj_item.spj_id='".$spjId."' AND (spj_item.spby_id='".$spbyId."' OR spj_item.spby_id='0') AND penugasan_item.status = '5' AND spj_item.tgl_kuitansi <= '".$tglSpby."'";
-		$this->db->where($where);*/
+		$this->new_db->where($where);*/
 		
 		
-		$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
+		$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
 		
 		$where = "spj_item.spj_id='".$spjId."' AND (spj_item.spby_id_honor='".$spbyId."' OR spj_item.spby_id_honor='0') AND spj_item.check_laporan = '1' AND spj_item.tgl_kuitansi <= '".$tglSpby."'";
-		$this->db->where($where);
+		$this->new_db->where($where);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -371,16 +376,16 @@ class Spj_model extends CI_Model{
 	public function getPaidSpbyItemsBySpjIdAndSpbyId ($spjId, $spbyId) {
 		$out = array();
 		
-		$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
+		$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
 		
-		//$this->db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
+		//$this->new_db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
 		//$where = "spj_item.spj_id='".$spjId."' AND spj_item.spby_id='".$spbyId."' AND penugasan_item.status = '6'";
 		
 		$where = "spj_item.spj_id='".$spjId."' AND spj_item.spby_id='".$spbyId."' AND spj_item.paid = '1'";
-		$this->db->where($where);
+		$this->new_db->where($where);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -394,16 +399,16 @@ class Spj_model extends CI_Model{
 	public function getPaidSpbyHonorItemsBySpjIdAndSpbyId ($spjId, $spbyId) {
 		$out = array();
 		
-		$this->db->select("spj_item.*");
-		$this->db->from("spj_item");
+		$this->new_db->select("spj_item.*");
+		$this->new_db->from("spj_item");
 		
-		//$this->db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
+		//$this->new_db->join('penugasan_item', 'penugasan_item.spj_item_id = spj_item.id', 'left');
 		//$where = "spj_item.spj_id='".$spjId."' AND spj_item.spby_id='".$spbyId."' AND penugasan_item.status = '6'";
 		
 		$where = "spj_item.spj_id='".$spjId."' AND spj_item.spby_id_honor='".$spbyId."' AND spj_item.paid_honor = '1'";
-		$this->db->where($where);
+		$this->new_db->where($where);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -417,12 +422,12 @@ class Spj_model extends CI_Model{
 	public function getItemsBySpjIdTerm ($id, $term) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spj_id", $id);
-		$this->db->like('nama', $term);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spj_id", $id);
+		$this->new_db->like('nama', $term);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -441,11 +446,11 @@ class Spj_model extends CI_Model{
 	public function getItemBySpbyId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spby_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spby_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -464,11 +469,11 @@ class Spj_model extends CI_Model{
 	public function getItemBySpbyIdHonor ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spby_id_honor", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spby_id_honor", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -487,11 +492,11 @@ class Spj_model extends CI_Model{
 	public function getItemByPenugasanItemId ($id) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("penugasan_item_id", $id);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("penugasan_item_id", $id);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -510,12 +515,12 @@ class Spj_model extends CI_Model{
 	public function getItemBySpjIdKtp ($id, $ktp) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spj_id", $id);
-		$this->db->where("ktp", $ktp);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spj_id", $id);
+		$this->new_db->where("ktp", $ktp);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -534,12 +539,12 @@ class Spj_model extends CI_Model{
 	public function getItemBySpjIdPaid ($spjId, $paid = 1) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where("spj_id", $spjId);
-		$this->db->where("paid", $paid);
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where("spj_id", $spjId);
+		$this->new_db->where("paid", $paid);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -562,15 +567,15 @@ class Spj_model extends CI_Model{
 			$data['dibuat_oleh'] = $_SESSION["user"]["id"];
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->insert("spj", $data);
-			$id = $this->db->insert_id();
+			$this->new_db->insert("spj", $data);
+			$id = $this->new_db->insert_id();
 		}
 		else {
 			$data['diubah_tgl'] = date("Y-m-d H:i:s");
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("spj", $data);
+			$this->new_db->where("id", $id);
+			$this->new_db->update("spj", $data);
 		}
 		
 		return $id;
@@ -584,16 +589,16 @@ class Spj_model extends CI_Model{
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
 			if (isset($data["spj_id"]) && !empty($data["spj_id"])) {
-				$this->db->insert("spj_item", $data);
-				$id = $this->db->insert_id();	
+				$this->new_db->insert("spj_item", $data);
+				$id = $this->new_db->insert_id();	
 			}
 		}
 		else {
 			$data['diubah_tgl'] = date("Y-m-d H:i:s");
 			$data['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("spj_item", $data);
+			$this->new_db->where("id", $id);
+			$this->new_db->update("spj_item", $data);
 		}
 		
 		return $id;
@@ -603,29 +608,29 @@ class Spj_model extends CI_Model{
 		$data['diubah_tgl'] = date("Y-m-d H:i:s");
 		$data['diubah_oleh'] = $_SESSION["user"]["id"];
 
-		$this->db->where("spj_id", $spj_id);
-		$this->db->update("spj_item", $data);
+		$this->new_db->where("spj_id", $spj_id);
+		$this->new_db->update("spj_item", $data);
 	}
 	
 	public function getGroupByPenugasanAndKegiatan ($current, $rowCount, $search, $sort) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("penugasan_id", "kegiatan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->group_by(array("penugasan_id", "kegiatan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -644,22 +649,22 @@ class Spj_model extends CI_Model{
 	public function countGroupByPenugasanAndKegiatan ($current, $rowCount, $search, $sort) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("penugasan_id", "kegiatan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->group_by(array("penugasan_id", "kegiatan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		return $query->num_rows();
 	}
@@ -667,23 +672,23 @@ class Spj_model extends CI_Model{
 	public function getGroupByPenugasan ($current, $rowCount, $search, $sort) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("penugasan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
-		$this->db->where('kegiatan_id','0');
+		$this->new_db->group_by(array("penugasan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->where('kegiatan_id','0');
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -702,23 +707,23 @@ class Spj_model extends CI_Model{
 	public function countGroupByPenugasan ($current, $rowCount, $search, $sort) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("penugasan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
-		$this->db->where('kegiatan_id','0');
+		$this->new_db->group_by(array("penugasan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->where('kegiatan_id','0');
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		return $query->num_rows();
 	}
@@ -726,29 +731,29 @@ class Spj_model extends CI_Model{
 	public function getGroupByKegiatan ($current, $rowCount, $search, $sort, $dibuat_oleh = 0) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("kegiatan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
-		$this->db->where('penugasan_id','0');
+		$this->new_db->group_by(array("kegiatan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->where('penugasan_id','0');
 		
 		if (!empty($dibuat_oleh)) {
-			$this->db->where('dibuat_oleh',$dibuat_oleh);
+			$this->new_db->where('dibuat_oleh',$dibuat_oleh);
 		}
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -758,11 +763,11 @@ class Spj_model extends CI_Model{
 				}
 				
 				
-				$this->db->select("*");
-				$this->db->from("spj");
-				$this->db->where('kegiatan_id',$row["kegiatan_id"]);
+				$this->new_db->select("*");
+				$this->new_db->from("spj");
+				$this->new_db->where('kegiatan_id',$row["kegiatan_id"]);
 				
-				$querySPJ = $this->db->get();
+				$querySPJ = $this->new_db->get();
 				
 				if($querySPJ->num_rows() > 0) {
 					$komponen = array();
@@ -797,27 +802,27 @@ class Spj_model extends CI_Model{
 	public function countGroupByKegiatan ($current, $rowCount, $search, $sort, $dibuat_oleh = 0) {
 		$out = array();
 		
-		$this->db->select("*");
-		$this->db->from("spj");
+		$this->new_db->select("*");
+		$this->new_db->from("spj");
 		
 		if ($rowCount) {
-			$this->db->limit($rowCount, (($current * $rowCount) - $rowCount));	
+			$this->new_db->limit($rowCount, (($current * $rowCount) - $rowCount));	
 		}
 		
 		if (!empty($search)) {
-			$this->db->like('nama', $search);
+			$this->new_db->like('nama', $search);
 		}
 		
-		$this->db->group_by(array("kegiatan_id"));
-		$this->db->order_by('dibuat_tgl', 'DESC');
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
-		$this->db->where('penugasan_id','0');
+		$this->new_db->group_by(array("kegiatan_id"));
+		$this->new_db->order_by('dibuat_tgl', 'DESC');
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->where('penugasan_id','0');
 		
 		if (!empty($dibuat_oleh)) {
-			$this->db->where('dibuat_oleh',$dibuat_oleh);
+			$this->new_db->where('dibuat_oleh',$dibuat_oleh);
 		}
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		return $query->num_rows();
 	}
@@ -827,11 +832,11 @@ class Spj_model extends CI_Model{
 		$ids = array();
 		
 		// GET ALL REGISTERED KEGIATAN
-		$this->db->select("id, penugasan_id, kegiatan_id");
-		$this->db->from("spj");
-		$this->db->group_by(array("kegiatan_id"));
+		$this->new_db->select("id, penugasan_id, kegiatan_id");
+		$this->new_db->from("spj");
+		$this->new_db->group_by(array("kegiatan_id"));
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -839,21 +844,21 @@ class Spj_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		
 		// GET NAMA KEGIATAN
-		$this->db->select("*");
-		$this->db->from("kegiatan");
-		$this->db->like('nama', $term, 'both');
-		$this->db->order_by('nama', 'ASC');
-		$this->db->where('YEAR(tgl_selesai_kegiatan)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->select("*");
+		$this->new_db->from("kegiatan");
+		$this->new_db->like('nama', $term, 'both');
+		$this->new_db->order_by('nama', 'ASC');
+		$this->new_db->where('YEAR(tgl_selesai_kegiatan)', $_SESSION["tahun_anggaran"]);
 		
 		if (!empty($ids)) {
-			$this->db->where_not_in('id', $ids);
+			$this->new_db->where_not_in('id', $ids);
 		}
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -861,7 +866,7 @@ class Spj_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -871,11 +876,11 @@ class Spj_model extends CI_Model{
 		$ids = array();
 		
 		// GET ALL REGISTERED KEGIATAN
-		$this->db->select("id, penugasan_id, kegiatan_id");
-		$this->db->from("spj");
-		$this->db->group_by(array("penugasan_id"));
+		$this->new_db->select("id, penugasan_id, kegiatan_id");
+		$this->new_db->from("spj");
+		$this->new_db->group_by(array("penugasan_id"));
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -883,26 +888,26 @@ class Spj_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		
 		// GET NAMA KEGIATAN
-		$this->db->select("*");
-		$this->db->from("penugasan");
+		$this->new_db->select("*");
+		$this->new_db->from("penugasan");
 		
 		if (!empty($term)) {
-			$this->db->like('nama', $term, 'both');
+			$this->new_db->like('nama', $term, 'both');
 		}
 		
-		$this->db->order_by('nama', 'ASC');
+		$this->new_db->order_by('nama', 'ASC');
 		
 		if (!empty($ids)) {
-			$this->db->where_not_in('id', $ids);
+			$this->new_db->where_not_in('id', $ids);
 		}
 		
-		$this->db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
+		$this->new_db->where('YEAR(dibuat_tgl)', $_SESSION["tahun_anggaran"]);
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -910,7 +915,7 @@ class Spj_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -920,8 +925,8 @@ class Spj_model extends CI_Model{
 		$out["error"] = true;
 		
 		if (!empty($id)) {
-			$this->db->where('id', $id);
-			$this->db->delete('spj');
+			$this->new_db->where('id', $id);
+			$this->new_db->delete('spj');
 			$out["error"] = false;
 		}
 		
@@ -933,8 +938,8 @@ class Spj_model extends CI_Model{
 		$out["error"] = true;
 		
 		if (!empty($id)) {
-			$this->db->where('id', $id);
-			$this->db->delete('spj_item');
+			$this->new_db->where('id', $id);
+			$this->new_db->delete('spj_item');
 			$out["error"] = false;
 		}
 		
@@ -946,8 +951,8 @@ class Spj_model extends CI_Model{
 		$out["error"] = true;
 		
 		if (!empty($id)) {
-			$this->db->where('spj_id', $id);
-			$this->db->delete('spj_item');
+			$this->new_db->where('spj_id', $id);
+			$this->new_db->delete('spj_item');
 			$out["error"] = false;
 		}
 		
@@ -956,13 +961,13 @@ class Spj_model extends CI_Model{
 	
 	public function getItemDaftarKegiatan ($spjId, $spjDaftarHadirId = 0) {
 		// GET NAMA KEGIATAN
-		$this->db->select("*");
-		$this->db->from("spj_item");
-		$this->db->where('spj_id = "'.$spjId.'" AND (daftar_hadir = "'.$spjDaftarHadirId.'" OR daftar_hadir = "0")');
+		$this->new_db->select("*");
+		$this->new_db->from("spj_item");
+		$this->new_db->where('spj_id = "'.$spjId.'" AND (daftar_hadir = "'.$spjDaftarHadirId.'" OR daftar_hadir = "0")');
 		
-		$this->db->order_by('kategori', 'ASC');
+		$this->new_db->order_by('kategori', 'ASC');
 		
-		$query = $this->db->get();
+		$query = $this->new_db->get();
 		
 		if($query->num_rows() > 0) {
 			foreach ($query->result_array() as $row) {
@@ -970,7 +975,7 @@ class Spj_model extends CI_Model{
 			}
 		}
 		
-		$this->db->reset_query();
+		$this->new_db->reset_query();
 		
 		return $out;
 	}
@@ -1002,8 +1007,8 @@ class Spj_model extends CI_Model{
 			$foo['diubah_oleh'] = $_SESSION["user"]["id"];
 			
 			if (isset($foo["spj_id"]) && !empty($foo["spj_id"])) {
-				$this->db->insert("spj_daftar_hadir", $foo);
-				$id = $this->db->insert_id();
+				$this->new_db->insert("spj_daftar_hadir", $foo);
+				$id = $this->new_db->insert_id();
 			}
 		}
 		else {
@@ -1019,8 +1024,8 @@ class Spj_model extends CI_Model{
 			$foo['diubah_tgl'] = date("Y-m-d H:i:s");
 			$foo['diubah_oleh'] = $_SESSION["user"]["id"];
 			
-			$this->db->where("id", $id);
-			$this->db->update("spj_daftar_hadir", $foo);
+			$this->new_db->where("id", $id);
+			$this->new_db->update("spj_daftar_hadir", $foo);
 		}
 		
 		if (!empty($id) && !empty($items)) {
