@@ -82,6 +82,9 @@
 										<?php
 											if (isset($petugas) && !empty($petugas)) {
 												foreach ($petugas as $pet) {
+													if (!isset($pet["id"])) {
+														$pet["id"] = "";
+													}
 										?>
 													<tr>
 														<td><?php print $pet["no"]; ?></td>
@@ -93,7 +96,7 @@
 														<td><?php print $pet["tgl_tugas"]; ?></td>
 														
 														<?php
-															//if ($penugasan["status"] == "2" || $penugasan["status"] == "6") {
+															if ($penugasan["status"] == "2" || $penugasan["status"] == "6") {
 																
 																print "<td>";
 																print '<a href="javascript:;" class="btn btn-sm btn-secondary ubah-penugasan" data-id="'.$pet["id"].'">Edit</a> ';
@@ -123,7 +126,7 @@
 																}
 																
 																print "</td>";
-															//}
+															}
 														?>
 													</tr>
 										<?php
