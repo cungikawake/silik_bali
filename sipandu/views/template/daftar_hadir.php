@@ -24,8 +24,13 @@
 <?php
 	$showTtd = false;
 
-	if (($type == "peserta" && $kegiatan["form_ttd_peserta"]) || ($type == "narasumber" && $kegiatan["form_ttd_narasumber"]) || ($type == "panitia" && $kegiatan["form_ttd_panitia"]) || ($type == "moderator" && $kegiatan["form_ttd_moderator"]) || ($type == "pengajar_praktek" && $kegiatan["form_ttd_pp"]) || ($type == "fasilitator" && $kegiatan["form_ttd_fasil"]) || ($type == "instruktur" && $kegiatan["form_ttd_instruktur"])) {
-		$showTtd = true;
+	if (isset($kegiatan_options) && !empty($kegiatan_options)) {
+		foreach ($kegiatan_options as $opt) {
+			if ($opt["key"] == "form_ttd") {
+				$showTtd = $opt["value"];
+				break;
+			}
+		}
 	}
 
 	if ($kegiatan["tipe_kegiatan"] == "Daring") {
@@ -33,10 +38,6 @@
 	}
 
 	$typeTitle = $type;
-
-	if ($type == "pengajar_praktek") {
-		$typeTitle = "pengajar_praktik";
-	}
 ?>
 <table style="width:100%; font-family: 'timesnewromanxx'; border-bottom: 3px solid #000; text-align: center;">
 	<tbody>

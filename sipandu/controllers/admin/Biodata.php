@@ -23,7 +23,7 @@ class Biodata extends CI_Controller {
 		$out["reload_table"] = true;
 		
 		if (isset($_POST) && !empty($_POST)) {
-			if ($_POST["kab_unit_kerja"] == "Lainnya") {
+			if (isset($_POST["kab_unit_kerja"]) && $_POST["kab_unit_kerja"] == "Lainnya") {
 				$_POST["kab_unit_kerja"] = $_POST["kab_unit_kerja_lainnya"];
 			}
 			unset($_POST["kab_unit_kerja_lainnya"]);

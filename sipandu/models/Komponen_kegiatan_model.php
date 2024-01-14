@@ -158,6 +158,45 @@ class Komponen_kegiatan_model extends CI_Model{
 		return $out;
 	}
 
+	public function getItemByNik ($code_komponen, $kegiatanId, $nik) {
+		$out = array();
+		
+		// Komponen
+		$this->db->select("*");
+		$this->db->from("master_komponen_kegiatan");
+		$this->db->where("code", $code_komponen);
+		
+		$query = $this->db->get();
+
+		$komponen = array();
+
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$komponen = $row;
+			}
+		}
+		
+		$this->db->reset_query();
+
+		// Item
+		$this->new_db->select("*");
+		$this->new_db->from($komponen["table_name"]);
+		$this->new_db->where("kegiatan_id", $kegiatanId);
+		$this->new_db->where("ktp", $nik);
+		
+		$query = $this->new_db->get();
+		
+		if($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$out = $row;
+			}
+		}
+		
+		$this->new_db->reset_query();
+		
+		return $out;
+	}
+
 	public function getItemById ($code_komponen, $id) {
 		$out = array();
 		
