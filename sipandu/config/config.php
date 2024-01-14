@@ -1161,3 +1161,15 @@ $yearNow = date("Y");
 foreach (range(2022, $yearNow) as $confYear) {
 	$config["tahun_anggaran"][] = $confYear;
 }
+
+// TABLE MASTER & TRANSACTION
+$config["db_master_table"] = array(
+	"biodata",
+	"kutipan",
+	"master_komponen_kegiatan",
+	"migrations",
+	"pengaturan",
+	"sertifikat",
+	"user",
+	"user_document"
+);
