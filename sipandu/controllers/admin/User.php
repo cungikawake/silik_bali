@@ -509,6 +509,7 @@ class User extends CI_Controller {
 										// Handle File To Upload 
 										$tempFile = $fotos["tmp_name"][$fotoKey];
 										$targetPath = APPPATH . "../assets/laporan_perjadin/".$id;
+										chmod($targetPath, 0755);
 										is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
 										$targetFile =  "foto_".($fotoKey + 1).".".$ext;
 										move_uploaded_file($tempFile,$targetPath. "/" .$targetFile);
@@ -547,7 +548,7 @@ class User extends CI_Controller {
 							// Handle Upload File
 							$tempFile = $stamp["tmp_name"];
 							$targetPath = APPPATH . "../assets/laporan_perjadin/".$id;
-
+							chmod($targetPath, 0755);
 							is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
 
 							$targetFile =  "stamp.".$ext;
@@ -597,7 +598,7 @@ class User extends CI_Controller {
 							// Handle Upload File
 							$tempFile = $buktiPengeluaran["tmp_name"];
 							$targetPath = APPPATH . "../assets/laporan_perjadin/".$id;
-
+							chmod($targetPath, 0755);
 							is_dir($targetPath) || @mkdir($targetPath) || die("Can't Create folder");
 
 							$targetFile =  "bukti_pengeluaran.".$ext;

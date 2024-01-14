@@ -1402,12 +1402,25 @@ class Bootgrids extends CI_Controller {
 			$view = $_POST["view"];
 			
 			if (isset($_POST["id"]) && !empty($_POST["id"]) && isset($_POST["table"]) && !empty($_POST["table"])) {
-				$this->db->select('*');
-				$this->db->from($_POST["table"]);
-				$this->db->where('id', $_POST["id"]);
 				
-				$result = $this->db->get();
+				
+				$config_tb = $this->config->item('db_master_table');
+				if(!in_array($_POST["table"], $config_tb)){
+					$db_tahun = 'transaction_' . $_SESSION['tahun_anggaran']; 
+					$newDb = $this->load->database($db_tahun, true);
 
+					$newDb->select('*');
+					$newDb->from($_POST["table"]);
+					$newDb->where('id', $_POST["id"]);
+
+					$result = $newDb->get();
+				} else {
+					$this->db->select('*');
+					$this->db->from($_POST["table"]);
+					$this->db->where('id', $_POST["id"]);
+
+					$result = $this->db->get();
+				}
 
 				if($result->num_rows() > 0) {
 					foreach ($result->result_array() as $res) {
